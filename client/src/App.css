@@ -1,0 +1,141 @@
+@import 'tailwindcss';
+@import "aos/dist/aos.css";
+
+
+/* ------------------- *\
+Globel;
+\* ------------------- */
+@layer base{
+    *{
+        @apply relative
+        /* border border-black */
+    }
+    body{
+        @apply font-['Arial']
+    }
+    button{
+        @apply cursor-pointer
+    }
+}
+
+/* ------------------- *\
+Layout
+\* ------------------- */
+.container-mid {
+    @apply w-[75%] max-lg:w-[90%] max-md:w-[98%] mx-auto px-4 
+}
+
+.cart-container {
+    @apply px-8 flex items-center justify-center
+}
+
+.row {
+    @apply mx-[-16px]
+}
+
+@layer utilities {
+    .gap-rwd {
+        gap: clamp(24px, 3vw, 32px);
+    }
+}
+
+/* ------------------- *\
+Conponent
+\* ------------------- */
+
+/* background */
+@layer components {
+    .bg-cover-set {
+        @apply bg-cover bg-no-repeat bg-center
+    }
+    .bg-contain-set {
+        @apply bg-contain bg-no-repeat bg-center
+    }
+}
+
+/* position */
+@layer components {
+    /* navbar label position */
+    .navbar-menu-mid {
+        @apply m-0 absolute left-1/2 top-[70%] -translate-x-1/2
+    }
+    /* navbar label's items position */
+    .navbar-items-mid {
+        @apply m-0 absolute left-1/2 top-[100%] -translate-x-1/2
+    }
+    .absolute-mid {
+        @apply m-0 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
+    }
+}
+
+/* curved-container */
+@layer utilities {
+    .curved-container{
+        clip-path: path(
+        "M 0 40 C 25% 0, 75% 0, 100% 40 L 100% 260 C 75% 300, 25% 300, 0 260 Z"
+    );
+    overflow: visible; /* 允許子元素向外伸出 */
+    background-color: #fff;
+    width: 100%;
+    height: 400px;
+        }
+}
+
+
+/* font */
+@layer utilities {
+    .exile-regular {
+        font-family: "Exile", system-ui;
+        font-weight: 400;
+        font-style: normal;
+    }
+    .pacifico-regular {
+        font-family: "Pacifico", cursive;
+        font-weight: 400;
+        font-style: normal;
+    }
+    .sirin-stencil-regular {
+        font-family: "Sirin Stencil", Exile;
+        font-weight: 400;
+        font-style: normal;
+    }
+    .indie-flower-regular {
+        font-family: "Indie Flower", cursive;
+        font-weight: 400;
+        font-style: normal;
+    }
+
+}
+
+/* shadow */
+@layer utilities {
+    .stereo-shadow {
+        color: #ccc;
+        text-shadow: -1px -1px 0 #fff, 1px 1px 0 #868484;
+    }
+}
+
+/* scroll */
+@layer utilities {
+
+    /* 調整寬(直)高(橫) */
+    .cart-scroll::-webkit-scrollbar { 
+        width: 10px;            /* scroll bar 寬度 */
+    }
+
+    /* 調整滑軌道 */
+    .cart-scroll::-webkit-scrollbar-track {
+        background: 'none';  
+        border-radius: 10px;
+    }
+
+    /* 調整滑塊 */
+    .cart-scroll::-webkit-scrollbar-thumb {
+        background: #888;      /* 拖拉塊顏色 */
+        border-radius: 10px;
+    }
+
+    .cart-scroll::-webkit-scrollbar-thumb:hover {
+        background: #777;      /* 滑過時的顏色 */
+    }
+}

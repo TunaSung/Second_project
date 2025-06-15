@@ -1,0 +1,45 @@
+@import 'tailwindcss';
+
+/* home page jumbotron swiper */
+.swiper-pagination-bullet {
+  @apply w-2 h-2 bg-white opacity-50 mx-1 rounded-full transition-all;
+}
+.swiper-pagination-bullet-active{
+  @apply w-8 h-2 mx-1 rounded-2xl opacity-100 bg-orange-500
+}
+
+/* swiper of home page events and arrivals  */
+#new-item .swiper {
+  width: 66%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+#new-item .swiper-wrapper {
+  width: 25%;
+}
+
+#new-even .swiper-slide {
+  background-position: center;
+  background-size: cover;
+  height: 100%;
+  aspect-ratio: 1 / 1;
+}
+
+#new-even .swiper-slide img {
+  display: block;
+  width: 100%;
+}
+
+/* swiper of product category  */
+
+#swiper-product-category .swiper-slide {
+  height: 25%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#swiper-product-category .swiper-slide-active {
+  color: red;
+  font-size: larger;
+}
