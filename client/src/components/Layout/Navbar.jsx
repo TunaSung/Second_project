@@ -98,7 +98,9 @@ function Navbar() {
                     <div className="grid grid-cols-3 gap-2">
                         <IoMdCart onClick={handleCartClick} className="flex self-center justify-self-center text-2xl cursor-pointer"/>
                         <HiBellAlert className="flex self-center justify-self-center text-2xl cursor-pointer"/>
-                        <IoLogIn className="flex self-center justify-self-center text-2xl cursor-pointer"/>
+                        <Link to={'/sign'} className="flex self-center justify-self-center text-2xl">
+                            <IoLogIn />
+                        </Link>
                     </div>
                     <form action="" className="h-full px-3 border-1 rounded-2xl flex items-center justify-center">
                         <input type="text" value={search} onChange={toggleSearch} className="w-full outline-none text-gray-600 placeholder-gray-400"/>
