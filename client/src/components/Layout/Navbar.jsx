@@ -43,7 +43,7 @@ function Navbar() {
 
 
     return(
-        <nav className="w-full h-20 fixed top-0 right-0 bg-blue-200 z-150">
+        <nav className="w-full h-20 fixed top-0 right-0 bg-blue-200 z-110">
 
             <Cart isClicked={isCartClicked} setIsClicked={setIsCartClicked}/>
             <div className="container-mid h-full grid grid-cols-[1fr_4fr_1fr] justify-center gap-rwd px-2">
