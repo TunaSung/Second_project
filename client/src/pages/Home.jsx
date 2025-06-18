@@ -2,7 +2,7 @@ import { useRef, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion, useScroll, useTransform} from "framer-motion";
 
-// UI and icon
+// UI and icons
 import Hero from '../components/Layout/Hero';
 import EventCard from "../components/Feature/EventCard";
 import ProductCard from "../components/Feature/ProductCard";
@@ -48,9 +48,9 @@ function Home() {
     return (
         <div id="home-page">
 
-            {/* start jumbotron swiper */}
+            {/* start kpop swiper */}
             <Swiper
-                id="jumbotron-swiper"
+                id="kpop-swiper"
                 loop={true}
                 slidesPerView={1}
                 spaceBetween={0}
@@ -76,26 +76,25 @@ function Home() {
                     </form>
                 </div>
 
-                {/* jumbotron slide */}
+                {/* kpop slide */}
                 <SwiperSlide className='w-full h-full'>
-                    <div className='h-full w-full bg-cover-set bg-[url("imgs/jumbotron/aespa-karina-hot-mess.jpg")]'/>
+                    <div className='h-full w-full bg-cover-set bg-[url("imgs/kpop/aespa-karina-hot-mess.jpg")]'/>
                 </SwiperSlide>
                 <SwiperSlide className='w-full h-full'>
-                    <div className='h-full w-full bg-cover-set bg-[url("imgs/jumbotron/aespa-winter-hot-mess.jpg")]'/>
+                    <div className='h-full w-full bg-cover-set bg-[url("imgs/kpop/aespa-winter-hot-mess.jpg")]'/>
                 </SwiperSlide>
                 <SwiperSlide className='w-full h-full'>
-                    <div className='h-full w-full bg-cover-set bg-[url("imgs/jumbotron/ningning-aespa-hot-mess.jpg")]'/>
+                    <div className='h-full w-full bg-cover-set bg-[url("imgs/kpop/ningning-aespa-hot-mess.jpg")]'/>
                 </SwiperSlide>
                 <SwiperSlide className='w-full h-full'>
-                    <div className='h-full w-full bg-cover-set bg-[url("imgs/jumbotron/giselle-aespa-hot-mess.jpg")]'/>
+                    <div className='h-full w-full bg-cover-set bg-[url("imgs/kpop/giselle-aespa-hot-mess.jpg")]'/>
                 </SwiperSlide>
 
             </Swiper>
-            {/* end jumbotron swiper */}
+            {/* end kpop swiper */}
             
             {/* start wrapper of main */}
             <div style={{ 
-                backgroundColor: "#D3D3D3",
                 backgroundImage: "linear-gradient(178deg,rgba(211, 211, 211, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(107, 142, 35, 1) 100%)"
             }}>
 
@@ -105,32 +104,47 @@ function Home() {
                     style={{y: useScrollTransform(0.1, 0.6, "0%", "50%")}}
                     >
                         <motion.div className="m-0 absolute left-1/2 -translate-x-1/2 top-1/4 w-auto h-10"
-                        style={{ opacity: useScrollTransform(0.6, 0.85, 0, 1) }}
+                        loading="lazy"
+                        style={{ opacity: useScrollTransform(0.6, 0.7, 0, 1) }}
                         >
-                            <h1 className="text-4xl text-center indie-flower-regular">Sustainable Chic Starts Here</h1>
+                            <h1 className="text-4xl font-bold text-center indie-flower-regular">Sustainable Chic Starts Here</h1>
                         </motion.div>
-                        <motion.div className="border-1 w-full h-70 rounded-2xl"
-                        style={{ scale: useScrollTransform(0.25, 0.5, "100%", "60%"),
+                        <motion.div className="w-full h-70 rounded-2xl bg-cover-set "
+                        loading="lazy"
+                        style={{ 
+                            backgroundImage: 'url("/imgs/kpop/bts-kpop-v-butter.jpg")',
+                            scale: useScrollTransform(0.25, 0.5, "100%", "60%"),
                             y: useScrollTransform(0.23, 0.8, "0%", "50%"),
                             x: useScrollTransform(0.23, 0.8, "0%", "-30%") }}
                         />
-                        <motion.div className="border-1 w-full h-70 rounded-2xl"
-                        style={{ scale: useScrollTransform(0.25, 0.48, "100%", "50%"),
+                        <motion.div className="w-full h-70 rounded-2xl bg-cover-set"
+                        loading="lazy"
+                        style={{ 
+                            backgroundImage: 'url("/imgs/kpop/tzuyu-twice-with-youth.jpg")',
+                            scale: useScrollTransform(0.25, 0.48, "100%", "50%"),
                             y: useScrollTransform(0.23, 0.8, "0%", "-50%"),
                             x: useScrollTransform(0.23, 0.83, "0%", "-30%") }}
                         />
-                        <motion.div className="border-1 w-full h-70 rounded-2xl"
-                        style={{ scale: useScrollTransform(0.25, 0.5, "100%", "60%"),
+                        <motion.div className="w-full h-70 rounded-2xl bg-cover-set"
+                        loading="lazy"
+                        style={{ 
+                            backgroundImage: 'url("/imgs/kpop/bts-butter-jungkook.jpg")',
+                            scale: useScrollTransform(0.25, 0.5, "100%", "60%"),
                             y: useScrollTransform(0.23, 0.8, "0%", "70%") }}
                         />
-                        <motion.div className="border-1 w-full h-70 rounded-2xl"
-                        style={{ height: useScrollTransform(0.25, 0.7, 280, 168), 
+                        <motion.div className="w-full h-70 rounded-2xl bg-cover-set"
+                        loading="lazy"
+                        style={{ 
+                            backgroundImage: 'url("/imgs/kpop/karina-aespa-dirty-work2.jpg")',
+                            height: useScrollTransform(0.25, 0.7, 280, 168), 
                             width: useScrollTransform(0.25, 0.5, 160.6, 128),
                             y: useScrollTransform(0.23, 0.8, "0%", "-32%"),
                             x: useScrollTransform(0.23, 0.8, "0%", "20%") }}
                         />
-                        <motion.div className="border-1 w-full h-70 rounded-2xl"
-                        style={{ height: useScrollTransform(0.25, 0.5, 280, 168), 
+                        <motion.div className="w-full h-70 rounded-2xl bg-cover-set"
+                        style={{ 
+                            backgroundImage: 'url("/imgs/kpop/bts-be-jimin.jpg")',
+                            height: useScrollTransform(0.25, 0.5, 280, 168), 
                             width: useScrollTransform(0.25, 0.5, 107.6, 128),
                             y: useScrollTransform(0.23, 0.8, "0%", "15%"),
                             x: useScrollTransform(0.23, 0.8, "0%", "40%") }}

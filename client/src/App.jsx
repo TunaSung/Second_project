@@ -27,7 +27,7 @@ function App() {
       <ScrollToTop/>
       <FixedMessage/>
       <Navbar />
-      <Suspense fallback={<div className="w-full h-[100vh] flex items-center justify-center text-center my-60"> 
+      <Suspense fallback={<div className="w-full h-[50vh] flex items-center justify-center text-center my-60"> 
                             <l-dot-stream
                             size="60"
                             speed="2.5"

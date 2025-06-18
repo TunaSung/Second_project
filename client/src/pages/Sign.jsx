@@ -1,82 +1,115 @@
 import { useState } from "react";
-import { IoPersonOutline } from "react-icons/io5";
-import { TbLockPassword } from "react-icons/tb";
+import { motion, useTransform} from "framer-motion";
+
+// UI
+import SignIn from "../components/Feature/SignIn";
+import SignUp from "../components/Feature/SignUp";
 
 
 function Sign() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
+
+    // useState
+    const [isSignUp, setIsSignUp] = useState(false);
+    const [isSignIn, setIsSignIn] = useState(true);
+
+    // toggle UI
+    const toggleSignChange = () => {
+        setIsSignUp(!isSignUp)
+        setIsSignIn(!isSignIn)
+    }
 
     return (
-        <div className="h-[100vh] w-full grid grid-cols-2 items-center justify-center mt-10">
+        <div className="h-[90vh] w-full grid grid-cols-2 items-center justify-center mt-20 bg-linear-[90deg,[#fef6e4]_0%,[#c3ddfa]_33%,[#e1ecf8]_66%,[#fef6e4]]"
+        style={{
+            background: "linear-gradient(90deg,#fef6e4 0%,#f8e1f4 40%,#e1ecf8 60%,#fef6e4 100%)"
+        }}>
 
-            {/* start sign in */}
-            <form action=""  className="border w-full h-full flex items-center justify-center">
-                <div className="border h-2/3 w-3/7 p-3 flex items-center justify-center">
-                    <div className=" border flex w-full h-full flex-col items-center pt-10 gap-5">
-
-                        <div className="w-3/5 h-20  border"/>
-
-                        <div className="w-3/5">
-                            
+            {/* start go sign in*/}
+            <motion.div className="absolute grid grid-cols-2 h-full w-full z-90 -right-1/2 transition-all duration-500"
+            style={{translateX: isSignUp ? '50%' : 0}}
+            >
+                <div className="flex flex-col items-center p-10
+                bg-[url('/imgs/kpop/yeji-itzy-girls-will-be-girls.jpg')] bg-cover-set"
+                >
+                    {/* start title */}
+                    <div className="w-full mb-60">
+                        <div className="border pl-2 flex justify-start text-7xl mb-3 sail-regular 
+                        bg-clip-text text-transparent drop-shadow-[3px_3px_3px_rgba(0,0,0,0.8)] bg-cover-set"
+                        style={{
+                            backgroundImage: 'url("/imgs/kpop/aespa-winter-hot-mess.jpg")'
+                        }}>
+                            Sign In &
                         </div>
-
-                        <div className="w-full h-12 flex items-center">
-                            <div className="flex justify-center items-center w-full h-full ">
-                                <label htmlFor="email" className="text-2xl mr-2"><IoPersonOutline/></label>
-                                <input 
-                                type="email"
-                                id="email" 
-                                value={email} 
-                                onChange={(e) => {setEmail(e.target-value)}}
-                                className="peer border px-2 h-full rounded-xl 
-                                placeholder-transparent focus:outline-none focus:border-blue-500" 
-                                placeholder="Email"/>
-                                <label htmlFor="email" 
-                                className="absolute bg-white px-1 left-1/4 peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 
-                                peer-focus:-top-2.5 peer-focus:text-blue-500 peer-focus:text-sm">
-                                    Email
-                                </label>
-                            </div>
+                        <div className="border pl-2 flex justify-end text-7xl mb-3 sail-regular 
+                        bg-clip-text text-transparent drop-shadow-[3px_3px_3px_rgba(0,0,0,0.8)] bg-contian-set"
+                        style={{
+                            backgroundImage: 'url("/imgs/kpop/aespa-winter-hot-mess.jpg")'
+                        }}>
+                            Rediscover Value
                         </div>
-
-                        <div className="w-full h-12 flex items-center">
-                            <div className="flex justify-center items-center w-full h-full ">
-                                <label htmlFor="password" className="text-2xl mr-2"><TbLockPassword /></label>
-                                <input 
-                                type="password" 
-                                id="password"
-                                value={password}
-                                onChange={(e) => {setPassword(e.target-value)}} 
-                                className="peer border px-2 h-full rounded-xl 
-                                placeholder-transparent focus:outline-none focus:border-blue-500" 
-                                placeholder="Password"/>
-                                <label htmlFor="password" 
-                                className="absolute bg-white px-1 left-1/4 peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 
-                                peer-focus:-top-2.5 peer-focus:text-blue-500 peer-focus:text-sm">
-                                    Password
-                                </label>
-                            </div>
-                        </div>
-
-                        {/* {error && <p className="text-red-500 text-sm">{error}</p>} */}
-                        <button type="submit" className="rounded-lg bg-black/60 w-4/5 text-[#ccc] hover:text-white hover:bg-black/40 cursor-pointer">
-                            Sign In
-                        </button>
-                        <a href="#!" className="hover:underline text-black hover:text-red-800">Forget password?</a>
                     </div>
-
+                    {/* end title */}
+                    
+                    {/* start btn */}
+                    <button className="w-40 h-20 border-2 border-gray-500 rounded-xl opacity-85 group text-2xl font-bold pacifico-regular
+                    bg-gradient-to-r from-[#fef6e4] via-[#f8e1f4] to-[#d7eaff] drop-shadow-[3px_3px_3px_rgba(0,0,0,0.8)]
+                    hover:opacity-100 hover:border-pink-400 hover:scale-110 hover:text-pink-500 transition-all duration-250"
+                    onClick={toggleSignChange}
+                    >
+                        Go Sign Up
+                    </button>
+                    {/* end btn */}
 
                 </div>
-            </form>
+            </motion.div>
+            {/* end go sign in*/}
+
+            {/* start go sign up*/}
+            <motion.div className="absolute grid grid-cols-2 h-full w-full z-90 -left-1/2 transition-all duration-500"
+            style={{translateX: isSignIn ? '-50%' : 0}}
+            >
+                <div className="col-start-2 flex flex-col items-center p-10
+                bg-[url('/imgs/kpop/karina-aespa-dirty-work.jpg')] bg-cover-set"
+                >
+                    {/* start title */}
+                    <div className="w-full mb-60">
+                        <div className="border pl-2 flex justify-start text-7xl mb-3 sail-regular 
+                        bg-clip-text text-transparent drop-shadow-[3px_3px_3px_rgba(0,0,0,0.8)] bg-cover-set"
+                        style={{
+                            backgroundImage: 'url("/imgs/kpop/aespa-winter-hot-mess.jpg")'
+                        }}>
+                            Sign Up &
+                        </div>
+                        <div className="border pl-2 flex justify-end text-7xl mb-3 sail-regular 
+                        bg-clip-text text-transparent drop-shadow-[3px_3px_3px_rgba(0,0,0,0.8)] bg-contian-set"
+                        style={{
+                            backgroundImage: 'url("/imgs/kpop/aespa-winter-hot-mess.jpg")'
+                        }}>
+                            Discover Gems
+                        </div>
+                    </div>
+                    {/* end title */}
+
+                    {/* start btn */}
+                    <button className="w-40 h-20 border-2 border-gray-500 rounded-xl opacity-85 group text-2xl font-bold pacifico-regular
+                    bg-gradient-to-r from-[#fef6e4] via-[#e1ecf8] to-[#c3ddfa] drop-shadow-[3px_3px_3px_rgba(0,0,0,0.8)]
+                    hover:opacity-100 hover:border-sky-400 hover:scale-110 hover:text-sky-600 transition-all duration-250"
+                    onClick={toggleSignChange}
+                    >
+                        Go Sign In
+                    </button>
+                    {/* end btn */}
+
+                </div>
+            </motion.div>
+            {/* end go sign up*/}
+
+            {/* start sign in */}
+            <SignIn isShowed={isSignIn}/>
             {/* end sign in */}
 
-
             {/* start sign up */}
-            <div>
-
-            </div>
+            <SignUp isShowed={isSignUp}/>
             {/* end sign up */}
         </div>
     )

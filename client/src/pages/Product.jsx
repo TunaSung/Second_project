@@ -52,15 +52,6 @@ function Product() {
         {key:5, title: "Accessories", contents: accessories, img:"/imgs/category/accessories.jpg"}]
     const hashTags = ["#GentlyUsed", "#XL", "#Fashion", "#Sale", "#Discount"];
 
-    // Preload img
-    useEffect(() => {
-        labels.forEach(label => {
-            const img = new Image();
-            img.src = label.img;
-        });
-    }, []);
-
-
     // Dynamic grid size
     const getRowSizes = () => {
         return Array.from({ length: rows }, (_, i) =>
@@ -132,6 +123,7 @@ function Product() {
                         w-[85%] transition-all duration-300 flex justify-self-center items-center justify-center rounded-t-xl font-bold border-b-0`}>
 
                             <div className="absolute w-full h-full rounded-t-xl bg-cover-set transition-opacity duration-300"
+                            loading="lazy"
                             style={{ backgroundImage: `url(${label.img})`,
                                 opacity: label.key === clickIndex ? 1 : 0,
                             }}
@@ -189,7 +181,8 @@ function Product() {
                         >
                         <div className="w-full h-full flex group">
                             {/* start img */}
-                            <div className='w-full h-full rounded-2xl bg-[url("/imgs/jumbotron/aespa-karina-hot-mess.jpg")] bg-cover-set group-hover:w-1/2 group-hover:rounded-r-none transition-all duration-200 z-100' />
+                            <div className='w-full h-full rounded-2xl bg-[url("/imgs/kpop/aespa-karina-hot-mess.jpg")] bg-cover-set group-hover:w-1/2 group-hover:rounded-r-none transition-all duration-200 z-100' 
+                            loading="lazy"/>
                             {/* end img */}
 
                             {/* start info */}
