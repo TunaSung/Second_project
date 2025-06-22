@@ -36,7 +36,7 @@ function SignIn( {isShowed} ) {
                             placeholder-transparent focus:outline-none focus:border-blue-500" 
                             placeholder=""/>
                             <label htmlFor="sign-in-email" 
-                            className="absolute bg-white px-1 left-1/5 peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 
+                            className="absolute bg-white px-1 left-1/5 cursor-text peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 
                             peer-focus:-top-2.5 peer-focus:text-blue-500 peer-focus:text-sm transition-all duration-200">
                                 Email
                             </label>
@@ -57,7 +57,7 @@ function SignIn( {isShowed} ) {
                             placeholder-transparent focus:outline-none focus:border-blue-500" 
                             placeholder=""/>
                             <label htmlFor="sign-in-password" 
-                            className="absolute bg-white px-1 left-1/5 peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 
+                            className="absolute bg-white px-1 left-1/5 cursor-text peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 
                             peer-focus:-top-2.5 peer-focus:text-blue-500 peer-focus:text-sm transition-all duration-200">
                                 Password
                             </label>
