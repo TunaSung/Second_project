@@ -15,7 +15,7 @@ import { Avatar } from 'antd';
 function Navbar() {
 
     // useState
-    const [isAuthon, setIsAution] = useState(true)
+    const [isAuthon, setIsAution] = useState(false)
     const [hoverIndex, setHoverIndex] = useState(null)
     const [isCartClicked, setIsCartClicked] = useState(false)
     const [search, setSearch] = useState("");

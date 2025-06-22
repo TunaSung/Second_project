@@ -106,8 +106,7 @@ function Product() {
 
     return (
         <div id="product-list-page" style={{ 
-                backgroundColor: "#D3D3D3",
-                backgroundImage: "linear-gradient(178deg,rgba(211, 211, 211, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(107, 142, 35, 1) 100%)"
+                background: "linear-gradient(178deg,rgba(211, 211, 211, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(107, 142, 35, 1) 100%)"
             }}>
 
             {/* start title */}
@@ -122,12 +121,15 @@ function Product() {
                     <button key={label.key} onClick={() => setClickIndex(label.key)} className={`border ${label.key === clickIndex ? `h-3/4 text-white text-2xl` : 'h-1/2'} 
                         w-[85%] transition-all duration-300 flex justify-self-center items-center justify-center rounded-t-xl font-bold border-b-0`}>
 
-                            <div className="absolute w-full h-full rounded-t-xl bg-cover-set transition-opacity duration-300"
+                            <img
+                            src={label.img}
                             loading="lazy"
-                            style={{ backgroundImage: `url(${label.img})`,
-                                opacity: label.key === clickIndex ? 1 : 0,
-                            }}
+                            className={`
+                                absolute w-full h-full rounded-t-xl object-cover transition-opacity duration-300
+                                ${label.key === clickIndex ? 'opacity-100' : 'opacity-0'}
+                            `}
                             />
+
 
                             <span className="relative z-10 text-shadow-sm">{label.title}</span>
                     </button>
@@ -181,7 +183,7 @@ function Product() {
                         >
                         <div className="w-full h-full flex group">
                             {/* start img */}
-                            <div className='w-full h-full rounded-2xl bg-[url("/imgs/kpop/aespa-karina-hot-mess.jpg")] bg-cover-set group-hover:w-1/2 group-hover:rounded-r-none transition-all duration-200 z-100' 
+                            <div className='w-full h-full rounded-2xl bg-[url("/imgs/kpop/aespa-karina-hot-mess2.jpg")] bg-cover-set group-hover:w-1/2 group-hover:rounded-r-none transition-all duration-200 z-100' 
                             loading="lazy"/>
                             {/* end img */}
 
@@ -220,8 +222,7 @@ function Product() {
                                         
                                         {/* start msg btn */}
                                         <button className="border w-8 px-2 aspect-square rounded-full scale-100 hover:scale-125 transition-all duration-200"
-                                        style={{background: '#0453ba',
-                                            background: 'linear-gradient(90deg,rgba(42, 123, 155, 1) 0%, rgba(87, 199, 133, 0.75) 50%, rgba(237, 221, 83, 1) 100%)'}}>
+                                        style={{background: 'linear-gradient(90deg,rgba(42, 123, 155, 1) 0%, rgba(87, 199, 133, 0.75) 50%, rgba(237, 221, 83, 1) 100%)'}}>
                                             <TiMessages className="absolute-mid text-xl"/>
                                         </button>
                                         {/* end msg btn */}

@@ -1,6 +1,6 @@
 import { FaPlus, FaMinus } from "react-icons/fa";
 
-function CardItem() {
+function CardItem( {title, quantity, price} ) {
 
     const hashTags = ["#GentlyUsed", "#XL", "#Fashion", "#Sale", "#Discount"];
 
@@ -16,7 +16,7 @@ function CardItem() {
                 {/* start info detail */}
                 <div className="flex justify-between gap-5">
                     <div className="flex flex-wrap">
-                        <p>Product name</p>
+                        <p>{title}</p>
                         <div className="mb-2 flex flex-wrap">
                             {hashTags.map((tag, index) => (
                                 <p
@@ -28,7 +28,7 @@ function CardItem() {
                             ))}
                         </div>
                     </div>
-                    <div className="">$999</div>
+                    <div className="">${quantity*price}</div>
                 </div>
                 {/* end info detail */}
                 
@@ -36,7 +36,7 @@ function CardItem() {
                 <div className="flex justify-between h-8">
                     <div className="border-b grid grid-cols-[1fr_2fr_1fr] w-18">
                         <span className="flex items-center justify-center text-xs"><FaMinus /></span>
-                        <span className="flex items-center justify-center font-bold">2</span>
+                        <span className="flex items-center justify-center font-bold">{quantity}</span>
                         <span className="flex items-center justify-center text-xs"><FaPlus /></span>
                     </div>
                     <p className="border-b flex self-end text-sm w-14 h-5">Remove</p>
