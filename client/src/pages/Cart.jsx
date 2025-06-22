@@ -4,7 +4,7 @@ import CardItem from "../components/Feature/CardItem";
 
 function Cart({ isClicked, setIsClicked }) {
     return (
-        <motion.div id="cart-page" className="fixed right-0 h-full grid grid-rows-[auto_1fr_auto] rounded-l-xl z-100 bg-[#FFFBEF] overflow-hidden transition-all duration-150"
+        <motion.div id="cart-page" className="fixed right-0 h-full grid grid-rows-[auto_1fr_auto] rounded-l-xl z-200 bg-[#FFFBEF] overflow-hidden transition-all duration-150"
         style={{ width: isClicked ? "30%" : "0%"}}>
 
             {/* start header */}
@@ -28,9 +28,6 @@ function Cart({ isClicked, setIsClicked }) {
             {/* start card items */}
             <div className="cart-container overflow-y-scroll cart-scroll mb-2">
                 <div className="h-full">
-                    <CardItem/>
-                    <CardItem/>
-                    <CardItem/>
                     <CardItem/>
                     <CardItem/>
                     <CardItem/>

@@ -15,6 +15,7 @@ import { Avatar } from 'antd';
 function Navbar() {
 
     // useState
+    const [isAuthon, setIsAution] = useState(true)
     const [hoverIndex, setHoverIndex] = useState(null)
     const [isCartClicked, setIsCartClicked] = useState(false)
     const [search, setSearch] = useState("");
@@ -94,14 +95,22 @@ function Navbar() {
                 {/* end nav middle */}
 
                 {/* start nav right (icon, search)*/}
-                <div className="grid grid-rows-2 gap-1 my-2">
-                    <div className="grid grid-cols-3 gap-2">
-                        <IoMdCart onClick={handleCartClick} className="flex self-center justify-self-center text-2xl cursor-pointer"/>
-                        <HiBellAlert className="flex self-center justify-self-center text-2xl cursor-pointer"/>
-                        <Link to={'/sign'} className="flex self-center justify-self-center text-2xl">
-                            <IoLogIn />
-                        </Link>
+                <div className="grid grid-rows-2 gap-1 w-full my-2">
+                    <div className="grid grid-cols-3 items-center w-full">
+                        <div className="h-full w-full flex justify-center items-center">
+                            <IoMdCart onClick={handleCartClick} className="text-2xl cursor-pointer"/>
+                        </div>
+                        <div className="col-start-3 h-full w-full flex justify-center items-center">
+                            {isAuthon ? <AvatarIcon/>
+                             :
+                            <Link to={'/sign'} className="text-2xl cursor-pointer">
+                                <IoLogIn/>
+                            </Link>
+                            }
+                            
+                        </div>
                     </div>
+                    
                     <form action="" className="h-full px-3 border-1 rounded-2xl flex items-center justify-center">
                         <input type="text" value={search} onChange={toggleSearch} className="w-full outline-none text-gray-600 placeholder-gray-400"/>
                         <button type="submit" className="flex justify-center items-center rounded-full">

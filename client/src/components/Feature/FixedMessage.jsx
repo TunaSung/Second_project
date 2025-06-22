@@ -17,6 +17,16 @@ function FixedMessage() {
         setIsClick(!isCLick)
     }
 
+    // aside example
+    const msgAside = [{key:1, sender:'Tuna', lastMsg:'I mis you❤️'},
+        {key:2, sender:'jnru', lastMsg:'Sorry, but I feel like you have an ulterior motive...'},
+        {key:3, sender:'辰', lastMsg:'今天去哪小魚'},
+        {key:4, sender:'晚餐吃甚麼', lastMsg:'ㄟ幹櫃哥只有3秒ㄝ'},
+        {key:5, sender:'IMkkkkarina', lastMsg:'spicy it, up, up, up, hold up'},
+        {key:6, sender:'winter123', lastMsg:"I'd appreciate it if you stayed away from my wife"},
+        {key:7, sender:'pyparty', lastMsg:'19:00👌'}
+    ]
+
     return(
         <motion.div className={`fixed right-15 bottom-15 z-100 border p-3 pb-4 overflow-hidden grid grid-cols-[auto_1fr]
                         ${isCLick ? "" : "hover:bg-blue-400 hover:text-white"} bg-gray-100 transition-all duration-200`}
@@ -27,56 +37,15 @@ function FixedMessage() {
             {/* start aside */}
             <motion.div className="h-[95%] w-50 rounded-l-xl overflow-y-scroll cart-scroll"
             style={{opacity: isCLick ? "100%" : 0}}>
-                <button className="w-full h-1/6 hover:bg-gray-300/70 flex items-center pl-2">
-                    <div className="w-10 aspect-square rounded-full border mr-2"></div>
-                    <div className="grid gird-rows-2">
-                        <p className="font-bold line-clamp-1 text-start">This is seller's name</p>
-                        <p className="text-gray-500 line-clamp-1 text-start">The last message</p>
-                    </div>
-                </button>
-                <button className="w-full h-1/6 hover:bg-gray-300/70 flex items-center pl-2">
-                    <div className="w-10 aspect-square rounded-full border mr-2"></div>
-                    <div className="grid gird-rows-2">
-                        <p className="font-bold line-clamp-1 text-start">This is seller's name</p>
-                        <p className="text-gray-500 line-clamp-1 text-start">The last message</p>
-                    </div>
-                </button>
-                <button className="w-full h-1/6 hover:bg-gray-300/70 flex items-center pl-2">
-                    <div className="w-10 aspect-square rounded-full border mr-2"></div>
-                    <div className="grid gird-rows-2">
-                        <p className="font-bold line-clamp-1 text-start">This is seller's name</p>
-                        <p className="text-gray-500 line-clamp-1 text-start">The last message</p>
-                    </div>
-                </button>
-                <button className="w-full h-1/6 hover:bg-gray-300/70 flex items-center pl-2">
-                    <div className="w-10 aspect-square rounded-full border mr-2"></div>
-                    <div className="grid gird-rows-2">
-                        <p className="font-bold line-clamp-1 text-start">This is seller's name</p>
-                        <p className="text-gray-500 line-clamp-1 text-start">The last message</p>
-                    </div>
-                </button>
-                <button className="w-full h-1/6 hover:bg-gray-300/70 flex items-center pl-2">
-                    <div className="w-10 aspect-square rounded-full border mr-2"></div>
-                    <div className="grid gird-rows-2">
-                        <p className="font-bold line-clamp-1 text-start">This is seller's name</p>
-                        <p className="text-gray-500 line-clamp-1 text-start">The last message</p>
-                    </div>
-                </button>
-                <button className="w-full h-1/6 hover:bg-gray-300/70 flex items-center pl-2">
-                    <div className="w-10 aspect-square rounded-full border mr-2"></div>
-                    <div className="grid gird-rows-2">
-                        <p className="font-bold line-clamp-1 text-start">This is seller's name</p>
-                        <p className="text-gray-500 line-clamp-1 text-start">The last message</p>
-                    </div>
-                </button>
-                <button className="w-full h-1/6 hover:bg-gray-300/70 flex items-center pl-2">
-                    <div className="w-10 aspect-square rounded-full border mr-2"></div>
-                    <div className="grid gird-rows-2">
-                        <p className="font-bold line-clamp-1 text-start">This is seller's name</p>
-                        <p className="text-gray-500 line-clamp-1 text-start">The last message</p>
-                    </div>
-                </button>
-                
+                {msgAside.map((item) => (
+                    <button key={item.key} className="w-full h-1/6 hover:bg-gray-300/70 flex items-center pl-2">
+                        <div className="w-10 aspect-square rounded-full border mr-2"/>
+                        <div className="grid gird-rows-2 w-full">
+                            <p className="font-bold line-clamp-1 text-start">{item.sender}</p>
+                            <p className="text-gray-500 line-clamp-1 text-start">{item.lastMsg}</p>
+                        </div>
+                    </button>
+                ))}  
             </motion.div>
             {/* end aside */}
 
