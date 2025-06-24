@@ -19,7 +19,7 @@ function Sign() {
     }
 
     return (
-        <div className="h-[90vh] w-full grid grid-cols-2 items-center justify-center mt-20 bg-linear-[90deg,[#fef6e4]_0%,[#c3ddfa]_33%,[#e1ecf8]_66%,[#fef6e4]]"
+        <div className="h-[90vh] w-full grid grid-cols-2 items-center justify-center mt-20 bg-linear-[90deg,[#fef6e4]_0%,[#c3ddfa]_33%,[#e1ecf8]_66%,[#fef6e4]] overflow-hidden"
         style={{
             background: "linear-gradient(90deg,#fef6e4 0%,#f8e1f4 40%,#e1ecf8 60%,#fef6e4 100%)"
         }}>

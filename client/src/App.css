@@ -137,7 +137,7 @@ Conponent
 
     /* 調整寬(直)高(橫) */
     .cart-scroll::-webkit-scrollbar { 
-        width: 10px;            /* scroll bar 寬度 */
+        width: 6px;            /* scroll bar 寬度 */
     }
 
     /* 調整滑軌道 */

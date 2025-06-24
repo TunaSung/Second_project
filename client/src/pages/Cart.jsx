@@ -9,6 +9,8 @@ import CardItem from "../components/Feature/CardItem";
         { key: 5, title: "Linen Shirt Dress", quantity: 2, price: 1390 }
     ]
 
+    const subTotal = cartItems.reduce((sum, item) => sum+(item.quantity*item.price),0)
+
 function Cart({ isClicked, setIsClicked }) {
     return (
         <motion.div id="cart-page" className="fixed right-0 h-full grid grid-rows-[auto_1fr_auto] rounded-l-xl z-200 bg-[#FFFBEF] overflow-hidden transition-all duration-150"
@@ -48,7 +50,7 @@ function Cart({ isClicked, setIsClicked }) {
                 {/* start subtotal */}
                 <div className="flex w-full justify-between text-lg mb-2">
                     <p>Subtotal</p>
-                    <p>$999</p>
+                    <p>${subTotal}</p>
                 </div>
                 {/* end subtotal */}
 
