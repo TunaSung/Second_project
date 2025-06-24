@@ -46,7 +46,7 @@ function Home() {
     }
 
     return (
-        <div id="home-page">
+        <div id="home-page" className="overflow-hidden">
 
             {/* start kpop swiper */}
             <Swiper

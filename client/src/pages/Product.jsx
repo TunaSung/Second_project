@@ -198,11 +198,11 @@ function Product() {
                                 <div className="mb-2 flex flex-wrap">
                                     {hashTags.map((tag, index) => (
                                         <p
-                                        key={index}
-                                        className="text-xs inline px-1 rounded-3xl border bg-gray-300 mr-1"
-                                        >
-                                        {tag}
-                                    </p>
+                                            key={index}
+                                            className="text-xs inline px-1 rounded-3xl border bg-gray-300 mr-1"
+                                            >
+                                            {tag}
+                                        </p>
                                     ))}
                                 </div>
                                 {/* end hashtags */}
