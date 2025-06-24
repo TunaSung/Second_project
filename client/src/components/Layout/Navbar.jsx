@@ -15,7 +15,7 @@ import { Avatar } from 'antd';
 function Navbar() {
 
     // useState
-    const [isAuthon, setIsAution] = useState(false)
+    const [isAuthon, setIsAution] = useState(true)
     const [hoverIndex, setHoverIndex] = useState(null)
     const [isCartClicked, setIsCartClicked] = useState(false)
     const [search, setSearch] = useState("");
@@ -46,7 +46,11 @@ function Navbar() {
     return(
         <nav className="w-full h-20 fixed top-0 right-0 bg-blue-200 z-110">
 
+            {/* start cart */}
             <Cart isClicked={isCartClicked} setIsClicked={setIsCartClicked}/>
+            {/* end cart */}
+
+
             <div className="container-mid h-full grid grid-cols-[1fr_4fr_1fr] justify-center gap-rwd px-2">
 
                 {/* start nav left (logo)*/}
@@ -101,7 +105,7 @@ function Navbar() {
                             <IoMdCart onClick={handleCartClick} className="text-2xl cursor-pointer"/>
                         </div>
                         <div className="col-start-3 h-full w-full flex justify-center items-center">
-                            {isAuthon ? <AvatarIcon/>
+                            {isAuthon ? <AvatarIcon isAuthon={isAuthon} setIsAution={setIsAution}/>
                              :
                             <Link to={'/sign'} className="text-2xl cursor-pointer">
                                 <IoLogIn/>
