@@ -9,6 +9,8 @@ import 'ldrs/dotStream'
 const Home = lazy(() => import('./pages/Home')); 
 const Product = lazy(() => import('./pages/Product'));
 const Sign = lazy(() => import('./pages/Sign'))
+const Personal = lazy(() => import('./pages/Personal'))
+const MyShop = lazy(() => import('./pages/MyShop'))
 
 function App() {
 
@@ -38,6 +40,8 @@ function App() {
           <Route path="/" element={<Home />}/>
           <Route path="/product" element={<Product />}/>
           <Route path="/sign" element={<Sign />}/>
+          <Route path="/personal" element={<Personal />}/>
+          <Route path="/my-shop" element={<MyShop />}/>
         </Routes>
       </Suspense>
       <Footer/>
