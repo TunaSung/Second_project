@@ -63,17 +63,17 @@ function AvatarIcon({setIsAution}){
                 style={{opacity: isOpen ? 100 : 0}}>
                     <div className='w-full text-center cursor-default mb-1'>Hi~ Tuna</div>
 
-                    <Link to='/personal' className='block w-full py-2 text-center hover:bg-gray-300'
+                    <Link to='/personal' className='block w-full py-2 text-center hover:bg-gray-300 hover:text-white'
                     onClick={() => setIsOpen(!isOpen)}>
-                        Profile
+                        My Account
                     </Link>
 
-                    <Link to={'/my-shop'} className='block w-full py-2 text-center hover:bg-gray-300' 
+                    <Link to={'/my-shop'} className='block w-full py-2 text-center hover:bg-gray-300 hover:text-white' 
                     onClick={() => setIsOpen(!isOpen)}>
                         My Shop
                     </Link>
                     
-                    <Link to={'/'} className='block w-full py-2 text-center hover:bg-red-300' 
+                    <Link to={'/'} className='block w-full py-2 text-center hover:bg-red-300 hover:text-white' 
                     onClick={handleLogout}>
                         Logout
                     </Link>
