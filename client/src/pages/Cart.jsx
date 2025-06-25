@@ -13,7 +13,7 @@ import CardItem from "../components/Feature/CardItem";
 
 function Cart({ isClicked, setIsClicked }) {
     return (
-        <motion.div id="cart-page" className="fixed right-0 h-full grid grid-rows-[auto_1fr_auto] rounded-l-xl z-200 bg-[#FFFBEF] overflow-hidden transition-all duration-150"
+        <motion.div id="cart-page" className="fixed right-0 h-full grid grid-rows-[auto_1fr_auto] rounded-l-xl z-200 bg-[#ded7c1] overflow-hidden transition-all duration-150"
         style={{ width: isClicked ? "30%" : "0%"}}>
 
             {/* start header */}
@@ -22,7 +22,7 @@ function Cart({ isClicked, setIsClicked }) {
                     {/* start title & quantity */}
                     <div className="flex">
                         <h1 className="text-5xl indie-flower-regular mr-3 font-bold">Your Cart</h1>
-                        <p className="rounded-3xl text-xs h-lh py-3 px-4 font-bold bg-[#E5ECD1] flex items-center justify-center">{cartItems.length} items</p>
+                        <p className="rounded-3xl text-xs h-lh py-3 px-4 font-bold bg-[#adbe7e] flex items-center justify-center">{cartItems.length} items</p>
                     </div>
                     {/* end title & quantity */}
 
@@ -45,7 +45,7 @@ function Cart({ isClicked, setIsClicked }) {
             {/* end card items */}
 
             {/* start checkout */}
-            <div className="cart-container flex-col bg-[#F7EEDE] rounded-t-3xl rounded-bl-xl py-8">
+            <div className="cart-container flex-col bg-[#dcc59e] rounded-t-3xl rounded-bl-xl py-8">
 
                 {/* start subtotal */}
                 <div className="flex w-full justify-between text-lg mb-2">
@@ -55,7 +55,7 @@ function Cart({ isClicked, setIsClicked }) {
                 {/* end subtotal */}
 
                 {/* start check out btn */}
-                <button className="w-full text-lg text-white rounded-lg py-2 bg-[#e1c99f] border-white border-3 hover:bg-[#FFDEA3] hover:border-gray-400 hover:text-black transition-all duration-200">
+                <button className="w-full text-lg text-white rounded-lg py-2 bg-[#ac8b54] border-white border-3 hover:bg-[#f1d5a5] hover:border-gray-400 hover:text-black transition-all duration-200">
                     Check out
                 </button>
                 {/* end check out btn */}
