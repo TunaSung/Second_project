@@ -34,10 +34,11 @@ function SignIn( {isShowed} ) {
                             onChange={(e) => {setEmail(e.target.value)}}
                             className="peer border px-2 h-full rounded-xl 
                             placeholder-transparent focus:outline-none focus:border-blue-500" 
-                            placeholder=""/>
+                            placeholder=" "/>
                             <label htmlFor="sign-in-email" 
-                            className="absolute bg-white px-1 left-1/5 cursor-text peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 
-                            peer-focus:-top-2.5 peer-focus:text-blue-500 peer-focus:text-sm transition-all duration-200">
+                            className="absolute bg-white px-1 left-1/5 cursor-text  transition-all duration-200 peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 
+                            peer-focus:-top-2.5 peer-focus:text-blue-500 peer-focus:text-sm peer-not-placeholder-shown:-top-2.5 peer-not-placeholder-shown:text-sm"
+                            >
                                 Email
                             </label>
                         </div>
@@ -57,8 +58,9 @@ function SignIn( {isShowed} ) {
                             placeholder-transparent focus:outline-none focus:border-blue-500" 
                             placeholder=""/>
                             <label htmlFor="sign-in-password" 
-                            className="absolute bg-white px-1 left-1/5 cursor-text peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 
-                            peer-focus:-top-2.5 peer-focus:text-blue-500 peer-focus:text-sm transition-all duration-200">
+                            className="absolute bg-white px-1 left-1/5 cursor-text  transition-all duration-200 peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 
+                            peer-focus:-top-2.5 peer-focus:text-blue-500 peer-focus:text-sm peer-not-placeholder-shown:-top-2.5 peer-not-placeholder-shown:text-sm"
+                            >
                                 Password
                             </label>
                         </div>

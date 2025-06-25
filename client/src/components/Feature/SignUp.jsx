@@ -11,8 +11,11 @@ import { MdOutlinePhone } from "react-icons/md";
 function SignUp( {isShowed} ) {
 
     // useState
+    const [username, setUsername] = useState("");
+    const [phoneNumber, setPhoneNumber] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [confirm, setConfirm] = useState("");
     const [error, setError] = useState("");
     
     return(
@@ -29,14 +32,15 @@ function SignUp( {isShowed} ) {
                             <input 
                             type="text"
                             id="username"
-                            value={email} 
-                            onChange={(e) => {setEmail(e.target.value)}}
+                            value={username} 
+                            onChange={(e) => {setUsername(e.target.value)}}
                             className="peer border px-2 h-full rounded-xl 
                             placeholder-transparent focus:outline-none focus:border-blue-500" 
                             placeholder=""/>
                             <label htmlFor="username" 
-                            className="absolute bg-white px-1 left-1/5 cursor-text peer-placeholder-shown:top-2.5 peer-placeholder-shown:text-gray-400 
-                            peer-focus:-top-2.5 peer-focus:text-blue-500 peer-focus:text-sm transition-all duration-200">
+                            className="absolute bg-white px-1 left-1/5 cursor-text  transition-all duration-200 peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 
+                            peer-focus:-top-2.5 peer-focus:text-blue-500 peer-focus:text-sm peer-not-placeholder-shown:-top-2.5 peer-not-placeholder-shown:text-sm"
+                            >
                                 Username
                             </label>
                         </div>
@@ -50,14 +54,15 @@ function SignUp( {isShowed} ) {
                             <input 
                             type="text"
                             id="phone-number"
-                            value={email} 
-                            onChange={(e) => {setEmail(e.target.value)}}
+                            value={phoneNumber} 
+                            onChange={(e) => {setPhoneNumber(e.target.value)}}
                             className="peer border px-2 h-full rounded-xl 
                             placeholder-transparent focus:outline-none focus:border-blue-500" 
                             placeholder=""/>
                             <label htmlFor="phone-number" 
-                            className="absolute bg-white left-1/5 cursor-text peer-placeholder-shown:top-2.5 peer-placeholder-shown:text-gray-400 
-                            peer-focus:-top-2.5 peer-focus:text-blue-500 peer-focus:text-sm transition-all duration-200">
+                            className="absolute bg-white px-1 left-1/5 cursor-text  transition-all duration-200 peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 
+                            peer-focus:-top-2.5 peer-focus:text-blue-500 peer-focus:text-sm peer-not-placeholder-shown:-top-2.5 peer-not-placeholder-shown:text-sm"
+                            >
                                 Phone number
                             </label>
                         </div>
@@ -77,8 +82,9 @@ function SignUp( {isShowed} ) {
                             placeholder-transparent focus:outline-none focus:border-blue-500" 
                             placeholder=""/>
                             <label htmlFor="sign-up-email" 
-                            className="absolute bg-white px-1 left-1/5 cursor-text peer-placeholder-shown:top-2.5 peer-placeholder-shown:text-gray-400 
-                            peer-focus:-top-2.5 peer-focus:text-blue-500 peer-focus:text-sm transition-all duration-200">
+                            className="absolute bg-white px-1 left-1/5 cursor-text  transition-all duration-200 peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 
+                            peer-focus:-top-2.5 peer-focus:text-blue-500 peer-focus:text-sm peer-not-placeholder-shown:-top-2.5 peer-not-placeholder-shown:text-sm"
+                            >
                                 Email
                             </label>
                         </div>
@@ -98,8 +104,9 @@ function SignUp( {isShowed} ) {
                             placeholder-transparent focus:outline-none focus:border-blue-500" 
                             placeholder=""/>
                             <label htmlFor="sign-up-password" 
-                            className="absolute bg-white px-1 left-1/5 cursor-text peer-placeholder-shown:top-2.5 peer-placeholder-shown:text-gray-400 
-                            peer-focus:-top-2.5 peer-focus:text-blue-500 peer-focus:text-sm transition-all duration-200">
+                            className="absolute bg-white px-1 left-1/5 cursor-text  transition-all duration-200 peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 
+                            peer-focus:-top-2.5 peer-focus:text-blue-500 peer-focus:text-sm peer-not-placeholder-shown:-top-2.5 peer-not-placeholder-shown:text-sm"
+                            >
                                 Password
                             </label>
                         </div>
@@ -113,14 +120,15 @@ function SignUp( {isShowed} ) {
                             <input 
                             type="password" 
                             id="confirm-password"
-                            value={password}
-                            onChange={(e) => {setPassword(e.target.value)}} 
+                            value={confirm}
+                            onChange={(e) => {setConfirm(e.target.value)}} 
                             className="peer border px-2 h-full rounded-xl 
                             placeholder-transparent focus:outline-none focus:border-blue-500" 
                             placeholder=""/>
                             <label htmlFor="confirm-password" 
-                            className="absolute bg-white px-1 left-1/5 cursor-text peer-placeholder-shown:top-2.5 peer-placeholder-shown:text-gray-400 
-                            peer-focus:-top-2.5 peer-focus:text-blue-500 peer-focus:text-sm transition-all duration-200">
+                            className="absolute bg-white px-1 left-1/5 cursor-text  transition-all duration-200 peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 
+                            peer-focus:-top-2.5 peer-focus:text-blue-500 peer-focus:text-sm peer-not-placeholder-shown:-top-2.5 peer-not-placeholder-shown:text-sm"
+                            >
                                 Confirm
                             </label>
                         </div>
