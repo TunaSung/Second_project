@@ -1,8 +1,9 @@
 import './App.css'
+import NavbarFixed from './components/Layout/NavbarFixed'
 import Navbar from './components/Layout/Navbar'
 import Footer from './components/Layout/Footer'
 import FixedMessage from './components/Feature/FixedMessage'
-import { useState, useEffect, lazy, Suspense} from 'react'
+import { useState, useEffect, lazy, Suspense, location} from 'react'
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom"; 
 import 'ldrs/dotStream'
 
@@ -11,6 +12,17 @@ const Product = lazy(() => import('./pages/Product'));
 const Sign = lazy(() => import('./pages/Sign'))
 const Personal = lazy(() => import('./pages/Personal'))
 const MyShop = lazy(() => import('./pages/MyShop'))
+
+function DynamicNavbar() { 
+  const location = useLocation();
+
+  const [isAuthon, setIsAution] = useState(true)
+  
+  if (location.pathname === "/" || location.pathname === "/sign") {
+    return <NavbarFixed isAuthon={isAuthon} setIsAution={setIsAution} />;
+  }
+  return <Navbar isAuthon={isAuthon} setIsAution={setIsAution}/>;
+}
 
 function App() {
 
@@ -28,7 +40,7 @@ function App() {
     <Router>
       <ScrollToTop/>
       <FixedMessage/>
-      <Navbar />
+      <DynamicNavbar />
       <Suspense fallback={<div className="w-full h-[50vh] flex items-center justify-center text-center my-60"> 
                             <l-dot-stream
                             size="60"
