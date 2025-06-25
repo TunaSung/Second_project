@@ -9,7 +9,7 @@ import { IoLogIn, IoSearch } from "react-icons/io5";
 import AvatarIcon from "../Feature/AvatarIcon";
 
 
-function Navbar({isAuthon, setIsAution}) {
+function Navbar( {isAuthon, setIsAution} ) {
 
     // useState
     const [hoverIndex, setHoverIndex] = useState(null)
@@ -40,7 +40,7 @@ function Navbar({isAuthon, setIsAution}) {
 
 
     return(
-        <nav className="w-full h-20 absolute top-0 right-0 bg-blue-200 z-110">
+        <nav className="w-full h-20 fixed top-0 right-0 bg-blue-200 z-110">
 
             {/* start cart */}
             <Cart isClicked={isCartClicked} setIsClicked={setIsCartClicked}/>
