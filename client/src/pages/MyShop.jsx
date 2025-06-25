@@ -1,5 +1,8 @@
+import { useState } from "react";
+import { motion } from "framer-motion";
 // UI
 import ShopItem from "../components/Feature/ShopItem";
+import { MdClose } from "react-icons/md";
 
 // item example
 const items = [
@@ -54,11 +57,85 @@ const items = [
 ];
 
 function ProductInput() {
+
+    const [fileNames, setFileNames] = useState([])
+    const [isAddProductOpen, setIsAddProductOpen] = useState(false)
+
+    const handleChange = (e) => {
+        setFileNames([])
+        const file = Array.from(e.target.files)
+        setFileNames(file)
+
+    }
     return (
         <div className="">
+            
+            {/* Start add product */}
+            <motion.div className="fixed-mid p-4 w-120 aspect-square border z-200 bg-white rounded-2xl"
+            animate={{scale: isAddProductOpen ? [0, 1.1, 0.9, 1] : [1, 0],
+                opacity: isAddProductOpen ? [0, 1] : [0, 0]
+            }}
+            transition={{
+                scale: {duration: 0.8, times: [0, 0.7, 0.85, 1], ease: 'easeInOut'},
+                opacity: {duration: 0.6}
+            }}
+            >
+                
+                <form className="w-full h-full border p-3 flex flex-col justify-center items-center rounded-xl">
+                    <MdClose onClick={() => setIsAddProductOpen(false)} className="absolute right-3 top-3 scale-150 hover:text-red-500 transition-all duration-250 cursor-pointer"
+
+                    />
+                    <div className="mb-8 flex flex-col justify-center items-center">
+                        <label htmlFor="file-input"
+                            className="px-4 py-2 border rounded cursor-pointer"
+                        >
+                            選擇檔案
+                        </label>
+                        {fileNames.length > 0 && (
+                            <ul className="mt-4 h-10 space-x-1 text-gray-700 overflow-y-auto">
+                            {fileNames.map((file, idx) => (
+                                <li key={idx}>{file.name}</li>   // 用 file.name 顯示檔名
+                            ))}
+                            </ul>
+                        )}
+                        <input
+                            id="file-input"
+                            type="file"
+                            className="hidden"
+                            onChange={handleChange}
+                            multiple
+                            required
+                        />
+                        {/* <input type="file" id="avatar" accept="image/*" className="p-1 border" required /> */}
+                    </div>
+
+                    <div className="grid grid-cols-2">
+
+                        <div className="flex flex-col gap-rwd">
+                            <label htmlFor="title">Name: </label>
+                            <label htmlFor="price">Price: </label>
+                            <label htmlFor="stock">Stock: </label>
+                            <label htmlFor="hashtag">Hashtag: </label>
+                        </div>
+
+                        <div className="flex flex-col gap-rwd">
+                            <input type="text" id="title" className="border"/>
+                            <input type="text" id="price" className="border"/>
+                            <input type="number" id="stock" className="border"/>
+                            <input type="text" id="hashtag" className="border"/>
+                        </div>
+                    </div>
+                    <button type="submit" onClick={() => setIsAddProductOpen(false)} className="mt-10 border py-2 px-6 rounded-2xl">Add to shop</button>
+
+
+                
+                
+                </form>
+            </motion.div>
+            {/* End add product */}
 
             {/* Start title */}
-            <div className="border-b p-4 pt-35 flex justify-self-center">
+            <div className="border-b p-4 mt-35 flex justify-self-center">
                 <h1 className="text-5xl font-bold indie-flower-regular">My Shop</h1>
             </div>
             {/* End title */}
@@ -74,19 +151,19 @@ function ProductInput() {
 
                     {/* Start btn */}
                     <div className="w-full h-20 grid grid-cols-4 gap-5">
-                        <button className="rounded-2xl hover:bg-gray-100 transition-colors duration-250">
+                        <button className="rounded-2xl hover:bg-gray-300 transition-colors duration-250">
                             <p className="font-bold text-xl text-blue-600 mb-1">0</p>
                             <p className="text-xs">To-Process Shipment</p>
                         </button>
-                        <button className="rounded-2xl hover:bg-gray-100 transition-colors duration-250">
+                        <button className="rounded-2xl hover:bg-gray-300 transition-colors duration-250">
                             <p className="font-bold text-xl text-blue-600 mb-1">0</p>
                             <p className="text-xs">Processed Shipment</p>
                         </button>
-                        <button className="rounded-2xl hover:bg-gray-100 transition-colors duration-250">
+                        <button className="rounded-2xl hover:bg-gray-300 transition-colors duration-250">
                             <p className="font-bold text-xl text-blue-600 mb-1">0</p>
                             <p className="text-xs">Return/Refund/Cancel</p>
                         </button>
-                        <button className="rounded-2xl hover:bg-gray-100 transition-colors duration-250">
+                        <button className="rounded-2xl hover:bg-gray-300 transition-colors duration-250">
                             <p className="font-bold text-xl text-blue-600 mb-1">0</p>
                             <p className="text-xs">Banned / Deboosted Products</p>
                         </button>
@@ -113,7 +190,7 @@ function ProductInput() {
                     <div className="text-center">Sale</div>
                     <div className="text-center">Stock</div>
                     <div className="text-center">Hashtag</div>
-                    <button className="text-center hover:text-green-400">Add product</button>
+                    <button onClick={() => setIsAddProductOpen(true)} className="text-center hover:text-green-400">Add product</button>
                 </div>
                 {/* End subtitle */}
 
