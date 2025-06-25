@@ -19,10 +19,8 @@ function Sign() {
     }
 
     return (
-        <div className="h-[90vh] w-full grid grid-cols-2 items-center justify-center mt-20 bg-linear-[90deg,[#fef6e4]_0%,[#c3ddfa]_33%,[#e1ecf8]_66%,[#fef6e4]] overflow-hidden"
-        style={{
-            background: "linear-gradient(90deg,#fef6e4 0%,#f8e1f4 40%,#e1ecf8 60%,#fef6e4 100%)"
-        }}>
+        <div className="h-[90vh] w-full grid grid-cols-2 items-center justify-center mt-20 overflow-hidden"
+        style={{backgroundImage: "linear-gradient(90deg,#fef6e4 0%, #EBA7C9 33%, #9FD6ED 66%, #fef6e4 100%)"}}>
 
             {/* start go sign in*/}
             <motion.div className="absolute grid grid-cols-2 h-full w-full z-90 -right-1/2 transition-all duration-500"
@@ -52,8 +50,8 @@ function Sign() {
                     
                     {/* start btn */}
                     <button className="w-40 h-20 border-2 border-gray-500 rounded-xl opacity-85 group text-2xl font-bold pacifico-regular
-                    bg-gradient-to-r from-[#fef6e4] via-[#f8e1f4] to-[#d7eaff] drop-shadow-[3px_3px_3px_rgba(0,0,0,0.8)]
-                    hover:opacity-100 hover:border-pink-400 hover:scale-110 hover:text-pink-500 transition-all duration-250"
+                    bg-gradient-to-r from-[#fef6e4] via-[#c584ba] to-[#6da0db] drop-shadow-[3px_3px_3px_rgba(0,0,0,0.8)]
+                    hover:opacity-100 hover:border-pink-400 hover:scale-110 hover:text-pink-600 transition-all duration-250"
                     onClick={toggleSignChange}
                     >
                         Go Sign Up
@@ -92,8 +90,8 @@ function Sign() {
 
                     {/* start btn */}
                     <button className="w-40 h-20 border-2 border-gray-500 rounded-xl opacity-85 group text-2xl font-bold pacifico-regular
-                    bg-gradient-to-r from-[#fef6e4] via-[#e1ecf8] to-[#c3ddfa] drop-shadow-[3px_3px_3px_rgba(0,0,0,0.8)]
-                    hover:opacity-100 hover:border-sky-400 hover:scale-110 hover:text-sky-600 transition-all duration-250"
+                    bg-gradient-to-br from-[#fef6e4] via-[#599be2] to-[#e487ce] drop-shadow-[3px_3px_3px_rgba(0,0,0,0.8)]
+                    hover:opacity-100 hover:border-sky-400 hover:scale-110 hover:text-sky-900 transition-all duration-250"
                     onClick={toggleSignChange}
                     >
                         Go Sign In
