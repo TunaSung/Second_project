@@ -68,7 +68,7 @@ function ProductInput() {
 
     }
     return (
-        <div className="">
+        <div className="pt-30">
             
             {/* Start add product */}
             <motion.div className="fixed-mid p-4 w-120 aspect-square border z-200 bg-white rounded-2xl"
@@ -135,7 +135,7 @@ function ProductInput() {
             {/* End add product */}
 
             {/* Start title */}
-            <div className="border-b p-4 mt-35 flex justify-self-center">
+            <div className="border-b p-4 flex justify-self-center">
                 <h1 className="text-5xl font-bold indie-flower-regular">My Shop</h1>
             </div>
             {/* End title */}
