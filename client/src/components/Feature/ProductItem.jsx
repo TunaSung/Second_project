@@ -24,24 +24,30 @@ function ProductItem( {product} ){
         setIsAnimating(true);
 
         await controlAddSvg.start({
-        height: ['40px', '120px', '40px'],
-        opacity: [0, 1, 0],
-        transition: { duration: 0.8 }
+            height: ["40px", "120px", "40px"],
+            opacity: [0, 1, 1, 0],
+            transition: {
+                height: { duration: 0.5 },
+                opacity: { duration: 0.5, ease: "easeOut", times:[0, 0.2, 0.8, 1] },
+            }
         });
 
         await Promise.all([
         controlAddCart.start({
-            rotate: [0, -30, 30, 0],
-            color: ['#fff', '#03A609', '#03A609', '#fff'],
-            transition: { duration: 1.2 }
+            color: ["#ffffff", "#03A609", "#03A609", "#ffffff"],
+            rotate: [0, -30, 30 ,0],
+            transition: {
+                rotate: { duration: 1 },
+                color: { duration: 1.5, times: [0, 0.21, 0.8, 1] }
+            }
         }),
         controlAddBtn.start({
-            backgroundColor: ['#03A609', '#fff', '#03A609'],
-            transition: { duration: 1.2 }
+            backgroundColor: ["#03A609", "#ffffff", "#ffffff", "#03A609"],
+            transition: { duration: 1.5, times: [0, 0.2, 0.8, 1] }
         }),
         controlAddText.start({
-            color: ['#fff', '#03A609', '#fff'],
-            transition: { duration: 1.2 }
+            color: ["#ffffff", "#03A609", "#03A609", "#ffffff"],
+                transition: { duration: 1.5, times: [0, 0.2, 0.8, 1] }
         })
         ]);
 
