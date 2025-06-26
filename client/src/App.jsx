@@ -3,7 +3,7 @@ import NavbarFixed from './components/Layout/NavbarFixed'
 import Navbar from './components/Layout/Navbar'
 import Footer from './components/Layout/Footer'
 import FixedMessage from './components/Feature/FixedMessage'
-import { useState, useEffect, lazy, Suspense, location} from 'react'
+import { useState, useEffect, lazy, Suspense } from 'react'
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom"; 
 import 'ldrs/dotStream'
 
@@ -18,7 +18,7 @@ function DynamicNavbar() {
 
   const [isAuthon, setIsAution] = useState(true)
   
-  if (location.pathname === "/" || location.pathname === "/sign") {
+  if (location.pathname === "/" || location.pathname === "/sign" || location.pathname === "/personal") {
     return <NavbarFixed isAuthon={isAuthon} setIsAution={setIsAution} />;
   }
   return <Navbar isAuthon={isAuthon} setIsAution={setIsAution}/>;
