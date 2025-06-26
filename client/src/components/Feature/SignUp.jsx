@@ -38,7 +38,7 @@ function SignUp( {isShowed} ) {
                             placeholder-transparent focus:outline-none focus:border-blue-500" 
                             placeholder=""/>
                             <label htmlFor="username" 
-                            className="absolute bg-white px-1 left-1/5 cursor-text  transition-all duration-200 peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 
+                            className="absolute bg-white px-1 left-1/5 cursor-text transition-all duration-200 peer-placeholder-shown:top-2.5 peer-placeholder-shown:text-gray-400 
                             peer-focus:-top-2.5 peer-focus:text-blue-500 peer-focus:text-sm peer-not-placeholder-shown:-top-2.5 peer-not-placeholder-shown:text-sm"
                             >
                                 Username
@@ -60,7 +60,7 @@ function SignUp( {isShowed} ) {
                             placeholder-transparent focus:outline-none focus:border-blue-500" 
                             placeholder=""/>
                             <label htmlFor="phone-number" 
-                            className="absolute bg-white px-1 left-1/5 cursor-text  transition-all duration-200 peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 
+                            className="absolute bg-white px-1 left-1/5 cursor-text  transition-all duration-200 peer-placeholder-shown:top-2.5 peer-placeholder-shown:text-gray-400 
                             peer-focus:-top-2.5 peer-focus:text-blue-500 peer-focus:text-sm peer-not-placeholder-shown:-top-2.5 peer-not-placeholder-shown:text-sm"
                             >
                                 Phone number
@@ -82,7 +82,7 @@ function SignUp( {isShowed} ) {
                             placeholder-transparent focus:outline-none focus:border-blue-500" 
                             placeholder=""/>
                             <label htmlFor="sign-up-email" 
-                            className="absolute bg-white px-1 left-1/5 cursor-text  transition-all duration-200 peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 
+                            className="absolute bg-white px-1 left-1/5 cursor-text  transition-all duration-200 peer-placeholder-shown:top-2.5 peer-placeholder-shown:text-gray-400 
                             peer-focus:-top-2.5 peer-focus:text-blue-500 peer-focus:text-sm peer-not-placeholder-shown:-top-2.5 peer-not-placeholder-shown:text-sm"
                             >
                                 Email
@@ -104,7 +104,7 @@ function SignUp( {isShowed} ) {
                             placeholder-transparent focus:outline-none focus:border-blue-500" 
                             placeholder=""/>
                             <label htmlFor="sign-up-password" 
-                            className="absolute bg-white px-1 left-1/5 cursor-text  transition-all duration-200 peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 
+                            className="absolute bg-white px-1 left-1/5 cursor-text  transition-all duration-200 peer-placeholder-shown:top-2.5 peer-placeholder-shown:text-gray-400 
                             peer-focus:-top-2.5 peer-focus:text-blue-500 peer-focus:text-sm peer-not-placeholder-shown:-top-2.5 peer-not-placeholder-shown:text-sm"
                             >
                                 Password
@@ -126,7 +126,7 @@ function SignUp( {isShowed} ) {
                             placeholder-transparent focus:outline-none focus:border-blue-500" 
                             placeholder=""/>
                             <label htmlFor="confirm-password" 
-                            className="absolute bg-white px-1 left-1/5 cursor-text  transition-all duration-200 peer-placeholder-shown:top-3 peer-placeholder-shown:text-gray-400 
+                            className="absolute bg-white px-1 left-1/5 cursor-text  transition-all duration-200 peer-placeholder-shown:top-2.5 peer-placeholder-shown:text-gray-400 
                             peer-focus:-top-2.5 peer-focus:text-blue-500 peer-focus:text-sm peer-not-placeholder-shown:-top-2.5 peer-not-placeholder-shown:text-sm"
                             >
                                 Confirm

@@ -89,7 +89,7 @@ function ProductInput() {
                         <label htmlFor="file-input"
                             className="px-4 py-2 border rounded cursor-pointer"
                         >
-                            選擇檔案
+                            Select Image
                         </label>
                         {fileNames.length > 0 && (
                             <ul className="mt-4 h-10 space-x-1 text-gray-700 overflow-y-auto">
@@ -126,10 +126,6 @@ function ProductInput() {
                         </div>
                     </div>
                     <button type="submit" onClick={() => setIsAddProductOpen(false)} className="mt-10 border py-2 px-6 rounded-2xl">Add to shop</button>
-
-
-                
-                
                 </form>
             </motion.div>
             {/* End add product */}
