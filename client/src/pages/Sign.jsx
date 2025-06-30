@@ -19,7 +19,7 @@ function Sign() {
     }
 
     return (
-        <div className="h-[90vh] w-full grid grid-cols-2 items-center justify-center mt-20 overflow-hidden"
+        <div className="h-[90vh] w-full grid grid-cols-2 items-center justify-center overflow-hidden"
         style={{backgroundImage: "linear-gradient(90deg,#fef6e4 0%, #EBA7C9 33%, #9FD6ED 66%, #fef6e4 100%)"}}>
 
             {/* start go sign in*/}

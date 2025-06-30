@@ -18,7 +18,7 @@ function DynamicNavbar() {
 
   const [isAuthon, setIsAution] = useState(true)
   
-  if (location.pathname === "/" || location.pathname === "/sign" || location.pathname === "/personal") {
+  if (location.pathname === "/") {
     return <NavbarFixed isAuthon={isAuthon} setIsAution={setIsAution} />;
   }
   return <Navbar isAuthon={isAuthon} setIsAution={setIsAution}/>;

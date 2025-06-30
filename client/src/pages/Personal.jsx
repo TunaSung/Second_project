@@ -102,7 +102,7 @@ function Personal() {
     };
 
     return (
-        <div className="container-mid pt-40">
+        <div className="container-mid">
 
             {/* Start profile */}
             <div className="border sticky top-1/4 w-full py-15 flex justify-center items-center">
