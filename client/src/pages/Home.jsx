@@ -71,8 +71,8 @@ function Home() {
                 {/* search bar */}
                 <div className="absolute-mid w-1/3 h-1/5 flex items-center justify-center bg-white/70 border z-50 p-5">
                     <form action="" className=" border w-full bg-white flex items-center justify-center">
-                        <input value={search} onChange={toggleSearch} placeholder="Enter product name" className="h-15 w-full border px-2 text-xl"/>
-                        <Link to={'/product'} className="h-15 aspect-5/3 bg-yellow-500 flex items-center justify-center hover:text-white hover:text-lg transition-all duration-300"><IoSearch />Search</Link>
+                        <input value={search} onChange={toggleSearch} placeholder="Enter product name" className="h-15 w-full px-2 text-xl"/>
+                        <Link to={'/product'} className="h-15 aspect-5/3 bg-[#D2D0A0] text-[#537D5D] flex items-center justify-center hover:text-white hover:text-lg transition-all duration-300"><IoSearch />Search</Link>
                     </form>
                 </div>
 
@@ -94,9 +94,7 @@ function Home() {
             {/* end kpop swiper */}
             
             {/* start wrapper of main */}
-            <div style={{ 
-                backgroundImage: "linear-gradient(178deg,rgba(211, 211, 211, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(107, 142, 35, 1) 100%)"
-            }}>
+            <div className="bg-[#73946B]">
 
                 {/* start welcome */}
                 <Hero>
@@ -107,7 +105,7 @@ function Home() {
                         loading="lazy"
                         style={{ opacity: useScrollTransform(0.6, 0.7, 0, 1) }}
                         >
-                            <h1 className="text-4xl font-bold text-center indie-flower-regular">Sustainable Chic Starts Here</h1>
+                            <h1 className="text-4xl font-bold text-center text-[#D2D0A0] indie-flower-regular">Sustainable Chic Starts Here</h1>
                         </motion.div>
                         <motion.div className="w-full h-70 rounded-2xl bg-cover-set "
                         loading="lazy"
@@ -155,13 +153,13 @@ function Home() {
                 
                 <Hero>
                     {/* start new event swiper */}
-                    <div id= 'new-item' data-aos="fade-up" data-aos-offset='50' className=' w-screen h-100 flex items-center justify-center overflow-hidden'>
+                    <div id= 'new-item' data-aos="fade-up" data-aos-offset='50' className='w-screen h-100 flex items-center justify-center overflow-hidden'>
                         <div className='absolute w-screen h-10 left-0 top-0 z-500'>
                             <svg width='100%' height='40' viewBox='0 0 100 10' preserveAspectRatio="none"  xmlns='http://www.w3.org/2000/svg'>
-                                <path d='M0 0 A50 10 0 0 0 9.5 6' stroke="#000" strokeWidth={0.5} fill="none"/>
-                                <path d='M23.5 8 A50 10 0 0 0 100 0' stroke="#000" strokeWidth={0.5} fill="none"/>
+                                <path d='M0 0 A50 10 0 0 0 9.5 6' stroke="#D2D0A0" strokeWidth={0.5} fill="none"/>
+                                <path d='M23.5 8 A50 10 0 0 0 100 0' stroke="#D2D0A0" strokeWidth={0.5} fill="none"/>
                             </svg>
-                            <div className="absolute text-3xl left-[10%] top-[10px] exile-regular">NEW EVENTS</div>
+                            <div className="absolute text-[#D2D0A0] text-3xl left-[10%] top-[10px] exile-regular">NEW EVENTS</div>
                         </div>
                         <Swiper
                             effect={'coverflow'}
@@ -197,14 +195,12 @@ function Home() {
                                 <EventCard/>
                             </SwiperSlide>
                         </Swiper>
-                        <div className=' absolute border-3 bottom-[-10%] w-screen h-20 rounded-[50%]'/>
+                        <div className='absolute border-3 border-[#D2D0A0] bottom-[-10%] w-screen h-20 rounded-[50%]'/>
                     </div>
                     {/* end new event swiper */}
 
                     {/* start new arrival swiper */}
                     <div id='new-item' data-aos="fade-up" data-aos-offset='150' className='w-screen h-98 -mt-10 flex items-center justify-center '>
-                        <div className='absolute right-40 bottom-0 px-3 bg-[#ffffff] z-50'>
-                        </div>
                         <Swiper
                             effect={'coverflow'}
                             loop={true}
@@ -253,10 +249,10 @@ function Home() {
                         </Swiper>
                         <div className='absolute w-screen h-10 left-0 bottom-0 z-500'>
                             <svg width='100%' height='40' viewBox='0 0 100 10' preserveAspectRatio="none"  xmlns='http://www.w3.org/2000/svg'>
-                                <path d='M0 0 A50 10 0 0 0 73.8 8' stroke="#000" strokeWidth={0.5} fill="none"/>
-                                <path d='M90.5 7 A50 10 0 0 0 100 0' stroke="#000" strokeWidth={0.5} fill="none"/>
+                                <path d='M0 0 A50 10 0 0 0 73.8 8' stroke="#D2D0A0" strokeWidth={0.5} fill="none"/>
+                                <path d='M90.5 7 A50 10 0 0 0 100 0' stroke="#D2D0A0" strokeWidth={0.5} fill="none"/>
                             </svg>
-                            <div className="absolute text-3xl right-[10%] top-[10px] exile-regular">NEW ARRIVALS</div>
+                            <div className="absolute text-[#D2D0A0] text-3xl right-[10%] top-[10px] exile-regular">NEW ARRIVALS</div>
                         </div>
                     </div>
                     {/* end new arrival swiper */}

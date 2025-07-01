@@ -17,7 +17,7 @@ function SignIn( {isShowed} ) {
         style={{opacity: isShowed ? "100%" : 0}}
         >
             <div className="w-3/7 h-2/3 p-3 border rounded-3xl bg-white flex items-center justify-center">
-                <div className="w-full h-full pt-7 border rounded-2xl flex flex-col items-center">
+                <div className="w-full h-full pt-7 rounded-2xl flex flex-col items-center">
 
                     {/* start img */}
                     <div className="w-3/5 h-20  border mb-10"/>

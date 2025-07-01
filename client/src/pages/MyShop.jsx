@@ -2,6 +2,8 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 // UI
 import ShopItem from "../components/Feature/ShopItem";
+import { FaPlus } from "react-icons/fa";
+import { LuImagePlus } from "react-icons/lu";
 import { MdClose } from "react-icons/md";
 
 // item example
@@ -68,7 +70,7 @@ function ProductInput() {
 
     }
     return (
-        <div className="pt-30">
+        <div className="pt-30 bg-[#9EBC8A] text-[#f8f7cf]">
             
             {/* Start add product */}
             <motion.div className="fixed-mid p-4 w-120 aspect-square border z-200 bg-white rounded-2xl"
@@ -81,15 +83,15 @@ function ProductInput() {
             }}
             >
                 
-                <form className="w-full h-full border p-3 flex flex-col justify-center items-center rounded-xl">
+                <form className="w-full h-full p-3 flex flex-col justify-center items-center rounded-xl">
                     <MdClose onClick={() => setIsAddProductOpen(false)} className="absolute right-3 top-3 scale-150 hover:text-red-500 transition-all duration-250 cursor-pointer"
 
                     />
                     <div className="mb-8 flex flex-col justify-center items-center">
                         <label htmlFor="file-input"
-                            className="px-4 py-2 border rounded cursor-pointer"
+                            className="p-10 border rounded-full cursor-pointer"
                         >
-                            Select Image
+                            <LuImagePlus className="scale-150"/>
                         </label>
                         {fileNames.length > 0 && (
                             <ul className="mt-4 h-10 space-x-1 text-gray-700 overflow-y-auto">
@@ -138,7 +140,7 @@ function ProductInput() {
 
             {/* Start to do list */}
             <div className="container-mid mt-20">
-                <div className="w-full border p-5">
+                <div className="w-full border p-5 bg-[#73946B]">
 
                     {/* Start title */}
                     <p className="text-xl font-bold mb-1">To Do List</p>
@@ -147,20 +149,20 @@ function ProductInput() {
 
                     {/* Start btn */}
                     <div className="w-full h-20 grid grid-cols-4 gap-5">
-                        <button className="rounded-2xl hover:bg-gray-300 transition-colors duration-250">
-                            <p className="font-bold text-xl text-blue-600 mb-1">0</p>
+                        <button className="rounded-2xl hover:bg-[#9EBC8A] transition-colors duration-250">
+                            <p className="font-bold text-xl text-white mb-1">0</p>
                             <p className="text-xs">To-Process Shipment</p>
                         </button>
-                        <button className="rounded-2xl hover:bg-gray-300 transition-colors duration-250">
-                            <p className="font-bold text-xl text-blue-600 mb-1">0</p>
+                        <button className="rounded-2xl hover:bg-[#9EBC8A] transition-colors duration-250">
+                            <p className="font-bold text-xl text-white mb-1">0</p>
                             <p className="text-xs">Processed Shipment</p>
                         </button>
-                        <button className="rounded-2xl hover:bg-gray-300 transition-colors duration-250">
-                            <p className="font-bold text-xl text-blue-600 mb-1">0</p>
+                        <button className="rounded-2xl hover:bg-[#9EBC8A] transition-colors duration-250">
+                            <p className="font-bold text-xl text-white mb-1">0</p>
                             <p className="text-xs">Return/Refund/Cancel</p>
                         </button>
-                        <button className="rounded-2xl hover:bg-gray-300 transition-colors duration-250">
-                            <p className="font-bold text-xl text-blue-600 mb-1">0</p>
+                        <button className="rounded-2xl hover:bg-[#9EBC8A] transition-colors duration-250">
+                            <p className="font-bold text-xl text-white mb-1">0</p>
                             <p className="text-xs">Banned / Deboosted Products</p>
                         </button>
                     </div>
@@ -171,7 +173,7 @@ function ProductInput() {
             {/* End to do list */}
 
             {/* Start my shop */}
-            <div id="container" className="container-mid flex justify-center items-center mb-15 flex-col max-md:text-sm">
+            <div id="container" className="container-mid flex justify-center items-center pb-15 flex-col max-md:text-sm">
 
                 {/* Start subtitle */}
                 <div id="classification" className="border w-full pl-10 py-4 mt-4 grid grid-cols-[3fr_1fr_1fr_1fr_2fr_1fr]">
@@ -180,13 +182,14 @@ function ProductInput() {
                             type="checkbox"
                             className="mr-3 scale-150"
                         />
-                        Select/Deselect All
                     </div>
-                    <div className="text-center">Price</div>
-                    <div className="text-center">Sale</div>
-                    <div className="text-center">Stock</div>
-                    <div className="text-center">Hashtag</div>
-                    <button onClick={() => setIsAddProductOpen(true)} className="text-center hover:text-green-400">Add product</button>
+                    <h3 className="text-center">Price</h3>
+                    <h3 className="text-center">Sale</h3>
+                    <h3 className="text-center">Stock</h3>
+                    <h3 className="text-center">Hashtag</h3>
+                    <button onClick={() => setIsAddProductOpen(true)} className="flex justify-center items-center justify-self-center w-1/3 hover:text-[#537D5D]">
+                        <FaPlus />
+                    </button>
                 </div>
                 {/* End subtitle */}
 
@@ -206,7 +209,6 @@ function ProductInput() {
                             type="checkbox"
                             className="mr-3 scale-150"
                         />
-                        Select/Deselect All
                     </div>
                 </div>
                 {/* End Select/Deselect All (bottom) */}

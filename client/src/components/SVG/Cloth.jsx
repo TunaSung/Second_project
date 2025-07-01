@@ -7,7 +7,7 @@ function Cloth() {
       className="w-6 h-6"
     >
       <g>
-        <style>{`.st0{fill:#03A609;} .st1{fill:#ffffff;}`}</style>
+        <style>{`.st0{fill:#537D5D;} .st1{fill:#ffffff;}`}</style>
         <g>
           <path
             className="st0"

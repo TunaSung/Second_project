@@ -18,7 +18,7 @@ function FixedMessage() {
     }
 
     // aside example
-    const msgAside = [{key:1, sender:'Tuna', lastMsg:'I mis you❤️'},
+    const msgAside = [{key:1, sender:'Tuna', lastMsg:'I miss you❤️'},
         {key:2, sender:'jnru', lastMsg:'Sorry, but I feel like you have an ulterior motive...'},
         {key:3, sender:'辰', lastMsg:'今天去哪小魚'},
         {key:4, sender:'晚餐吃甚麼', lastMsg:'ㄟ幹櫃哥只有3秒ㄝ'},
@@ -29,7 +29,7 @@ function FixedMessage() {
 
     return(
         <motion.div className={`fixed right-15 bottom-15 z-100 border p-3 pb-4 overflow-hidden grid grid-cols-[auto_1fr]
-                        ${isCLick ? "" : "hover:bg-blue-400 hover:text-white"} bg-gray-100 transition-all duration-200`}
+                        ${isCLick ? "" : "text-[#537D5D] hover:bg-[#9EBC8A] hover:text-white"} bg-gray-100 transition-all duration-200`}
         style={{width: isCLick ? '500px' : '40px',
             height: isCLick ? '70vh' : '40px',
             borderRadius: isCLick ? '16px' : "100%",

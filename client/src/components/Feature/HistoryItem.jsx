@@ -6,8 +6,8 @@ function ShopItem({seller, name, price, sale, stock}){
     const hashTags = ["#GentlyUsed", "#XL", "#Fashion", "#Sale", "#Discount", "#Fashion", "#Sale", "#Discount", "#Discount", "#Fashion", "#Sale", "#Discount"];
 
     return(
-        <div id="cart-items">
-            <div id="container" className="mt-4 w-full py-4 pl-10 hover:bg-gray-100 grid grid-cols-[4fr_1fr_1fr_1fr_1fr] items-center">
+        <div id="cart-items" className="">
+            <div id="container" className="mt-4 w-full py-4 pl-10 hover:bg-[#537D5D] grid grid-cols-[4fr_1fr_1fr_1fr_1fr] items-center">
                 <div className="flex items-center flex-wrap">
                     <div className="w-full">
                         <span className="mr-3">Seller: {seller}</span>
@@ -29,7 +29,7 @@ function ShopItem({seller, name, price, sale, stock}){
                     {hashTags.sort().reverse().map((tag, index) => (
                         <p
                             key={index}
-                            className="text-xs inline px-1 rounded-3xl border bg-gray-300 mr-1 "
+                            className="text-xs inline px-1 rounded-3xl border bg-[#CAE8BD] text-[#1f4428] mr-1 "
                             >
                             {tag}
                         </p>

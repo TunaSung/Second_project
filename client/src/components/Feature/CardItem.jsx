@@ -11,7 +11,7 @@ function CardItem( {title, quantity, price} ) {
             {/* end product img */}
 
             {/* start product info */}
-            <div className="flex flex-col justify-between h-full gap-3">
+            <div className="flex flex-col justify-between h-full text-[#1f4428] gap-3">
 
                 {/* start info detail */}
                 <div className="flex justify-between gap-5">
@@ -21,7 +21,7 @@ function CardItem( {title, quantity, price} ) {
                             {hashTags.map((tag, index) => (
                                 <p
                                 key={index}
-                                className="text-xs inline px-1 rounded-3xl bg-gray-300 mr-1"
+                                className="text-xs inline px-1 rounded-3xl bg-[#CAE8BD] mr-1"
                                 >
                                 {tag}
                             </p>

@@ -20,7 +20,7 @@ function Sign() {
 
     return (
         <div className="h-[90vh] w-full grid grid-cols-2 items-center justify-center overflow-hidden"
-        style={{backgroundImage: "linear-gradient(90deg,#fef6e4 0%, #EBA7C9 33%, #9FD6ED 66%, #fef6e4 100%)"}}>
+        style={{backgroundImage: "linear-gradient(0deg,#D2D0A0 0%, #9EBC8A 33%, #73946B 66%, #537D5D 100%)"}}>
 
             {/* start go sign in*/}
             <motion.div className="absolute grid grid-cols-2 h-full w-full z-90 -right-1/2 transition-all duration-500"
@@ -39,7 +39,7 @@ function Sign() {
                             Sign In &
                         </div>
                         <div className="border pl-2 flex justify-end text-7xl mb-3 sail-regular 
-                        bg-clip-text text-transparent drop-shadow-[3px_3px_3px_rgba(0,0,0,0.8)] bg-contian-set"
+                        bg-clip-text text-transparent drop-shadow-[3px_3px_3px_rgba(0,0,0,0.8)] bg-cover-set"
                         style={{
                             backgroundImage: 'url("/imgs/kpop/aespa-winter-hot-mess.jpg")'
                         }}>

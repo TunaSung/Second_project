@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useLocation } from 'react-router-dom';
 
 // UI & icons
 import ProductItem from "../components/Feature/ProductItem";
+import { FaArrowLeft, FaArrowRight} from "react-icons/fa";
 
 // Swiper 
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -10,7 +11,7 @@ import 'swiper/css';
 import 'swiper/css/effect-coverflow';
 import 'swiper/css/free-mode';
 import '../style/Swiper.css';
-import { Mousewheel, EffectCoverflow, FreeMode } from 'swiper/modules';
+import { Mousewheel, FreeMode } from 'swiper/modules';
 
 
 function Product() {
@@ -22,22 +23,39 @@ function Product() {
     // useState
     const [clickIndex, setClickIndex] = useState(labelIndex);
     const [hovered, setHovered] = useState(null);
+    const [page, setPage] = useState(1);
+    const isFirstRender = useRef(true)
 
     // example
-    const products = Array.from({ length: 17 }, (_, i) => ({
+    const products = Array.from({ length: 25 }, (_, i) => ({
         id: i + 1,
         name: `Product ${i+1}`,
         price: 999,
         stock: 1,
         hashTag:  ["#GentlyUsed", "#XL", "#Fashion", "#Sale", "#Discount"],
-        imgUrl: '/imgs/kpop/aespa-karina-hot-mess2.jpg'
+        imgUrl: '/imgs/kpop/tzuyu-twice-with-youth.jpg'
     }));
 
     // Grid dim
     // Dynamic adjustment 
     const cols = 5;
-    const rows = Math.ceil(products.length / cols); 
+    const rows = Math.ceil((products.length > 15) ? 4 : products.length / cols); 
     const wrapperHeight = 200 * rows;
+    const itemsPerPage = 20;
+    const startIndex = (page - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const currentProducts = products.slice(startIndex, endIndex);;
+    const totalPage = (products.length < itemsPerPage) ? 1 : Math.ceil(products.length/itemsPerPage);
+
+    const prevPage = useRef(null);
+    useEffect(() => {
+        if (isFirstRender.current) { //剛進入頁面時先用這個擋window.scrollTo
+            isFirstRender.current = false
+        } else if (prevPage.current !== page){ 
+            window.scrollTo(0,175);
+        }
+        prevPage.current = page; //會先跑這個再跑上面的else if
+    },[page])
     
     // Product categories
     const tops = ["T-shirt", "Shirt", "Blouse", "Tank top", "Vest", "Sweater", "Jumper", "Hoodie", "Jacket", "Blazer", "Suit jacket", "Sleeveless top"];
@@ -64,23 +82,21 @@ function Product() {
     };
 
     return (
-        <div id="product-list-page" style={{ 
-                background: "linear-gradient(178deg,rgba(211, 211, 211, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(107, 142, 35, 1) 100%)"
-            }}>
+        <div id="product-list-page" className="h-full w-full bg-[#73946B]">
 
             {/* start title */}
-            <div className="border-b p-4 pt-35 flex justify-self-center">
-                <h1 className="text-5xl font-bold indie-flower-regular">Product List</h1>
+            <div className="border-b border-[#D2D0A0] p-4 pt-35 flex justify-self-center">
+                <h1 className="text-5xl text-[#eceab8] font-bold indie-flower-regular">Product List</h1>
             </div>
             {/* end title */}
 
             {/* start category */}
             <div className="mt-10 mb-0 h-20 container-mid grid grid-cols-5 items-end ">
                 {labels.map(label => (
-                    <button key={label.key} onClick={() => setClickIndex(label.key)} className={`border ${label.key === clickIndex ? `h-3/4 text-white text-2xl` : 'h-1/2'} 
-                        w-[85%] transition-all duration-300 flex justify-self-center items-center justify-center rounded-t-xl font-bold border-b-0`}
+                    <button key={label.key} onClick={() => setClickIndex(label.key)} className={`border ${label.key === clickIndex ? `h-3/4 text-white text-2xl` : 'h-1/2 text-[#ECFAE5]'} 
+                        w-[85%] transition-all duration-300 flex justify-self-center items-center justify-center 
+                        rounded-t-xl font-bold border-b-0 bg-[#9EBC8A]`}
                     >
-
                             <img
                             src={label.img}
                             loading="lazy"
@@ -89,7 +105,6 @@ function Product() {
                                 ${label.key === clickIndex ? 'opacity-100' : 'opacity-0'}
                             `}
                             />
-
                             <span className="relative z-10 text-shadow-sm">{label.title}</span>
                     </button>
                 ))}
@@ -97,28 +112,26 @@ function Product() {
             {/* end category */}
 
             {/* start product list */}
-            <div className={`grid container-mid transition-all duration-350 gap-1`}
+            <div className={`grid w-[75%] max-lg:w-[90%] max-md:w-[98%] mx-auto rounded-2xl transition-all duration-350 gap-1 border`}
             style={{ height: `${wrapperHeight}px`,gridTemplateRows: getRowSizes()}}
             >
 
                 {/* start category swiper */}
-                <div id="swiper-product-category" className="absolute top-5 h-1/4 -left-31 w-35 pl-0 border border-r-0 rounded-l-2xl">
+                <div id="swiper-product-category" className="absolute top-5 h-1/3 -left-35 w-35 pl-0 border border-white rounded-l-2xl bg-[#9EBC8A]">
                     <Swiper
                         loop={true}
-                        effect={'coverflow'}
                         direction={'vertical'}
-                        slidesPerView={3}
+                        slidesPerView={5}
                         spaceBetween={3}
                         mousewheel={{ forceToAxis: true, sensitivity: 2, releaseOnEdges: true }}
                         centeredSlides={true}
                         grabCursor={true}
-                        coverflowEffect={{ stretch: 15, depth: 100, slideShadows: false }}
-                        modules={[Mousewheel, FreeMode, EffectCoverflow]}
+                        modules={[Mousewheel, FreeMode]}
                         className="h-full w-full"
                     >
                         {labels.find(label => label.key === clickIndex).contents.map((content, index) => (
                             <SwiperSlide key={index} className="h-20 w-full flex items-center justify-center ">
-                                <button className="transition-all duration-200 font-bold cursor-grab text-shadow-sm">
+                                <button className="transition-all duration-200 text-[#ECFAE5] hover:text-red-500 cursor-grab text-shadow-sm">
                                     {content}
                                 </button>
                             </SwiperSlide>
@@ -136,7 +149,7 @@ function Product() {
                     >
                         {Array.from({ length: cols }, (_, col) => {
                         const index = row * cols + col
-                        const product = products[index]
+                        const product = currentProducts[index]
                         if (!product) return <div key={col} /> //多出來的地方用空格佔位
 
                         return (
@@ -155,7 +168,19 @@ function Product() {
             </div>
             {/* end product list */}
 
-            <div className="pb-30"/>
+            {/* start page */}
+            <div id="page" className="w-full grid grid-cols-3 justify-center py-15">
+                <button id="previous" onClick={() => setPage(page-1)} className="flex justify-center items-center cursor-pointer disabled:text-[#ccc] disabled:cursor-default" disabled={(page === 1) ? true : false}>
+                    <FaArrowLeft />
+                    Previous
+                </button>
+                <div id="page-num" className="text-center">{`${page}/${totalPage}`}</div>
+                <button id="next" onClick={() => setPage(page+1)} className={`flex justify-center items-center cursor-pointer disabled:text-[#ccc] disabled:cursor-default`} disabled={(page === totalPage) ? true : false}>
+                    Next
+                    <FaArrowRight />
+                </button>
+            </div>
+            {/* end page */}
         
         </div>
     );

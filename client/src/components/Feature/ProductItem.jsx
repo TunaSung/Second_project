@@ -34,7 +34,7 @@ function ProductItem( {product} ){
 
         await Promise.all([
         controlAddCart.start({
-            color: ["#ffffff", "#03A609", "#03A609", "#ffffff"],
+            color: ["#ffffff", "#537D5D", "#537D5D", "#ffffff"],
             rotate: [0, -30, 30 ,0],
             transition: {
                 rotate: { duration: 1 },
@@ -42,11 +42,11 @@ function ProductItem( {product} ){
             }
         }),
         controlAddBtn.start({
-            backgroundColor: ["#03A609", "#ffffff", "#ffffff", "#03A609"],
+            backgroundColor: ["#537D5D", "#ffffff", "#ffffff", "#537D5D"],
             transition: { duration: 1.5, times: [0, 0.2, 0.8, 1] }
         }),
         controlAddText.start({
-            color: ["#ffffff", "#03A609", "#03A609", "#ffffff"],
+            color: ["#ffffff", "#537D5D", "#537D5D", "#ffffff"],
                 transition: { duration: 1.5, times: [0, 0.2, 0.8, 1] }
         })
         ]);
@@ -63,10 +63,10 @@ function ProductItem( {product} ){
         {/* end img */}
 
         {/* start info */}
-        <div className=" absolute left-1/2 w-0 p-4 h-full flex flex-col bg-none opacity-0 rounded-r-2xl group-hover:w-1/2 group-hover:opacity-100 group-hover:bg-gray-400 transition-all duration-200 overflow-hidden">
+        <div className=" absolute left-1/2 w-0 p-4 h-full flex flex-col bg-none opacity-0 rounded-r-2xl group-hover:w-1/2 group-hover:opacity-100 group-hover:bg-[#D2D0A0] transition-all duration-200 overflow-hidden">
             
             {/* start title */}
-            <p className="text-3xl mb-2">{product.name}</p>
+            <p className="text-3xl text-[#537D5D] mb-2">{product.name}</p>
             {/* end title */}
 
             {/* start hashtags */}
@@ -74,7 +74,7 @@ function ProductItem( {product} ){
                 {product.hashTag.map((tag, index) => (
                     <p
                         key={index}
-                        className="text-xs inline px-1 rounded-3xl border bg-gray-300 mr-1"
+                        className="text-xs text-[#1f4428] inline px-1 rounded-3xl border bg-[#CAE8BD] mr-1"
                         >
                         {tag}
                     </p>

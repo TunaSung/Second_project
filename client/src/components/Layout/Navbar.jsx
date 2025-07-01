@@ -9,7 +9,7 @@ import { IoLogIn, IoSearch } from "react-icons/io5";
 import AvatarIcon from "../Feature/AvatarIcon";
 
 
-function Navbar({isAuthon, setIsAution}) {
+function Navbar( {isAuthon, setIsAution} ) {
 
     // useState
     const [hoverIndex, setHoverIndex] = useState(null)
@@ -40,7 +40,7 @@ function Navbar({isAuthon, setIsAution}) {
 
 
     return(
-        <nav className="w-full h-20 top-0 right-0 bg-blue-200 z-110">
+        <nav className="w-full h-20 top-0 right-0 bg-[#537D5D] z-110">
 
             {/* start cart */}
             <Cart isClicked={isCartClicked} setIsClicked={setIsCartClicked}/>
@@ -50,7 +50,7 @@ function Navbar({isAuthon, setIsAution}) {
             <div className="container-mid h-full grid grid-cols-[1fr_4fr_1fr] justify-center gap-rwd px-2">
 
                 {/* start nav left (logo)*/}
-                <Link to={'/'} className="border-1 my-2"></Link>
+                <Link to={'/'} className="my-2 bg-[#D2D0A0]"></Link>
                 {/* end  nav left */}
 
                 {/* start nav middle (category) */}
@@ -63,14 +63,14 @@ function Navbar({isAuthon, setIsAution}) {
                                 <Link to={`/product`} state={{labelIndex: label.key}}>
                                     <motion.p
                                     initial={{y: 0, color: "black"}}
-                                    animate={{y: hoverIndex === label.key ? -12 : 0, color: hoverIndex === label.key ? "red" : "black"}}
+                                    animate={{y: hoverIndex === label.key ? -12 : 0, color: hoverIndex === label.key ? "white" : "#D2D0A0"}}
                                     transition={{duration: 0.2}}
                                     >
                                         {label.title}
                                     </motion.p>
                                 </Link>
                                 <AnimatePresence>
-                                    <motion.div className="navbar-menu-mid bg-purple-400/90 h-[70%] aspect-square rotate-45"
+                                    <motion.div className="navbar-menu-mid bg-[#D2D0A0]/95 h-[70%] aspect-square rotate-45"
                                     initial={{opacity: 0}}
                                     animate={{opacity: hoverIndex === label.key ? 1 : 0}}
                                     transition={{duration: 0.1}}
@@ -79,14 +79,14 @@ function Navbar({isAuthon, setIsAution}) {
                             </button>
                         ))}
                     </div>
-                    <motion.div className="absolute w-full navbar-items-mid bg-purple-400/90 overflow-hidden rounded-2xl"
+                    <motion.div className="absolute w-full navbar-items-mid bg-[#D2D0A0]/95 overflow-hidden rounded-2xl"
                     initial={{opacity: 0, height: 0}}
                     animate={{opacity: hoverIndex !== null ? 1 : 0, height: hoverIndex !== null ? "auto" : 0}}
                     transition={{duration: 0.2}}>
                         <ul className="grid grid-cols-5 gap-2 w-full items-center justify-center p-3">
                             {hoverIndex !== null && (
                                 labels.find(label => label.key === hoverIndex).contents.map((content, index) => (
-                                    <a href="#" key={index} className="text-center hover:text-red-500 max-lg:text-sm">{content}</a>
+                                    <a href="#" key={index} className="text-center text-[#537D5D] hover:text-white max-lg:text-sm">{content}</a>
                                 ))
                             )}
                         </ul>
@@ -96,14 +96,14 @@ function Navbar({isAuthon, setIsAution}) {
 
                 {/* start nav right (icon, search)*/}
                 <div className="grid grid-rows-2 gap-1 w-full my-2">
-                    <div className="grid grid-cols-3 items-center w-full">
-                        <div className="h-full w-full flex justify-center items-center">
-                            <IoMdCart onClick={handleCartClick} className="text-2xl cursor-pointer"/>
+                    <div className="flex justify-end items-center w-full">
+                        <div className="h-full flex justify-center items-center">
+                            <IoMdCart onClick={handleCartClick} className="text-2xl text-[#D2D0A0] hover:text-amber-300 transition-colors duration-200 cursor-pointer"/>
                         </div>
-                        <div className="col-start-3 h-full w-full flex justify-center items-center">
+                        <div className="col-start-3 h-full w-1/4 flex justify-center items-center">
                             {isAuthon ? <AvatarIcon isAuthon={isAuthon} setIsAution={setIsAution}/>
                              :
-                            <Link to={'/sign'} className="text-2xl cursor-pointer">
+                            <Link to={'/sign'} className="text-2xl cursor-pointer text-[#D2D0A0] hover:text-emerald-400 transition-colors duration-200">
                                 <IoLogIn/>
                             </Link>
                             }
@@ -111,10 +111,10 @@ function Navbar({isAuthon, setIsAution}) {
                         </div>
                     </div>
                     
-                    <form action="" className="h-full px-3 border-1 rounded-2xl flex items-center justify-center">
-                        <input type="text" value={search} onChange={toggleSearch} className="w-full outline-none text-gray-600 placeholder-gray-400"/>
+                    <form action="" className="h-full px-3 border-1 border-[#D2D0A0] rounded-2xl flex items-center justify-center">
+                        <input type="text" value={search} onChange={toggleSearch} className="w-full outline-none text-white placeholder-white"/>
                         <button type="submit" className="flex justify-center items-center rounded-full">
-                            <IoSearch className="text-2xl"/>
+                            <IoSearch className="text-2xl text-[#D2D0A0]"/>
                         </button>
                     </form>
                 </div>

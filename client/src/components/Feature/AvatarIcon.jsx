@@ -52,9 +52,10 @@ function AvatarIcon({setIsAution}){
                 {/* Start Icon exchange */}
                 {isOpen ? <IoClose className='z-90 absolute text-2xl' onClick={() => setIsOpen(!isOpen)}/>
                     :
-                    <Space className='bg-black rounded-full'>
-                    <Avatar size='small' className='z-90 text-2xl' icon={<UserOutlined/>} onClick={() => setIsOpen(!isOpen)}/>
-                </Space>
+                    <Avatar size='small' className='z-90' 
+                    icon={<div className="bg-cover-set h-full aspect-square bg-[url('imgs/kpop/bts-be-jimin.jpg')]"/>} 
+                    onClick={() => setIsOpen(!isOpen)}/>
+                
                 }
                 {/* End Icon exchange*/}
 

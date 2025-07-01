@@ -23,7 +23,7 @@ function SignUp( {isShowed} ) {
         style={{opacity: isShowed ? "100%" : 0}}
         >
             <div className="border h-2/3 w-3/7 p-3 rounded-3xl flex items-center justify-center bg-white">
-                <div className=" border flex w-full h-full rounded-2xl flex-col items-center pt-6">
+                <div className=" flex w-full h-full rounded-2xl flex-col items-center pt-6">
 
                     {/* start username */}
                     <div className="w-full h-12 flex items-center mb-5">
