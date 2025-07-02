@@ -22,7 +22,7 @@
 # 為了使用websocket先刻一個聊天室
 ![header](./readmeImage/chat.png)  
   
-# 一些first project沒用過的路如placeholder往上跳，還有用個profile page
+# 一些first project沒用過的例如placeholder往上跳，還有用個profile page
 ![header](./readmeImage/sign.png)  
 ![header](./readmeImage/profile.png)
 
