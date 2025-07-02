@@ -121,9 +121,9 @@ function ProductInput() {
                         </div>
 
                         <div className="flex flex-col gap-rwd">
-                            <input type="text" id="title" className="border"/>
-                            <input type="text" id="price" className="border"/>
-                            <input type="number" id="stock" className="border"/>
+                            <input type="text" id="title" className="border" required/>
+                            <input type="text" id="price" className="border" required/>
+                            <input type="number" id="stock" className="border" required/>
                             <input type="text" id="hashtag" className="border"/>
                         </div>
                     </div>
