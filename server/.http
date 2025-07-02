@@ -1,0 +1,49 @@
+POST http://localhost:3000/api/auth/register
+Content-Type: application/json
+
+{
+    "email": "test@example.com",
+    "password": "123456",
+    "username": "test",
+    "phone": "0931910336"
+}
+
+###
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "test@example.com",
+    "password": "123456"
+}
+
+###
+POST http://localhost:3000/api/auth/edit
+Content-Type: application/json
+
+{
+    "username": "Ryan",
+    "email": "ryan1107@example.com",
+    "phone": "0975805936",
+    "address": ""
+}
+
+###
+POST http://localhost:3000/api/product/upload
+Content-Type: application/json
+
+{
+    "name": "阿罵內褲",
+    "price": 180,
+    "stock": 1,
+    "hashTags": ["2xl", "GentlyUsed"],
+    "image": null
+}
+
+###
+GET  http://localhost:3000/api/product/products
+Content-Type: application/json
+
+###
+GET  http://localhost:3000/api/product/product/2
+Content-Type: application/json
