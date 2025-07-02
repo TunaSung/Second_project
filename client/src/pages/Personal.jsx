@@ -200,19 +200,6 @@ function Personal() {
                                     </tr>
                                     {/* End address */}
 
-                                    {/* Start credit card */}
-                                    <tr>
-                                        <td className="pb-8">
-                                            <label htmlFor="">Credit Card</label>
-                                        </td>
-                                        <td className="pb-8">
-                                            <div>
-                                                {profile.creditCard}
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    {/* Start credit card */}
-
                                     {/* Start btn */}
                                     <tr>
                                         <td className=""></td>
@@ -245,6 +232,18 @@ function Personal() {
                                 onChange={handleImgChange}
                                 accept="image/*"
                             />
+                            {/* Start credit card */}
+                            {/* <tr>
+                                <td className="pb-8">
+                                    <label htmlFor="">Credit Card</label>
+                                </td>
+                                <td className="pb-8">
+                                    <div>
+                                        {profile.creditCard}
+                                    </div>
+                                </td>-
+                            </tr> */}
+                            {/* Start credit card */}
                         </form>
                         {/* End avatar */}
 
