@@ -61,19 +61,27 @@ const items = [
 function ProductInput() {
 
     const [fileNames, setFileNames] = useState([])
+    const [name, setName] = useState('')
+    const [price, setPrice] = useState('')
+    const [stock, setStock] = useState(0)
+    const [hashTags, setHashTags] = useState([])
     const [isAddProductOpen, setIsAddProductOpen] = useState(false)
 
     const handleChange = (e) => {
         setFileNames([])
         const file = Array.from(e.target.files)
         setFileNames(file)
-
     }
+
+    const handdleClose = () => {
+        // setIsAddProductOpen(false)
+    }
+
     return (
         <div className="pt-30 bg-[#9EBC8A] text-[#f8f7cf]">
             
             {/* Start add product */}
-            <motion.div className="fixed-mid p-4 w-120 aspect-square border z-200 bg-white rounded-2xl"
+            <motion.div className="fixed-mid p-4 w-120 aspect-square border z-200 bg-[#537D5D] rounded-2xl"
             animate={{scale: isAddProductOpen ? [0, 1.1, 0.9, 1] : [1, 0],
                 opacity: isAddProductOpen ? [0, 1] : [0, 0]
             }}
@@ -84,9 +92,7 @@ function ProductInput() {
             >
                 
                 <form className="w-full h-full p-3 flex flex-col justify-center items-center rounded-xl">
-                    <MdClose onClick={() => setIsAddProductOpen(false)} className="absolute right-3 top-3 scale-150 hover:text-red-500 transition-all duration-250 cursor-pointer"
-
-                    />
+                    <MdClose onClick={() => setIsAddProductOpen(false)} className="absolute right-3 top-3 scale-150 hover:text-red-500 transition-all duration-250 cursor-pointer"/>
                     <div className="mb-8 flex flex-col justify-center items-center">
                         <label htmlFor="file-input"
                             className="p-10 border rounded-full cursor-pointer"
@@ -114,20 +120,30 @@ function ProductInput() {
                     <div className="grid grid-cols-2">
 
                         <div className="flex flex-col gap-rwd">
-                            <label htmlFor="title">Name: </label>
+                            <label htmlFor="name">Name: </label>
                             <label htmlFor="price">Price: </label>
                             <label htmlFor="stock">Stock: </label>
-                            <label htmlFor="hashtag">Hashtag: </label>
+                            <label htmlFor="hashTags">Hashtag: </label>
                         </div>
 
                         <div className="flex flex-col gap-rwd">
-                            <input type="text" id="title" className="border" required/>
-                            <input type="text" id="price" className="border" required/>
-                            <input type="number" id="stock" className="border" required/>
-                            <input type="text" id="hashtag" className="border"/>
+                            <input type="text" id="name" value={name} onChange={(e) => setName(e.target.value)}
+                            className="border rounded-sm pl-1 focus:bg-[#f8f7cf] focus:text-[#537D5D]" required/>
+
+                            <input type="number" id="price" value={price} onChange={(e) => setPrice(e.target.value)}
+                            className="border rounded-sm pl-1 focus:bg-[#f8f7cf] focus:text-[#537D5D]" required/>
+
+                            <input type="number" id="stock" value={stock} onChange={(e) => setStock(e.target.value)}
+                            className="border rounded-sm pl-1 focus:bg-[#f8f7cf] focus:text-[#537D5D]" required/>
+
+                            <input type="text" id="hashTags" value={hashTags} onChange={(e) => setHashTags(e.target.value)}
+                            className="border rounded-sm pl-1 focus:bg-[#f8f7cf] focus:text-[#537D5D]"/>
                         </div>
                     </div>
-                    <button type="submit" onClick={() => setIsAddProductOpen(false)} className="mt-10 border py-2 px-6 rounded-2xl">Add to shop</button>
+                    <button type="submit" onClick={() => setIsAddProductOpen(false)} className="mt-10 border py-2 px-6 rounded-2xl
+                     hover:bg-[#f8f7cf] hover:text-[#537D5D] hover:border-[#9bda8b] transition-all duration-200">
+                        Add to shop
+                    </button>
                 </form>
             </motion.div>
             {/* End add product */}
