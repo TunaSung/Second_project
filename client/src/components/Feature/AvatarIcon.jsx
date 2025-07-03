@@ -4,6 +4,7 @@ import { UserOutlined } from '@ant-design/icons';
 import { motion, AnimatePresence } from "framer-motion";
 import { Avatar, Space } from 'antd';
 import { IoClose } from "react-icons/io5";
+import { useAuth } from '../Context/authContext';
 
 function useOutsideClick(ref, handler) {
   useEffect(() => {
@@ -33,9 +34,12 @@ function AvatarIcon({setIsAution}){
         }
     });
 
+    const { logout } = useAuth()
+    const navigate = useNavigate()
     const handleLogout = () => {
         setIsOpen(!isOpen)
-        setIsAution(false)
+        logout()
+        navigate('/')
     }
 
     return (

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion, useTransform} from "framer-motion";
+import { signUp } from "../../services/authService";
 
 // UI and icons
 import { IoPersonOutline } from "react-icons/io5";
@@ -7,19 +8,39 @@ import { TbLockPassword } from "react-icons/tb";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { MdOutlineDriveFileRenameOutline } from "react-icons/md";
 import { MdOutlinePhone } from "react-icons/md";
+import { toast } from "react-toastify";
 
-function SignUp( {isShowed} ) {
+function SignUp( {isShowed, toggleSignChange} ) {
 
     // useState
     const [username, setUsername] = useState("");
-    const [phoneNumber, setPhoneNumber] = useState("");
+    const [phone, setPhone] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirm, setConfirm] = useState("");
-    const [error, setError] = useState("");
-    
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        try {
+            if (password !== confirm) {
+                toast.warn("Passwords do not match");
+                return;
+            }
+            const res = await signUp(username, phone, email, password)
+            toast.success("Sign up successfullly")
+            setUsername("")
+            setPhone("")
+            setEmail("")
+            setPassword("")
+            setConfirm("")
+            toggleSignChange()
+        } catch (err) {
+            console.error("🚨 註冊失敗", err); // ✅ 印出來看內容
+            toast.error(err.response?.data?.message || err.message || "Sign up failed");
+        }
+    }    
     return(
-        <motion.form action=""  className="w-full h-full flex items-center justify-center transition-all duration-400"
+        <motion.form onSubmit={handleSubmit}  className="w-full h-full flex items-center justify-center transition-all duration-400"
         style={{opacity: isShowed ? "100%" : 0}}
         >
             <div className="border h-2/3 w-3/7 p-3 rounded-3xl flex items-center justify-center bg-white">
@@ -54,8 +75,8 @@ function SignUp( {isShowed} ) {
                             <input 
                             type="text"
                             id="phone-number"
-                            value={phoneNumber} 
-                            onChange={(e) => {setPhoneNumber(e.target.value)}}
+                            value={phone} 
+                            onChange={(e) => {setPhone(e.target.value)}}
                             className="peer border px-2 h-full rounded-xl 
                             placeholder-transparent focus:outline-none focus:border-blue-500" 
                             placeholder=""/>

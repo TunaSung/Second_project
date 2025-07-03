@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import Cart from "../../pages/Cart";
+import { useAuth } from "../Context/authContext";
 
 // UI and icons
 import { IoMdCart } from "react-icons/io";
@@ -9,12 +10,14 @@ import { IoLogIn, IoSearch } from "react-icons/io5";
 import AvatarIcon from "../Feature/AvatarIcon";
 
 
-function Navbar( {isAuthon, setIsAution} ) {
+function Navbar() {
 
     // useState
     const [hoverIndex, setHoverIndex] = useState(null)
     const [isCartClicked, setIsCartClicked] = useState(false)
     const [search, setSearch] = useState("");
+
+    const { isAuthenticated } = useAuth()
 
     // Product categories
     const tops = ["T-shirt", "Shirt", "Blouse", "Tank top", "Vest", "Sweater", "Jumper", "Hoodie", "Jacket", "Blazer", "Suit jacket", "Sleeveless top"];
@@ -101,7 +104,7 @@ function Navbar( {isAuthon, setIsAution} ) {
                             <IoMdCart onClick={handleCartClick} className="text-2xl text-[#D2D0A0] hover:text-amber-300 transition-colors duration-200 cursor-pointer"/>
                         </div>
                         <div className="col-start-3 h-full w-1/4 flex justify-center items-center">
-                            {isAuthon ? <AvatarIcon isAuthon={isAuthon} setIsAution={setIsAution}/>
+                            {isAuthenticated ? <AvatarIcon />
                              :
                             <Link to={'/sign'} className="text-2xl cursor-pointer text-[#D2D0A0] hover:text-emerald-400 transition-colors duration-200">
                                 <IoLogIn/>

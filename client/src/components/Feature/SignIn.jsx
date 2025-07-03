@@ -1,19 +1,36 @@
 import { useState } from "react";
 import { motion, useTransform} from "framer-motion";
+import { signIn } from "../../services/authService";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../Context/authContext";
 
 // UI and icons
 import { IoPersonOutline } from "react-icons/io5";
 import { TbLockPassword } from "react-icons/tb";
+import { toast } from "react-toastify";
 
 function SignIn( {isShowed} ) {
 
     // useState
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
+    const navigate = useNavigate()
+    const {login} = useAuth()
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        try {
+            const res = await signIn(email, password)
+            login(res.token)
+            toast.success("Login successfully");
+            navigate('/')
+        } catch (err) {
+            toast.error(err)
+        }
+    }
 
     return(
-        <motion.form action=""  className="w-full h-full flex items-center justify-center transition-all duration-400"
+        <motion.form onSubmit={handleSubmit}  className="w-full h-full flex items-center justify-center transition-all duration-400"
         style={{opacity: isShowed ? "100%" : 0}}
         >
             <div className="w-3/7 h-2/3 p-3 border rounded-3xl bg-white flex items-center justify-center">
@@ -66,8 +83,6 @@ function SignIn( {isShowed} ) {
                         </div>
                     </div>
                     {/* end password */}
-
-                    {/* {error && <p className="text-red-500 text-sm">{error}</p>} */}
 
                     {/* start btn */}
                     <button type="submit" className="rounded-lg mb-5 bg-black/60 py-3 w-3/4 text-[#ccc] hover:text-white hover:bg-black/40 cursor-pointer">
