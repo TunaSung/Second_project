@@ -9,7 +9,17 @@ Product.init({
         price: {type: DataTypes.INTEGER, allowNull:false},
         stock: {type:DataTypes.INTEGER, allowNull:false},
         categoryID: {type: DataTypes.INTEGER},
-        image: {type: DataTypes.STRING},
+        isAvailable: { type: DataTypes.BOOLEAN, defaultValue: true },
+
+        imageUrls: {type: DataTypes.STRING, // 預計是回傳array，但MySQL不支持.ARRAY
+            set(value) { // 自動將回傳的array轉成string
+                this.setDataValue('imageUrls', value.join(','))
+            },
+            get(){ // 要被後端取出的時候把在資料庫的string轉回array
+                const raw = this.getDataValue('imageUrls')
+                return raw ? raw.split(',') : []
+            }
+        },
 
         hashTags: {type: DataTypes.STRING, // 預計是回傳array，但MySQL不支持.ARRAY
             set(value) { // 自動將回傳的array轉成string
@@ -19,7 +29,9 @@ Product.init({
                 const raw = this.getDataValue('hashTags')
                 return raw ? raw.split(',') : []
             }
-        }
+        },
+
+        sellerId: {type: DataTypes.INTEGER, allowNull: false, references: {model: 'users', key: "id"}}
     },
     {sequelize: sqlize, modelName:'product', tableName:'products', timestamps: true}
 )

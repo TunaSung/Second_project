@@ -9,6 +9,11 @@ const Event = require('./Event')
 User.hasMany(Order, { foreignKey: 'userId' });
 Order.belongsTo(User, { foreignKey: 'userId' });
 
+// user & product
+User.hasMany(Product, { foreignKey: 'sellerId', as: 'productsOnSale' });
+Product.belongsTo(User, { foreignKey: 'sellerId', as: 'seller' });
+
+
 // user & msg
 User.hasMany(Message, { foreignKey: 'fromUserId', as: 'sentMessages' });
 User.hasMany(Message, { foreignKey: 'toUserId', as: 'receivedMessages' });

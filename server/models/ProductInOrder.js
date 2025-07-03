@@ -5,7 +5,7 @@ class ProductInOrder extends Model{}
 
 ProductInOrder.init({
         id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-        quantity: {type: DataTypes.INTEGER, allowNull: false},
+        amount: {type: DataTypes.INTEGER, allowNull: false},
         productId: {type: DataTypes.INTEGER, allowNull: false, references: {model: "products", key: "id"}},
         orderId: {type: DataTypes.INTEGER, allowNull: false, references: {model: "orders", key: "id"}}
     },

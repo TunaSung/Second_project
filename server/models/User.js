@@ -10,8 +10,17 @@ User.init({
     email: {type: DataTypes.STRING, allowNull: false, unique: true},
     password: {type: DataTypes.STRING, allowNull: false},
     address: {type: DataTypes.STRING},
-    creditCard: {type: DataTypes.STRING, unique: true},
-    avatarUrl:{type: DataTypes.STRING}
+    avatarUrl:{type: DataTypes.STRING},
+
+    creditCards: {type: DataTypes.STRING, // 預計是回傳array，但MySQL不支持.ARRAY
+        set(value) { // 自動將回傳的array轉成string
+            this.setDataValue('creditCards', value.join(','))
+        },
+        get(){ // 要被後端取出的時候把在資料庫的string轉回array
+            const raw = this.getDataValue('creditCards')
+            return raw ? raw.split(',') : []
+        }
+    }
     },
     {sequelize: sqlize, modelName:'user', tableName:'users', timestamps: true}
 )
