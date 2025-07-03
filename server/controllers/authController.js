@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken')
 const { User } = require('../models/Association')
 const authenticate = require('../middleware/JWT')
 
-exports.register = async (req, res) => {
+exports.signUp = async (req, res) => {
     try {
         const {username, phone, email, password} = req.body
         const hashedPassword = await bcrypt.hash(password, 10)
@@ -14,7 +14,7 @@ exports.register = async (req, res) => {
     }
 }
 
-exports.login = async (req, res) => {
+exports.signIn = async (req, res) => {
     try {
         const {email, password} = req.body
         const user = await User.findOne({where: {email}})
@@ -22,7 +22,7 @@ exports.login = async (req, res) => {
             return res.status(401).json({error: 'Wrong email or password'})
         }
 
-        const token = jwt.sign({userId: user.id}, "mysecret", {expiresIn: "3h"})
+        const token = jwt.sign({userId: user.id}, process.env.JWT_SECRET, {expiresIn: "3h"})
         res.status(200).json({message: `Login successful token=${token}`, token})
     } catch (error) {
         res.status(500).json({error: "Login failed", details: error.message});
