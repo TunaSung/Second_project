@@ -113,7 +113,7 @@ function ProductItem( {product} ){
                     {/* start add btn */}
                     <motion.button className="w-auto h-8 px-2 py-2 rounded-full flex items-center"
                     onClick={handleAddClick} 
-                    initial={{backgroundColor: '#03A609'}}
+                    initial={{backgroundColor: '#537D5D'}}
                     animate={controlAddBtn}
                     >
                         {/* cloth svg */}
