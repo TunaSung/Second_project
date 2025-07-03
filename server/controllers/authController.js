@@ -2,7 +2,6 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const { User } = require('../models/Association')
 const authenticate = require('../middleware/JWT')
-const { where } = require('sequelize')
 
 exports.register = async (req, res) => {
     try {
@@ -34,6 +33,8 @@ exports.updateProfileInfo = [authenticate, async (req, res) => {
     try {
         const {username, email, phone, address} = req.body
         const user = req.user
+        // const userId = req.user?.id || 1
+        // const user = await User.findByPk(userId)
 
         if (!user) {
             return res.status(404).json({ message: "Can't find user" });
@@ -46,6 +47,46 @@ exports.updateProfileInfo = [authenticate, async (req, res) => {
         await user.save();
 
         res.status(200).json({message: `Data changed to name: ${user.username}, email: ${user.email}, phone number: ${user.phone}, address: ${user.address}`})
+    } catch (error) {
+        res.status(500).json({error: "Update failed", details: error.message})
+    }
+}]
+
+exports.updateCreditCard = [authenticate, async (req, res) => {
+    try {
+        const {creditCards} = req.body
+        const user = req.user
+        // const userId = req.user?.id || 1
+        // const user = await User.findByPk(userId)
+
+        if (!user) {
+            return res.status(404).json({ message: "Can't find user" });
+        }
+
+        user.creditCards = creditCards
+        await user.save();
+
+        res.status(200).json({message: `Data changed to Credit Crads: ${user.creditCards}`})
+    } catch (error) {
+        res.status(500).json({error: "Update failed", details: error.message})
+    }
+}]
+
+exports.updateAvatarUrl = [authenticate, async (req, res) => {
+    try {
+        const {avatarUrl} = req.body
+        const user = req.user
+        // const userId = req.user?.id || 1
+        // const user = await User.findByPk(userId)
+
+        if (!user) {
+            return res.status(404).json({ message: "Can't find user" });
+        }
+
+        user.avatarUrl = avatarUrl
+        await user.save();
+
+        res.status(200).json({message: `Data changed to Avatar URL: ${user.avatarUrl}`})
     } catch (error) {
         res.status(500).json({error: "Update failed", details: error.message})
     }
