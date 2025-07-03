@@ -1,3 +1,5 @@
+# test auth controller
+###
 POST http://localhost:3000/api/auth/register
 Content-Type: application/json
 
@@ -29,15 +31,44 @@ Content-Type: application/json
 }
 
 ###
+POST http://localhost:3000/api/auth/update/info
+Content-Type: application/json
+
+{
+    "username": "Tuna",
+    "phone": "0931910536",
+    "email": "ytsung99@gmail.com",
+    "address": "高雄市小港區漢民路695號"
+    
+}
+
+###
+POST http://localhost:3000/api/auth/update/card
+Content-Type: application/json
+
+{
+    "creditCards": ["1234-5678-9012-3456", "1111-2222-3333-4444", "9876-5432-1234-5678"]    
+}
+
+###
+POST http://localhost:3000/api/auth/update/avatar
+Content-Type: application/json
+
+{
+    "avatarUrl": "/imgae/winter.jpg"
+}
+
+# test product controller
+###
 POST http://localhost:3000/api/product/upload
 Content-Type: application/json
 
 {
-    "name": "阿罵內褲",
-    "price": 180,
-    "stock": 1,
-    "hashTags": ["2xl", "GentlyUsed"],
-    "image": null
+    "name": "老姊內褲",
+    "price": 400,
+    "stock": 2,
+    "hashTags": ["M", "網紅內褲", "9成新"],
+    "imageUrls": ["/image/124.jpg"]
 }
 
 ###
@@ -46,4 +77,8 @@ Content-Type: application/json
 
 ###
 GET  http://localhost:3000/api/product/product/2
+Content-Type: application/json
+
+###
+GET  http://localhost:3000/api/product/my-shop
 Content-Type: application/json
