@@ -64,10 +64,10 @@ POST http://localhost:3000/api/product/upload
 Content-Type: application/json
 
 {
-    "name": "老姊內褲",
-    "price": 400,
-    "stock": 2,
-    "hashTags": ["M", "網紅內褲", "9成新"],
+    "name": "老妹的原味襪子",
+    "price": 600,
+    "stock": 5,
+    "hashTags": ["哈味"],
     "imageUrls": ["/image/124.jpg"]
 }
 
@@ -81,4 +81,40 @@ Content-Type: application/json
 
 ###
 GET  http://localhost:3000/api/product/my-shop
+Content-Type: application/json
+
+# test cart controller
+###
+POST http://localhost:3000/api/cart/add
+Content-Type: application/json
+
+{
+   "productId": 3,
+   "amount": 1
+}
+
+###
+GET http://localhost:3000/api/cart/
+Content-Type: application/json
+
+###
+POST http://localhost:3000/api/cart/update
+Content-Type: application/json
+
+{
+   "productId": 3,
+   "amount": 4
+}
+
+###
+DELETE  http://localhost:3000/api/cart/delete
+Content-Type: application/json
+
+{
+   "productId": 1
+}
+
+# test event controller
+### 
+GET http://localhost:3000/api/event/
 Content-Type: application/json
