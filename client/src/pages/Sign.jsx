@@ -107,7 +107,7 @@ function Sign() {
             {/* end sign in */}
 
             {/* start sign up */}
-            <SignUp isShowed={isSignUp}/>
+            <SignUp isShowed={isSignUp} toggleSignChange={toggleSignChange}/>
             {/* end sign up */}
         </div>
     )
