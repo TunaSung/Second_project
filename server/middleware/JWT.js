@@ -11,7 +11,7 @@ const authenticate = async (req, res, next) => {
         }
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET); // 驗證 Token
-        const user = await User.findByPk(decoded.id); // 根據解碼的 ID 查找用戶資料
+        const user = await User.findByPk(decoded.userId); // 根據解碼的 ID 查找用戶資料
 
         if (!user) {
             return res.status(404).json({ message: `用戶不存在, decoded: ${JSON.stringify(decoded)}` });
