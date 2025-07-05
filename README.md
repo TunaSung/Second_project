@@ -1,5 +1,5 @@
-﻿# Second-roject  
-正在寫後端(ಥ _ ಥ)
+﻿# Second-roject   
+正在寫串後端(ಥ _ ಥ)  
 這是一個類似二手衣網站的東西  
 除了優化First Project的後端功能完整性  
 也會新增Socket.io來實現即時通訊  
