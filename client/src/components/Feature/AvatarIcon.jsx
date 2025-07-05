@@ -1,12 +1,13 @@
-import { useState, useEffect , useRef } from 'react';
+import React, { useState, useEffect , useRef } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import { UserOutlined } from '@ant-design/icons';
-import { motion, AnimatePresence } from "framer-motion";
-import { Avatar, Space } from 'antd';
+import { motion } from "framer-motion";
+import { Avatar } from 'antd';
 import { IoClose } from "react-icons/io5";
 import { useAuth } from '../Context/authContext';
 
 function useOutsideClick(ref, handler) {
+
   useEffect(() => {
     const listener = (event) => {
       // ref.current 存在，且點擊目標不在該區塊內，就觸發 handler
@@ -21,21 +22,25 @@ function useOutsideClick(ref, handler) {
   }, [ref, handler]);
 }
 
-function AvatarIcon({setIsAution}){
+function AvatarIcon(){
 
     // useState
     const [isOpen, setIsOpen] = useState(false)
     const containerRef = useRef(null);
+    const { avatarUrl, logout } = useAuth()
+    const navigate = useNavigate()
+
+    const avatarSrc = avatarUrl ? `${import.meta.env.VITE_API_URL}${avatarUrl}` : null;    
 
     // 當點擊到元件外，將isOpen = false
     useOutsideClick(containerRef, () => {
         if (isOpen) {
-        setIsOpen(false);
+            setIsOpen(false);
         }
     });
 
-    const { logout } = useAuth()
-    const navigate = useNavigate()
+    const toggleOpen = () => setIsOpen(prev => !prev);
+
     const handleLogout = () => {
         setIsOpen(!isOpen)
         logout()
@@ -54,13 +59,17 @@ function AvatarIcon({setIsAution}){
             <div className='w-full h-full'>
 
                 {/* Start Icon exchange */}
-                {isOpen ? <IoClose className='z-90 absolute text-2xl' onClick={() => setIsOpen(!isOpen)}/>
-                    :
-                    <Avatar size='small' className='z-90' 
-                    icon={<div className="bg-cover-set h-full aspect-square bg-[url('imgs/kpop/bts-be-jimin.jpg')]"/>} 
-                    onClick={() => setIsOpen(!isOpen)}/>
-                
-                }
+                {isOpen ? (
+                    <IoClose className='z-90 absolute text-2xl' onClick={() => setIsOpen(!isOpen)} />
+                    ) : (
+                    <div onClick={toggleOpen} className="p-1">
+                        <Avatar size="small"
+                        icon={!avatarUrl && <UserOutlined />}
+                        src={avatarUrl ? `${import.meta.env.VITE_API_URL}${avatarUrl}` : null}
+                        />
+
+                    </div>
+                )}
                 {/* End Icon exchange*/}
 
                 {/* Start menu */}

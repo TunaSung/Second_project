@@ -65,8 +65,8 @@ function Navbar() {
                             onMouseEnter={() => setHoverIndex(label.key)}>
                                 <Link to={`/product`} state={{labelIndex: label.key}}>
                                     <motion.p
-                                    initial={{y: 0, color: "black"}}
-                                    animate={{y: hoverIndex === label.key ? -12 : 0, color: hoverIndex === label.key ? "white" : "#D2D0A0"}}
+                                    initial={{y: 0, color: "D2D0A0"}}
+                                    animate={{y: hoverIndex === label.key ? -12 : 0, color: hoverIndex === label.key ? "#ffffff" : "#D2D0A0"}}
                                     transition={{duration: 0.2}}
                                     >
                                         {label.title}

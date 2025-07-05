@@ -1,8 +1,15 @@
 import { useState, useEffect } from "react"
+import { useAuth } from "../components/Context/authContext";
 import HistioryItem from "../components/Feature/HistoryItem"
 import { RiImageEditFill } from "react-icons/ri";
 import { MdAddCard } from "react-icons/md";
 import { motion } from "framer-motion"
+import { userInfo, updateInfo, updateAvatar } from "../services/authService";
+import { UserOutlined } from '@ant-design/icons';
+import { Avatar, Space } from 'antd';
+import { toast } from "react-toastify";
+import 'aos/dist/aos.css';
+
 
 const items = [
   {
@@ -64,20 +71,11 @@ const items = [
 
 function Personal() {
 
-    const [profile, setProfile] = useState({
-        username: "Tuna",
-        email: "ytsung99@gmail.com",
-        phone: "0931910536",
-        address: "高雄市小港區漢民路695號",
-        creditCard: ["1234"],
-        avatarUrl: "/imgs/kpop/karina-aespa-dirty-work2.jpg"
-    })
-    const atIndex = profile.email.indexOf("@");
-
-    const [fileURL, setFileURL] = useState(profile.avatarUrl)
-    const [email, setEmail] = useState(profile.email)
-    const [phone, setPhone] = useState(profile.phone)
-    const [address, setAddress] = useState(profile.address)
+    const [profile, setProfile] = useState({})
+    const [fileURL, setFileURL] = useState("");
+    const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
+    const [address, setAddress] = useState("");
     const [isEdited, setIsEdited] = useState(false)
     const [isHoverd, setIsHovered] = useState(false)
     const [isFormShow, setIsFormShow] = useState(false)
@@ -85,23 +83,76 @@ function Personal() {
     const [accountNumber, setAccountNumber] = useState("");
     const [accountName, setAccountName] = useState("");
 
+    const { setAvatarUrl } = useAuth();
 
-    const handleImgChange = (e) => {
-        const file = e.target.files[0]
-        if (!file) return;
-        const url = URL.createObjectURL(file);
-        setFileURL(url);
+    useEffect(() => {
+        const fetchProfile = async () => {
+            try {
+                const user = await userInfo()
+                setProfile(user)
+                setEmail(user.email || "")
+                setPhone(user.phone || "")
+                setAddress(user.address || "")
+                setFileURL(user.avatarUrl || "")
+            } catch (err) {
+                console.log("載入使用者資料失敗")
+            }
+        }
+        fetchProfile()
+    }, [])
+
+    if (!profile || !profile.email) {
+        return (
+            <div className="w-full h-[50vh] flex justify-center items-center my-25">
+                <l-dot-stream
+                size="60"
+                speed="2.5"
+                color="black" 
+                ></l-dot-stream>
+            </div>
+        )
     }
 
-    const handleProflieInfo = (e) =>{
+    const atIndex = profile.email.indexOf("@");
+
+
+    const handleImgChange = async (e) => {
+        const file = e.target.files[0]
+
+        if (!file) return;
+
+        try {
+            const formData = new FormData()
+            formData.append("avatar", file)
+
+            const { avatarUrl } = await updateAvatar(formData)
+            setFileURL(avatarUrl);
+            setAvatarUrl(avatarUrl);
+            toast.success("頭像更改成功")
+        } catch (error) {
+            console.error("頭像更新失敗", error);
+            toast.error("頭像更新失敗")
+        }
+
+    }
+
+    const handleProflieInfo = async (e) =>{
         e.preventDefault();
+        
         if (isEdited) {
-        setProfile(prev => ({
-            ...prev,
-            email,
-            phone,
-            address
-        }));
+            try {
+                await updateInfo(profile.username, phone, email, address)
+                setProfile(prev => ({
+                    ...prev,
+                    email,
+                    phone,
+                    address
+                }));
+                toast.success("使用者資料更新成功")
+            } catch (error) {
+                console.error("使用者資料更新失敗", error);
+                toast.error("使用者資料更新失敗")
+            }
         }
         setIsEdited(!isEdited);
     }
@@ -125,7 +176,7 @@ function Personal() {
                     <div className="w-4/5 flex justify-center items-center">
 
                         {/* Start info */}
-                        <form action="" className="w-full">
+                        <form onSubmit={handleProflieInfo} className="w-full">
                             <table className="table-auto w-full">
 
                                 {/* Start username */}
@@ -212,7 +263,7 @@ function Personal() {
                                     <td className=""></td>
                                     <td className="">
                                         <div>
-                                            <button onClick={handleProflieInfo} type="submit" className="border px-5 py-2 rounded">{isEdited ? 'Save' : 'Edit'}</button>
+                                            <button type="submit" className="border px-5 py-2 rounded">{isEdited ? 'Save' : 'Edit'}</button>
                                         </div>
                                     </td>
                                 </tr>
@@ -230,9 +281,16 @@ function Personal() {
                                 onMouseEnter={() => setIsHovered(true)} 
                                 onMouseLeave={() => setIsHovered(false)}
                                 >
-                                    <div className="bg-cover-set w-30 aspect-square rounded-full " 
-                                    style={{backgroundImage: `url(${fileURL})`}}
-                                    />
+                                    {fileURL === "" ?
+                                        <Space size={16}>
+                                            <Avatar size={120} icon={<UserOutlined />} />
+                                        </Space>
+                                        :
+                                        <div className="bg-cover-set w-30 border aspect-square rounded-full " 
+                                        style={{backgroundImage: `url(${import.meta.env.VITE_API_URL}${fileURL})`}}
+                                        />
+                                    }
+                    
                                     <motion.label htmlFor="file-input"
                                         className="absolute-mid w-full bg-[#f1f0c7]/30 aspect-square rounded-full border flex justify-center items-center cursor-pointer z-50"
                                         initial={{scale: 0}}

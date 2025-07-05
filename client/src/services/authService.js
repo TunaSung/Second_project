@@ -47,3 +47,43 @@ export const signIn = async (email, password) => {
         throw error.response?.data?.message || "Sign in failed";
     }
 }
+
+// get user info
+export const userInfo = async () => {
+    try {
+        const response = await api.get('/auth/')
+        return response.data.user
+    } catch (error) {
+        const message = error.response?.data?.message || error.message || "User info not found";
+        console.error("userInfo error:", message);
+        throw error.response?.data?.message || "User info not found";
+    }
+}
+
+// update avatar
+export const updateInfo = async (username, phone, email, address) => {
+    try {
+        const response = await api.put('/auth/update/info', {username, phone, email, address})
+        return response.data
+    } catch (error) {
+        const message = error.response?.data?.message || error.message || "Update info failed";
+        console.error("update error:", message);
+        throw error.response?.data?.message || "Update info failed";
+    }
+}
+
+// update avatar
+export const updateAvatar = async (formData) => {
+    try {
+        const response = await api.post('/auth/update/avatar', formData, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        })
+        return response.data
+    } catch (error) {
+        const message = error.response?.data?.message || error.message || "Update avater failed";
+        console.error("update error:", message);
+        throw error.response?.data?.message || "Update avater failed";
+    }
+}

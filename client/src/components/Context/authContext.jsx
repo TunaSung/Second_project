@@ -1,31 +1,55 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { saveToken, clearToken } from "../../services/authService";
+import { userInfo } from '../../services/authService';
 
 const AuthContext = createContext()
 
-export const AuthProvider = ({ children }) => {
+export default function AuthProvider({ children }) {
     const [isAuthenticated, setIsAuthenticated] = useState(false)
+    const [avatarUrl, setAvatarUrl] = useState("");
 
     useEffect(() => {
-        const token = localStorage.getItem("token")
-        setIsAuthenticated(!!token) // !! null就回傳false，反之則是true
-    }, [])
+        const fetchUser = async () => {
+            const token = localStorage.getItem("token")
+            setIsAuthenticated(!!token)
 
-    const login = (token) => {
+            if (!token) return;
+
+            try {
+                const user = await userInfo();
+                setAvatarUrl(user.avatarUrl || "");
+            } catch (err) {
+                console.warn("載入使用者失敗（可能未登入）");
+            }
+        };
+
+        fetchUser();
+    }, []);
+
+    const login = async (token) => {
         saveToken(token)
         setIsAuthenticated(true)
+        try {
+            const user = await userInfo();
+            setAvatarUrl(user.avatarUrl || "");
+        } catch (err) {
+            console.warn("載入使用者失敗（可能未登入）");
+        }
     }
 
     const logout = () => {
         clearToken()
         setIsAuthenticated(false)
+        setAvatarUrl("")
     }
     
     return (
-        <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+        <AuthContext.Provider value={{ isAuthenticated, avatarUrl, setAvatarUrl, login, logout }}>
             {children}
         </AuthContext.Provider>
     )
 }
 
-export const useAuth = () => useContext(AuthContext)
+export function useAuth() {
+  return useContext(AuthContext);
+}

@@ -5,6 +5,7 @@ const productRoute = require('./routes/productRoute')
 const cartRoute = require('./routes/cartRoute')
 const eventRoute = require('./routes/eventRoute')
 const sqlize = require('./config/database')
+const path = require('path')
 
 const app = express()
 app.use(cors({
@@ -13,6 +14,7 @@ app.use(cors({
 }));
 app.use(express.json())
 
+app.use("/uploads", express.static(path.join(__dirname, "public", "uploads")));
 app.use('/api/auth', authRoute)
 app.use('/api/product', productRoute)
 app.use('/api/cart', cartRoute)
