@@ -88,3 +88,24 @@ exports.uploadProudct = [authenticate, async (req, res) => {
         res.status(500).json({error: "Upload failed", details: error.message}) 
     }
 }]
+
+
+// 更改上架狀態
+exports.updateAvailable = async (req, res) => {
+    try {
+        const { productId } = req.body
+
+        const product = await Product.findByPk(productId)
+
+        if(!product){
+            res.status(404).json({message: "Product not found"})
+        }
+
+        product.isAvailable = !product.isAvailable
+        await product.save()
+
+        res.status(200).json({message: "Update successfullly"})
+    } catch (error) {
+        res.status(500).json({error: "Uupdate failed", details:error.message})
+    }
+}
