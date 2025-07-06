@@ -28,3 +28,25 @@ export const getMyShop = async () => {
         throw error.response?.data?.message || "get failed";
     }
 }
+
+export const updateAvailable = async (productId) => {
+    try {
+        const response = await api.post('/product/update/available', {productId})
+        return response.data
+    } catch (error) {
+        const message = error.response?.data?.message || error.message || "update failed";
+        console.error("update error:", message);
+        throw error.response?.data?.message || "update failed";
+    }
+}
+
+export const getAllProduct = async () => {
+    try {
+        const response = await api.get('/product/products')
+        return response.data.products
+    } catch (error) {
+        const message = error.response?.data?.message || error.message || "get product failed";
+        console.error("get product error:", message);
+        throw error.response?.data?.message || "get product failed";
+    }
+}

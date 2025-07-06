@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useLocation } from 'react-router-dom';
+import { getAllProduct } from "../services/productService";
+import 'aos/dist/aos.css';
 
 // UI & icons
 import ProductItem from "../components/Feature/ProductItem";
@@ -21,20 +23,45 @@ function Product() {
     const labelIndex = location.state?.labelIndex ?? 1;
 
     // useState
+    const [products, setProducts] = useState([])
     const [clickIndex, setClickIndex] = useState(labelIndex);
     const [hovered, setHovered] = useState(null);
     const [page, setPage] = useState(1);
     const isFirstRender = useRef(true)
+    const prevPage = useRef(null);
 
-    // example
-    const products = Array.from({ length: 25 }, (_, i) => ({
-        id: i + 1,
-        name: `Product ${i+1}`,
-        price: 999,
-        stock: 1,
-        hashTag:  ["#GentlyUsed", "#XL", "#Fashion", "#Sale", "#Discount"],
-        imgUrl: '/imgs/kpop/tzuyu-twice-with-youth.jpg'
-    }));
+    useEffect(() => {
+        if (isFirstRender.current) { //剛進入頁面時先用這個擋window.scrollTo
+            isFirstRender.current = false
+        } else if (prevPage.current !== page){ 
+            window.scrollTo(0,175);
+        }
+        prevPage.current = page; //會先跑這個再跑上面的else if
+    },[page])
+
+    useEffect(() => {
+        try {
+            const fetchProduct = async () => {
+                const data = await getAllProduct()
+                setProducts(data)
+            }
+            fetchProduct()
+        } catch (err) {
+            console.log('商品載入失敗', err)
+        }
+    },[])
+
+    if (products.length === 0) {
+        return (
+            <div className="w-full h-[50vh] flex justify-center items-center my-25">
+                <l-dot-stream
+                size="60"
+                speed="2.5"
+                color="black" 
+                ></l-dot-stream>
+            </div>
+        )
+    }
 
     // Grid dim
     // Dynamic adjustment 
@@ -46,16 +73,6 @@ function Product() {
     const endIndex = startIndex + itemsPerPage;
     const currentProducts = products.slice(startIndex, endIndex);;
     const totalPage = (products.length < itemsPerPage) ? 1 : Math.ceil(products.length/itemsPerPage);
-
-    const prevPage = useRef(null);
-    useEffect(() => {
-        if (isFirstRender.current) { //剛進入頁面時先用這個擋window.scrollTo
-            isFirstRender.current = false
-        } else if (prevPage.current !== page){ 
-            window.scrollTo(0,175);
-        }
-        prevPage.current = page; //會先跑這個再跑上面的else if
-    },[page])
     
     // Product categories
     const tops = ["T-shirt", "Shirt", "Blouse", "Tank top", "Vest", "Sweater", "Jumper", "Hoodie", "Jacket", "Blazer", "Suit jacket", "Sleeveless top"];
@@ -112,16 +129,16 @@ function Product() {
             {/* end category */}
 
             {/* start product list */}
-            <div className={`grid w-[75%] max-lg:w-[90%] max-md:w-[98%] mx-auto rounded-2xl transition-all duration-350 gap-1 border`}
+            <div className={`grid w-[72%] max-lg:w-[90%] max-md:w-[98%] mx-auto rounded-2xl transition-all duration-350 gap-1 border`}
             style={{ height: `${wrapperHeight}px`,gridTemplateRows: getRowSizes()}}
             >
 
                 {/* start category swiper */}
-                <div id="swiper-product-category" className="absolute top-5 h-1/3 -left-35 w-35 pl-0 border border-white rounded-l-2xl bg-[#9EBC8A]">
+                <div id="swiper-product-category" className="absolute top-5 h-40 -left-35 w-35 pl-0 border border-[#eceab8] border-r-black rounded-l-2xl bg-[#9EBC8A]">
                     <Swiper
                         loop={true}
                         direction={'vertical'}
-                        slidesPerView={5}
+                        slidesPerView={4}
                         spaceBetween={3}
                         mousewheel={{ forceToAxis: true, sensitivity: 2, releaseOnEdges: true }}
                         centeredSlides={true}
