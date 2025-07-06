@@ -60,7 +60,7 @@ export const userInfo = async () => {
     }
 }
 
-// update avatar
+// update info
 export const updateInfo = async (username, phone, email, address) => {
     try {
         const response = await api.put('/auth/update/info', {username, phone, email, address})
