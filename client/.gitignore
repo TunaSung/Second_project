@@ -28,5 +28,7 @@ dist-ssr
 # environment variables
 .env
 .env.*
-client/.env*
-server/.env*
+client/.env
+client/.env.*
+server/.env
+server/.env.*
