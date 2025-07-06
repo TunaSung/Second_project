@@ -1,11 +1,11 @@
 @import 'tailwindcss';
 
 /* home page jumbotron swiper */
-.swiper-pagination-bullet {
-  @apply w-2 h-2 bg-white opacity-50 mx-1 rounded-full transition-all;
+#kpop-swiper .swiper-pagination-bullet {
+  @apply w-2 h-2 bg-[#f8f7cf] opacity-50 mx-1 rounded-full transition-all;
 }
-.swiper-pagination-bullet-active{
-  @apply w-8 h-2 mx-1 rounded-2xl opacity-100 bg-orange-500
+#kpop-swiper .swiper-pagination-bullet-active{
+  @apply w-8 h-2 mx-1 rounded-2xl opacity-100 bg-[#9EBC8A]
 }
 
 /* swiper of home page events and arrivals  */
@@ -42,4 +42,42 @@
 #swiper-product-category .swiper-slide-active {
   color: red;
   font-size: larger;
+}
+
+/* swiper of my shop img */
+
+#my-shop-img .swiper-wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+#my-shop-img .swiper-slide {
+  width: 100%;
+  height: 100%;
+}
+
+#my-shop-img .swiper-pagination {
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  width: 100%;
+  height: 15px;
+}
+
+#my-shop-img .swiper-pagination-bullet {
+  background-color: #ffffff;
+  border-radius: 10px;
+  height: 3px;
+  width: 14%;
+}
+
+#my-shop-img .swiper-pagination-bullet-active {
+  background-color: #537D5D;
+  height: 3px;
+  width: 30%;
+}
+
+#my-shop-img .swiper-button-next::after, #my-shop-img .swiper-button-prev::after {
+  position: relative;
+  scale: 0.5;
 }
