@@ -4,24 +4,25 @@ import { MdDelete } from "react-icons/md";
 import { MdModeEdit } from "react-icons/md";
 // import { updateCartItemQuantity, removeCartItem } from "../../service/cartService"
 
-function ShopItem({name, price, sale, stock}){
+// Import Swiper React components
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/effect-cube';
+import 'swiper/css/pagination';
+import '../../style/Swiper.css'
+
+import { EffectFade, Pagination } from 'swiper/modules';
+
+function ShopItem({isAvailable, name, price, sale, stock, hashTags, imageUrls}){
 
     const [isDelete, setIsDelete] = useState(false)
-
-    const hashTags = ["#GentlyUsed", "#XL", "#Fashion", "#Sale", "#Discount", "#Fashion", "#Sale", "#Discount", "#Discount", "#Fashion", "#Sale", "#Discount"];
 
     const handleDelete = async () => {
         setIsDelete(!isDelete)
         setAmount(0)
-        // await removeCartItem(id); // 刪除後端的商品
-        // if (isChecked) {
-            // onAmountChange()
-        // }
     };
-
-    // const handleChecked = async () => {
-    //     onClickChange(!isChecked, id)
-    // }
 
     if (isDelete) {
         return null
@@ -32,13 +33,29 @@ function ShopItem({name, price, sale, stock}){
         <div id="cart-items">
             <div id="container" className="mt-4 w-full border py-4 pl-10 hover:bg-[#537D5D] grid grid-cols-[3fr_1fr_1fr_1fr_2fr_1fr] items-center">
                 <div className="flex items-center">
-                    <input type="checkbox"  id="cart-item" className="mr-3 scale-150"
-                    // onChange={e => onClickChange(e.target.checked, id)}
+                    <button className='w-5 border aspect-square rounded-full' 
+                    style={{backgroundColor: isAvailable ? 'green' : 'red'}}
                     />
-                    <a href="#!" className="w-20 aspect-square bg-[url('/imgs/kpop/bts-be-jimin.jpg')] bg-cover-set mr-3"/>
+                    <Swiper
+                        id="my-shop-img"
+                        loop={true}
+                        effect={'fade'}
+                        grabCursor={true}
+                        pagination={{clickable: true}}
+                        modules={[ EffectFade, Pagination ]}
+                        className="w-20 aspect-square flex justify-center items-center"
+                    >
+                        {imageUrls.map((fileUrl, index) => (
+                            <SwiperSlide key={index}>
+                                <div className="w-20 aspect-square bg-cover-set mr-3"
+                                style={{backgroundImage: `url(${import.meta.env.VITE_API_URL}${fileUrl})`}}
+                                />
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
                     <a href="#!">
                         <label htmlFor="cart-item">
-                            <h3 id="cart-item-title" className="max-w-50 line-clamp-2">{name}</h3>
+                            <h3 id="cart-item-title" className="w-30 line-clamp-2">{name}</h3>
                         </label>
                     </a>
                 </div>
@@ -58,9 +75,6 @@ function ShopItem({name, price, sale, stock}){
                     ))}
                 </div>
                 <div className="flex justify-center items-center gap-3">
-                    <button>
-                        <MdDelete onClick={handleDelete} className="hover:text-red-600 scale-125"/>
-                    </button>
                     <button>
                         <MdModeEdit className="hover:text-sky-400 scale-125"/>
                     </button>

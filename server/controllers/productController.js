@@ -1,5 +1,8 @@
 const { Product } = require('../models/Association')
 const authenticate = require('../middleware/JWT');
+const multer = require("multer");
+const path = require("path");
+const fs = require("fs");
 
 exports.getAllProudcts = async (req, res) => {
     try {
@@ -24,11 +27,15 @@ exports.getOneProudct = async (req, res) => {
     }
 }
 
-exports.getMyShop = async (req, res) => {
+exports.getMyShop = [authenticate, async (req, res) => {
     try {
-        const userId = req.user?.id || 1
+        const userId = req.user.id
 
-        const product = await Product.findAll({where: {sellerId: userId}});
+        const product = await Product.findAll({
+            where: {sellerId: userId},
+            order: [['createdAt', 'DESC']]
+        });
+        
         if(product){
             res.status(201).json({product});
         } else {
@@ -37,14 +44,34 @@ exports.getMyShop = async (req, res) => {
     } catch (error) {
         res.status(500).json({error: "fetch products failed", details: error.message}) 
     }
-}
+}]
 
+// 建立儲存目錄（第一次啟動時會自動建立）
+const uploadDir = path.join(__dirname, "..", "public", "uploads", "products");
+if (!fs.existsSync(uploadDir)){
+    fs.mkdirSync(uploadDir, { recursive: true });
+} 
 
+// 設定 multer 儲存設定
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, uploadDir);
+  },
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname);
+    cb(null, `product${Date.now()}${ext}`);
+  },
+});
 
-exports.uploadProudct = async (req, res) => {
+const upload = multer({ storage });
+exports.multiUpload = upload.array("imageUrls", 5);
+
+exports.uploadProudct = [authenticate, async (req, res) => {
     try {
-        const {name, price, stock, hashTags, imageUrls} = req.body
-        const userId = req.user?.id || 1
+        const {name, price, stock, hashTags} = req.body
+        const userId = req.user.id
+        
+        const imageUrls = req.files.map(file => `/uploads/products/${file.filename}`);
         
         await Product.create({
             name: name,
@@ -53,10 +80,11 @@ exports.uploadProudct = async (req, res) => {
             hashTags: hashTags,
             imageUrls: imageUrls,
             sellerId: userId
+            
         })
 
         res.status(200).json({message: "Upload successfully"})
     } catch (error) {
         res.status(500).json({error: "Upload failed", details: error.message}) 
     }
-}
+}]

@@ -1,80 +1,84 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { uploadProduct, getMyShop } from "../services/productService";
+import { toast } from "react-toastify";
 // UI
 import ShopItem from "../components/Feature/ShopItem";
 import { FaPlus } from "react-icons/fa";
 import { LuImagePlus } from "react-icons/lu";
 import { MdClose } from "react-icons/md";
 
-// item example
-const items = [
-  {
-    id: 1,
-    name: "Vintage 牛仔外套",
-    hashtag: "#vintage #denim",
-    price: 1200,
-    stock: 2,
-    sale: 0
-  },
-  {
-    id: 2,
-    name: "復古格紋襯衫",
-    hashtag: "#retro #plaid #shirt",
-    price: 550,
-    stock: 4,
-    sale: 0
-  },
-  {
-    id: 3,
-    name: "二手皮革夾克",
-    hashtag: "#leather #jacket",
-    price: 1800,
-    stock: 1,
-    sale: 0
-  },
-  {
-    id: 4,
-    name: "韓系寬鬆針織衫",
-    hashtag: "#kstyle #knitwear",
-    price: 600,
-    stock: 3,
-    sale: 0
-  },
-  {
-    id: 5,
-    name: "街頭風連帽衛衣",
-    hashtag: "#streetwear #hoodie",
-    price: 700,
-    stock: 6,
-    sale: 0
-  },
-  {
-    id: 6,
-    name: "優雅波點洋裝",
-    hashtag: "#elegant #polkadot #dress",
-    price: 950,
-    stock: 2,
-    sale: 0
-  }
-];
-
 function ProductInput() {
 
-    const [fileNames, setFileNames] = useState([])
     const [name, setName] = useState('')
-    const [price, setPrice] = useState('')
+    const [price, setPrice] = useState(0)
     const [stock, setStock] = useState(0)
-    const [hashTags, setHashTags] = useState([])
+    const [imageUrls, setImageUrls] = useState([])
+    const [hashTags, setHashTags] = useState('')
+    const [items, setItems] = useState([])
     const [isAddProductOpen, setIsAddProductOpen] = useState(false)
+    
+    useEffect(() => {
+        const fetchMyShop = async () => {
+            try {
+                const myShop = await getMyShop()
+                console.log(myShop)
+                setItems(myShop)
+            } catch (err) {
+                console.log('資料匯入失敗', err)
+                toast.error('資料匯入失敗', err)
+            }
+        }
+        fetchMyShop()
+    }, [])
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+
+        console.log(name, price, stock, hashTags, imageUrls)
+        try {
+            const formData = new FormData()
+
+            formData.append('name', name)
+            formData.append('price', price)
+            formData.append('stock', stock)
+            formData.append('hashTags', hashTags)
+            
+            imageUrls.forEach((file) => {
+                formData.append('imageUrls', file)
+            })
+
+            const upload = await uploadProduct(formData)
+            toast.success('商品上傳成功')
+
+            setIsAddProductOpen(false)
+            setName("")
+            setPrice(0)
+            setStock(0)
+            setHashTags('')
+            setImageUrls([])
+
+            await getMyShop().then(setItems)
+
+        } catch (error) {
+            console.log('商品上傳失敗', error)
+            toast.error('商品上傳失敗')
+        }
+    }
 
     const handleChange = (e) => {
-        setFileNames([])
+        setImageUrls([])
         const file = Array.from(e.target.files)
-        setFileNames(file)
+        setImageUrls(file)
     }
 
     const handdleClose = () => {
-        // setIsAddProductOpen(false)
+        setIsAddProductOpen(false)
+        setName('')
+        setPrice(0)
+        setStock(0)
+        setHashTags('')
+        setImageUrls([])
     }
 
     return (
@@ -91,17 +95,17 @@ function ProductInput() {
             }}
             >
                 
-                <form className="w-full h-full p-3 flex flex-col justify-center items-center rounded-xl">
-                    <MdClose onClick={() => setIsAddProductOpen(false)} className="absolute right-3 top-3 scale-150 hover:text-red-500 transition-all duration-250 cursor-pointer"/>
+                <form onSubmit={handleSubmit} className="w-full h-full p-3 flex flex-col justify-center items-center rounded-xl">
+                    <MdClose onClick={handdleClose} className="absolute right-3 top-3 scale-150 hover:text-red-500 transition-all duration-250 cursor-pointer"/>
                     <div className="mb-8 flex flex-col justify-center items-center">
                         <label htmlFor="file-input"
-                            className="p-10 border rounded-full cursor-pointer"
+                            className="p-10 border rounded-full cursor-pointer hover:bg-[#9EBC8A] transition-all duration-200"
                         >
                             <LuImagePlus className="scale-150"/>
                         </label>
-                        {fileNames.length > 0 && (
+                        {imageUrls.length > 0 && (
                             <ul className="mt-4 h-10 space-x-1 text-gray-700 overflow-y-auto">
-                            {fileNames.map((file, idx) => (
+                            {imageUrls.map((file, idx) => (
                                 <li key={idx}>{file.name}</li>   // 用 file.name 顯示檔名
                             ))}
                             </ul>
@@ -140,7 +144,7 @@ function ProductInput() {
                             className="border rounded-sm pl-1 focus:bg-[#f8f7cf] focus:text-[#537D5D]"/>
                         </div>
                     </div>
-                    <button type="submit" onClick={() => setIsAddProductOpen(false)} className="mt-10 border py-2 px-6 rounded-2xl
+                    <button type="submit" className="mt-10 border py-2 px-6 rounded-2xl
                      hover:bg-[#f8f7cf] hover:text-[#537D5D] hover:border-[#9bda8b] transition-all duration-200">
                         Add to shop
                     </button>
@@ -193,12 +197,7 @@ function ProductInput() {
 
                 {/* Start subtitle */}
                 <div id="classification" className="border w-full pl-10 py-4 mt-4 grid grid-cols-[3fr_1fr_1fr_1fr_2fr_1fr]">
-                    <div>
-                        <input
-                            type="checkbox"
-                            className="mr-3 scale-150"
-                        />
-                    </div>
+                    <h3 className="text-start">Status</h3>
                     <h3 className="text-center">Price</h3>
                     <h3 className="text-center">Sale</h3>
                     <h3 className="text-center">Stock</h3>
@@ -211,8 +210,17 @@ function ProductInput() {
 
                 {/* Start shop item */}
                 <div id="cart-item" className="w-full ">
-                    {items.map((item, index) => (
-                        <ShopItem key={item.id} name={item.name} price={item.price} stock={item.stock} sale={item.sale}/> 
+                    {Array.isArray(items) && items.map((item) => (
+                        <ShopItem
+                            key={item.id}
+                            name={item.name}
+                            price={item.price}
+                            stock={item.stock}
+                            hashTags={item.hashTags}
+                            imageUrls={item.imageUrls}
+                            sale={item.sale}
+                            isAvailable={item.isAvailable}
+                        />
                     ))}
                 </div>
                 {/* End shop item */}
@@ -221,10 +229,7 @@ function ProductInput() {
                 {/* Start Select/Deselect All (bottom) */}
                 <div id="classification" className="border w-full pl-10 pr-3 py-1 mt-5 flex justify-between">
                     <div className="flex items-center py-3">
-                        <input
-                            type="checkbox"
-                            className="mr-3 scale-150"
-                        />
+                        <h3 className="text-start">Status</h3>
                     </div>
                 </div>
                 {/* End Select/Deselect All (bottom) */}
