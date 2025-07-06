@@ -66,14 +66,14 @@ Content-Type: application/json
 # test product controller
 ###
 POST http://localhost:3000/api/product/upload
-Content-Type: application/json
+Content-Type: multipart/form-data
 
 {
     "name": "老妹的原味襪子",
     "price": 600,
     "stock": 5,
-    "hashTags": ["哈味"],
-    "imageUrls": ["/image/124.jpg"]
+    "hashTags": "哈味",
+    "imageUrls": ["/uploads/products/aaa.jpg","/uploads/products/bbb.jpg"]
 }
 
 ###
