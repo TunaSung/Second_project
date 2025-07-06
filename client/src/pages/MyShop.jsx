@@ -213,13 +213,14 @@ function ProductInput() {
                     {Array.isArray(items) && items.map((item) => (
                         <ShopItem
                             key={item.id}
+                            productId={item.id}
                             name={item.name}
                             price={item.price}
                             stock={item.stock}
                             hashTags={item.hashTags}
                             imageUrls={item.imageUrls}
                             sale={item.sale}
-                            isAvailable={item.isAvailable}
+                            available={item.isAvailable}
                         />
                     ))}
                 </div>

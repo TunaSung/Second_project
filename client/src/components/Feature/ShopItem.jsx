@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { FaPlus, FaMinus } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { MdModeEdit } from "react-icons/md";
+import { updateAvailable } from "../../services/productService";
 // import { updateCartItemQuantity, removeCartItem } from "../../service/cartService"
 
 // Import Swiper React components
@@ -14,26 +15,48 @@ import 'swiper/css/pagination';
 import '../../style/Swiper.css'
 
 import { EffectFade, Pagination } from 'swiper/modules';
+import { toast } from "react-toastify";
 
-function ShopItem({isAvailable, name, price, sale, stock, hashTags, imageUrls}){
+function ShopItem({productId, available, name, price, sale, stock, hashTags, imageUrls}){
 
-    const [isDelete, setIsDelete] = useState(false)
+    const [isAvailable, setIsAvailable] = useState(available)
+    const [isConfirmOpen, setIsConfirmOpen] = useState(false)
 
-    const handleDelete = async () => {
-        setIsDelete(!isDelete)
-        setAmount(0)
-    };
-
-    if (isDelete) {
-        return null
+    const handleConfirmOpen = () => {
+        setIsConfirmOpen(!isConfirmOpen)
     }
+
+    const handelAvailabe = async (productId) => {
+        try {
+            const update = await updateAvailable(productId)
+            setIsAvailable(!isAvailable)
+            setIsConfirmOpen(false)
+            toast.success(`商品已${!isAvailable ? '上架' : '下架'}`)
+        } catch (err) {
+            console.log("狀態更改失敗", err)
+            toast.error("狀態更改失敗")
+            
+        }
+    }
+
 
 
     return(
         <div id="cart-items">
             <div id="container" className="mt-4 w-full border py-4 pl-10 hover:bg-[#537D5D] grid grid-cols-[3fr_1fr_1fr_1fr_2fr_1fr] items-center">
                 <div className="flex items-center">
-                    <button className='w-5 border aspect-square rounded-full' 
+                    {isConfirmOpen ? 
+                    <div className="fixed-mid w-80 h-30 p-5 flex flex-col justify-center items-center border bg-[#f8f7cf]">
+                        <p className="text-black w-full mb-4">Confirm changing the product status?</p>
+                        <div className="flex justify-center items-center gap-rwd">
+                            <button onClick={() => handelAvailabe(productId)} className="w-20 h-10 border bg-[#537D5D]">Confirm</button>
+                            <button onClick={handleConfirmOpen} className="w-20 h-10 border bg-[#537D5D]">Cancal</button>
+                        </div>
+                    </div>
+                    :
+                    null
+                    }
+                    <button onClick={handleConfirmOpen} className='w-5 border aspect-square rounded-full drop-shadow-[1px_1px_2px_rgba(0,0,0,0.8)]' 
                     style={{backgroundColor: isAvailable ? 'green' : 'red'}}
                     />
                     <Swiper
