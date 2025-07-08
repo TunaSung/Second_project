@@ -1,15 +1,22 @@
 const { Product } = require('../models/Association')
 const authenticate = require('../middleware/JWT');
+const { Op } = require("sequelize");
 
-exports.getAllProudcts = async (req, res) => {
+exports.getAllProudcts = [authenticate, async (req, res) => {
     try {
-        const products = await Product.findAll({where: {isAvailable: true}});
+        const userId = req.user.id
+        const products = await Product.findAll({
+            where: {
+                isAvailable: true,
+                sellerId: { [Op.ne]: userId }
+            }
+        });
         res.status(200).json({products})
     } catch (error) {
         res.status(500).json({error: "fetch products failed", details: error.message})
         
     }
-}
+}]
 
 exports.getOneProudct = async (req, res) => {
     try {

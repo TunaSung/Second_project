@@ -180,7 +180,7 @@ function ShopItem({productId, available, itemName, itemPrice, sale, itemStock, i
             <div id="container" className="mt-4 w-full border py-4 pl-10 hover:bg-[#537D5D] grid grid-cols-[3fr_1fr_1fr_1fr_2fr_1fr] items-center">
                 <div className="flex items-center">
                     {isConfirmOpen ? 
-                    <div className="fixed-mid w-80 h-30 p-5 flex flex-col justify-center items-center border bg-[#f8f7cf]">
+                    <div className="fixed-mid w-80 h-30 p-5 z-100 flex flex-col justify-center items-center border bg-[#f8f7cf]">
                         <p className="text-black w-full mb-4">Confirm changing the product status?</p>
                         <div className="flex justify-center items-center gap-rwd">
                             <button onClick={() => toggleAvailabe(productId)} className="w-20 h-10 border bg-[#537D5D]">Confirm</button>
