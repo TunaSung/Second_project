@@ -65,7 +65,7 @@ Content-Type: application/json
 
 # test product controller
 ###
-POST http://localhost:3000/api/product/upload
+POST http://localhost:3000/api/product/upload/available
 Content-Type: multipart/form-data
 
 {
@@ -74,6 +74,19 @@ Content-Type: multipart/form-data
     "stock": 5,
     "hashTags": "哈味",
     "imageUrls": ["/uploads/products/aaa.jpg","/uploads/products/bbb.jpg"]
+}
+
+###
+POST http://localhost:3000/api/product/upload/my-shop
+Content-Type: multipart/form-data
+
+{
+    "productId": 5,
+    "name": "子瑜的限量版內衣",
+    "price": 1200,
+    "stock": 1,
+    "hashTags": "twice,tzuyu,M,Kpop",
+    "imageUrls": "tzuyu-twice-with-youth.jpg"
 }
 
 ###
@@ -107,8 +120,8 @@ POST http://localhost:3000/api/cart/update
 Content-Type: application/json
 
 {
-   "productId": 3,
-   "amount": 4
+   "productId": 4,
+   "amount": 1
 }
 
 ###
@@ -116,7 +129,7 @@ DELETE  http://localhost:3000/api/cart/delete
 Content-Type: application/json
 
 {
-   "productId": 1
+   "productId": 4
 }
 
 # test event controller
