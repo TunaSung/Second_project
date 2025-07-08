@@ -22,10 +22,10 @@ export default function AuthProvider({ children }) {
                 setAvatarUrl(user.avatarUrl || "");
                 const cart = await getCart()
                 if(cart.pios.length > 0) {
-                    let productList = cart.pios
-                    productList.reverse()
+                    const productList = cart.pios.reverse()
                     setCartList(productList)
                 }
+                console.log(cartList)
                 console.log('載入使用者資料成功')
             } catch (err) {
                 alert("載入使用者資料失敗", err);
@@ -38,8 +38,7 @@ export default function AuthProvider({ children }) {
     const toggleCart = async () => {
         try {
             const cart = await getCart()
-            let productList = cart.pios
-            productList.reverse()
+            const productList = cart.pios.reverse()
             setCartList(productList)
             console.log('更改購物車成功')
         } catch (err) {
@@ -54,7 +53,8 @@ export default function AuthProvider({ children }) {
             const user = await userInfo();
             setAvatarUrl(user.avatarUrl || "");
             const cart = await getCart()
-            setCartList(cart)
+            const productList = cart.pios.reverse()
+            setCartList(productList)
             console.log('載入使用者資料成功')
         } catch (err) {
             console.warn("載入使用者資料失敗");
