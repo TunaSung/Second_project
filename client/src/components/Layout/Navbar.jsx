@@ -14,7 +14,7 @@ function Navbar() {
 
     // useState
     const [hoverIndex, setHoverIndex] = useState(null)
-    const [isCartClicked, setIsCartClicked] = useState(false)
+    const [isCartOpen, setIsCartOpen] = useState(false)
     const [search, setSearch] = useState("");
 
     const { isAuthenticated } = useAuth()
@@ -33,7 +33,7 @@ function Navbar() {
 
     // functions
     const handleCartClick = () => {
-        setIsCartClicked(true)
+        setIsCartOpen(true)
     }
 
     const toggleSearch = (e) => {
@@ -46,7 +46,7 @@ function Navbar() {
         <nav className="w-full h-20 top-0 right-0 bg-[#537D5D] z-110">
 
             {/* start cart */}
-            <Cart isClicked={isCartClicked} setIsClicked={setIsCartClicked}/>
+            <Cart isCartOpen={isCartOpen} setIsCartOpen={setIsCartOpen}/>
             {/* end cart */}
 
 

@@ -15,7 +15,7 @@ import 'swiper/css/pagination';
 import '../../style/Swiper.css'
 
 
-function CardItem( {productId, title, amount, price, stock, hashTags, imageUrls} ) {
+function CardItem( {productId, title, amount, price, stock, hashTags, imageUrls, onClickChange, isChecked} ) {
 
     const [itemAmount, setItemAmount] = useState(amount)
     const { toggleCart } = useAuth()
@@ -54,7 +54,9 @@ function CardItem( {productId, title, amount, price, stock, hashTags, imageUrls}
     }
 
     return(
-        <div className="border-b w-full py-4 grid grid-cols-[1fr_3fr] gap-3">
+        <div className="border-b py-4 grid grid-cols-[1fr_6fr_12fr] gap-3">
+
+            <input type="checkbox" checked={isChecked} onChange={e => onClickChange(e.target.checked, productId)} className="accent-[#537D5D]"/>
             {/* start product img */}
             <Swiper
                 id="product-img"
@@ -79,7 +81,7 @@ function CardItem( {productId, title, amount, price, stock, hashTags, imageUrls}
             <div className="flex flex-col justify-between h-full text-[#1f4428] gap-3">
 
                 {/* start info detail */}
-                <div className="flex justify-between gap-5">
+                <div className="flex justify-between">
                     <div className="flex flex-col flex-wrap">
                         <p>{title}</p>
                         <div className="mb-2 flex flex-wrap">
