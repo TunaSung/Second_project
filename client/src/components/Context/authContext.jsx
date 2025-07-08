@@ -1,12 +1,14 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { saveToken, clearToken } from "../../services/authService";
 import { userInfo } from '../../services/authService';
+import { getCart } from "../../services/cartService";
 
 const AuthContext = createContext()
 
 export default function AuthProvider({ children }) {
     const [isAuthenticated, setIsAuthenticated] = useState(false)
     const [avatarUrl, setAvatarUrl] = useState("");
+    const [cartList, setCartList] = useState([])
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -18,13 +20,32 @@ export default function AuthProvider({ children }) {
             try {
                 const user = await userInfo();
                 setAvatarUrl(user.avatarUrl || "");
+                const cart = await getCart()
+                if(cart.pios.length > 0) {
+                    let productList = cart.pios
+                    productList.reverse()
+                    setCartList(productList)
+                }
+                console.log('載入使用者資料成功')
             } catch (err) {
-                console.warn("載入使用者失敗（可能未登入）");
+                alert("載入使用者資料失敗", err);
             }
         };
 
         fetchUser();
     }, []);
+
+    const toggleCart = async () => {
+        try {
+            const cart = await getCart()
+            let productList = cart.pios
+            productList.reverse()
+            setCartList(productList)
+            console.log('更改購物車成功')
+        } catch (err) {
+            alert("更改購物車失敗", err);
+        }
+    }
 
     const login = async (token) => {
         saveToken(token)
@@ -32,8 +53,11 @@ export default function AuthProvider({ children }) {
         try {
             const user = await userInfo();
             setAvatarUrl(user.avatarUrl || "");
+            const cart = await getCart()
+            setCartList(cart)
+            console.log('載入使用者資料成功')
         } catch (err) {
-            console.warn("載入使用者失敗（可能未登入）");
+            console.warn("載入使用者資料失敗");
         }
     }
 
@@ -41,10 +65,11 @@ export default function AuthProvider({ children }) {
         clearToken()
         setIsAuthenticated(false)
         setAvatarUrl("")
+        setCartList([])
     }
     
     return (
-        <AuthContext.Provider value={{ isAuthenticated, avatarUrl, setAvatarUrl, login, logout }}>
+        <AuthContext.Provider value={{ isAuthenticated, avatarUrl, setAvatarUrl, login, logout, cartList, setCartList, toggleCart }}>
             {children}
         </AuthContext.Provider>
     )

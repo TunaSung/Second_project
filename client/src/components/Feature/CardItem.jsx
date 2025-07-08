@@ -1,13 +1,78 @@
 import { FaPlus, FaMinus } from "react-icons/fa";
+import { useState } from "react";
+import { updateAmount, deleteCart } from "../../services/cartService";
+import { useAuth } from "../Context/authContext"
+import { toast } from "react-toastify"
 
-function CardItem( {title, quantity, price} ) {
+// Import Swiper React components
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { EffectFade, Pagination } from 'swiper/modules';
 
-    const hashTags = ["#GentlyUsed", "#XL", "#Fashion", "#Sale", "#Discount"];
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/effect-cube';
+import 'swiper/css/pagination';
+import '../../style/Swiper.css'
+
+
+function CardItem( {productId, title, amount, price, stock, hashTags, imageUrls} ) {
+
+    const [itemAmount, setItemAmount] = useState(amount)
+    const { toggleCart } = useAuth()
+
+    const togglePlus = async () => {
+        try {
+            await updateAmount(productId, itemAmount + 1)
+            toggleCart()
+            setItemAmount(itemAmount + 1);
+            console.log("調整成功")
+        } catch (error) {
+            console.log("調整失敗", error)
+        }
+    };
+
+    const toggleMinus = async () => {
+        try {
+            await updateAmount(productId, itemAmount - 1)
+            toggleCart()
+            setItemAmount(itemAmount - 1);
+            console.log("調整成功")
+        } catch (error) {
+            console.log("調整失敗")
+        }
+    };
+
+    const handleDelete = async () => {
+        try {
+            await deleteCart(productId)
+            toggleCart()
+            toast.success("刪除成功")
+            return null
+        } catch (error) {
+            console.log("刪除失敗")
+        }
+    }
 
     return(
         <div className="border-b w-full py-4 grid grid-cols-[1fr_3fr] gap-3">
             {/* start product img */}
-            <div className=" border h-32 aspect-square"></div>
+            <Swiper
+                id="product-img"
+                loop={true}
+                effect={'fade'}
+                grabCursor={true}
+                pagination={{clickable: true}}
+                modules={[ EffectFade, Pagination ]}
+                className='w-32 h-32' 
+            >
+                {imageUrls.map((fileUrl, index) => (
+                    <SwiperSlide key={index}>
+                        <div className='w-full h-full bg-cover-set rounded-2xl group-hover:rounded-r-none'
+                        style={{backgroundImage: `url(${import.meta.env.VITE_API_URL}${fileUrl})`}}
+                        />
+                    </SwiperSlide>
+                ))}
+            </Swiper>
             {/* end product img */}
 
             {/* start product info */}
@@ -15,7 +80,7 @@ function CardItem( {title, quantity, price} ) {
 
                 {/* start info detail */}
                 <div className="flex justify-between gap-5">
-                    <div className="flex flex-wrap">
+                    <div className="flex flex-col flex-wrap">
                         <p>{title}</p>
                         <div className="mb-2 flex flex-wrap">
                             {hashTags.map((tag, index) => (
@@ -28,18 +93,20 @@ function CardItem( {title, quantity, price} ) {
                             ))}
                         </div>
                     </div>
-                    <div className="">${quantity*price}</div>
+                    <div className="">${itemAmount*price}</div>
                 </div>
                 {/* end info detail */}
                 
                 {/* start quantity & remove */}
                 <div className="flex justify-between h-8">
-                    <div className="border-b grid grid-cols-[1fr_2fr_1fr] w-18">
-                        <span className="flex items-center justify-center text-xs"><FaMinus /></span>
-                        <span className="flex items-center justify-center font-bold">{quantity}</span>
-                        <span className="flex items-center justify-center text-xs"><FaPlus /></span>
+                    <div id="amount" className="grid grid-cols-[1fr_1.5fr_1fr] items-center border divide-x text-[#3e6547] border-[#73946B] divide-[#73946B]">
+                        <button onClick={toggleMinus} className="h-full flex justify-center items-center cursor-pointer p-1 disabled:text-[#9EBC8A] disabled:cursor-default" disabled={itemAmount === 1}><FaMinus /></button>
+                        <div className="text-center">{itemAmount}</div>
+                        <button onClick={togglePlus} className="h-full flex justify-center items-center cursor-pointer p-1 disabled:text-[#9EBC8A] disabled:cursor-default" disabled={itemAmount === stock}><FaPlus /></button>
                     </div>
-                    <p className="border-b flex self-end text-sm w-14 h-5">Remove</p>
+                    <button onClick={handleDelete} className="border-b flex self-end hover:text-red-600 text-sm w-14 h-5 transition-all duration-200">
+                        Remove
+                    </button>
                 </div>
                 {/* end quantity & remove */}
                 

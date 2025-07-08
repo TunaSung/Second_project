@@ -1,5 +1,8 @@
 import { useState } from 'react';
 import { motion, useAnimation } from 'framer-motion';
+import { addToCart } from '../../services/cartService';
+import { toast } from "react-toastify";
+import { useAuth } from "../Context/authContext"
 
 // Ui & icons
 import Cloth from '../SVG/Cloth';
@@ -23,6 +26,7 @@ function ProductItem({product}){
     const [isMsgHover, setIsMsgHover] = useState(false);
     const [isAnimating, setIsAnimating] = useState(false);
     const [amount, setAmount] = useState(1)
+    const { toggleCart } = useAuth()
     
     // useAnimation
     const controlAddSvg  = useAnimation();
@@ -31,46 +35,57 @@ function ProductItem({product}){
     const controlAddCart = useAnimation();
 
     // Animation of add btn
-    const handleAddClick = async () => {
-        if (isAnimating) return;
-        setIsAnimating(true);
+    const handleAddClick = async (productId, amount) => {
+        try {
+            await addToCart(productId, amount)
+            await toggleCart()
+            toast.success('成功加入購物車')
 
-        await controlAddSvg.start({
-            height: ["40px", "120px", "40px"],
-            opacity: [0, 1, 1, 0],
-            transition: {
-                height: { duration: 0.5 },
-                opacity: { duration: 0.5, ease: "easeOut", times:[0, 0.2, 0.8, 1] },
-            }
-        });
+            if (isAnimating) return;
+            setIsAnimating(true);
 
-        await Promise.all([
-        controlAddCart.start({
-            color: ["#ffffff", "#537D5D", "#537D5D", "#ffffff"],
-            rotate: [0, -30, 30 ,0],
-            transition: {
-                rotate: { duration: 1 },
-                color: { duration: 1.5, times: [0, 0.21, 0.8, 1] }
-            }
-        }),
-        controlAddBtn.start({
-            backgroundColor: ["#537D5D", "#ffffff", "#ffffff", "#537D5D"],
-            transition: { duration: 1.5, times: [0, 0.2, 0.8, 1] }
-        }),
-        controlAddText.start({
-            color: ["#ffffff", "#537D5D", "#537D5D", "#ffffff"],
+            await controlAddSvg.start({
+                height: ["40px", "120px", "40px"],
+                opacity: [0, 1, 1, 0],
+                transition: {
+                    height: { duration: 0.5 },
+                    opacity: { duration: 0.5, ease: "easeOut", times:[0, 0.2, 0.8, 1] },
+                }
+            });
+
+            await Promise.all([
+            controlAddCart.start({
+                color: ["#ffffff", "#537D5D", "#537D5D", "#ffffff"],
+                rotate: [0, -30, 30 ,0],
+                transition: {
+                    rotate: { duration: 1 },
+                    color: { duration: 1.5, times: [0, 0.21, 0.8, 1] }
+                }
+            }),
+            controlAddBtn.start({
+                backgroundColor: ["#537D5D", "#ffffff", "#ffffff", "#537D5D"],
                 transition: { duration: 1.5, times: [0, 0.2, 0.8, 1] }
-        })
-        ]);
+            }),
+            controlAddText.start({
+                color: ["#ffffff", "#537D5D", "#537D5D", "#ffffff"],
+                    transition: { duration: 1.5, times: [0, 0.2, 0.8, 1] }
+            })
+            ]);
 
-        setIsAnimating(false);
+            setIsAnimating(false);
+
+        } catch (err) {
+            console.error("加入購物車失敗", err);
+            toast.error("加入購物車失敗")
+        }
+        
     };
 
-    const togglePlus = async () => {
+    const togglePlus = () => {
         setAmount(amount + 1);
     };
 
-    const toggleMinus = async () => {
+    const toggleMinus = () => {
         if (amount > 1) {
             setAmount(amount - 1);
         }
@@ -154,15 +169,15 @@ function ProductItem({product}){
                     
                     {/* start msg btn */}
                     <div id="amount" className="grid grid-cols-[1fr_1.5fr_1fr] items-center border divide-x text-[#3e6547] border-[#73946B] divide-[#73946B]">
-                        <button onClick={toggleMinus} className="h-full flex justify-center items-center cursor-pointer p-1 disabled:text-[#9EBC8A] disabled:cursor-default" disabled={(amount === 1) ? true : false}><FaMinus /></button>
+                        <button onClick={toggleMinus} className="h-full flex justify-center items-center cursor-pointer p-1 disabled:text-[#9EBC8A] disabled:cursor-default" disabled={amount === 1}><FaMinus /></button>
                         <div className="text-center">{amount}</div>
-                        <button onClick={togglePlus} className="h-full flex justify-center items-center cursor-pointer p-1 disabled:text-[#9EBC8A] disabled:cursor-default" disabled={(amount === product.stock) ? true : false}><FaPlus /></button>
+                        <button onClick={togglePlus} className="h-full flex justify-center items-center cursor-pointer p-1 disabled:text-[#9EBC8A] disabled:cursor-default" disabled={amount === product.stock}><FaPlus /></button>
                     </div>
                     {/* end msg btn */}
                     
                     {/* start add btn */}
                     <motion.button className="w-auto h-8 px-2 py-2 rounded-full flex items-center"
-                    onClick={handleAddClick} 
+                    onClick={() => handleAddClick(product.id, amount)} 
                     initial={{backgroundColor: '#537D5D'}}
                     animate={controlAddBtn}
                     >

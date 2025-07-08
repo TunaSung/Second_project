@@ -2,12 +2,11 @@ const { Product } = require('../models/Association')
 const { ProductInOrder } = require('../models/Association')
 const { Order } = require('../models/Association')
 const authenticate = require('../middleware/JWT')
-const { where } = require('sequelize')
 
-exports.addToCart =  async (req, res) => {
+exports.addToCart = [authenticate, async (req, res) => {
     try {
         const {productId, amount} = req.body
-        const userId = req.user?.id || 1
+        const userId = req.user.id
 
         let order = await Order.findOne({
             where: {
@@ -47,24 +46,24 @@ exports.addToCart =  async (req, res) => {
     } catch (error) {
         res.status(500).json({error: "Add failed", details: error.message})
     }
-}
+}]
 
-exports.getCart = async (req, res) => {
+exports.getCart = [authenticate, async (req, res) => {
     try {
-        const userId = req.user?.id || 1
+        const userId = req.user.id
 
         const order = await Order.findOne({
             where: {
-            userId: userId,
-            status: "pending",
-            merchantTradeNo: null
+                userId: userId,
+                status: "pending",
+                merchantTradeNo: null
             },
             include: [{
                 model: ProductInOrder,
                 attributes: ["id", "amount"],
                 include: [{
                     model: Product,
-                    attributes: ["id", "name", "price", "imageUrls", "hashTags"]
+                    attributes: ["id", "name", "price", "stock", "imageUrls", "hashTags"]
                 }]
             }]
         })
@@ -78,12 +77,12 @@ exports.getCart = async (req, res) => {
     } catch (error) {
         res.status(500).json({error: "Get failed", details: error.message})
     }
-}
+}]
 
-exports.updateAmount = async (req, res) => {
+exports.updateAmount = [authenticate, async (req, res) => {
     try {
         const { productId, amount } = req.body;
-        const userId = req.user?.id || 1
+        const userId = req.user.id
 
         const order = await Order.findOne({
             where:{
@@ -92,13 +91,21 @@ exports.updateAmount = async (req, res) => {
                 merchantTradeNo: null
             }
         })
+        if (!order) {
+            return res.status(404).json({ message: "找不到使用者的待處理訂單" });
+        }
 
+        
         const productInOrder = await ProductInOrder.findOne({
             where: {
                 orderId: order.id,
                 productId: productId
             }
         })
+        
+        if (!productInOrder) {
+            return res.status(404).json({ message: "該商品不在購物車中" });
+        }
 
         productInOrder.amount = amount
         await productInOrder.save()
@@ -107,12 +114,12 @@ exports.updateAmount = async (req, res) => {
     } catch (error) {
         res.status(500).json({error: "update amount failed", details: error.message})
     }
-}
+}]
 
-exports.deleteItem = async (req, res) => {
+exports.deleteItem = [authenticate, async (req, res) => {
     try {
         const { productId } = req.body;
-        const userId = req.user?.id || 1
+        const userId = req.user.id
 
         const order = await Order.findOne({
             where:{
@@ -122,6 +129,10 @@ exports.deleteItem = async (req, res) => {
             }
         })
 
+        if (!order) {
+            return res.status(404).json({ message: "找不到使用者的待處理訂單" });
+        }
+
         const productInOrder = await ProductInOrder.findOne({
             where: {
                 orderId: order.id,
@@ -129,10 +140,14 @@ exports.deleteItem = async (req, res) => {
             }
         })
 
+        if (!productInOrder) {
+            return res.status(404).json({ message: "該商品不在購物車中" });
+        }
+
         await productInOrder.destroy()
 
         res.status(200).json({message: "delete successfully"})
     } catch (error) {
         res.status(500).json({error: "delete item failed", details: error.message})
     }
-}
+}]
