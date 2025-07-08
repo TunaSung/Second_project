@@ -2,14 +2,11 @@ import api from "./api";
 
 export const uploadProduct = async (formData) => {
     try {
-        const response = await api.post('/product/upload', formData,{
+        const response = await api.post('/product/upload', formData, {
             headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        })
-
-        console.log(response.data)
-
+                'Content-Type': 'multipart/form-data',
+            },
+        });
         return response.data
     } catch (error) {
         const message = error.response?.data?.message || error.message || "upload failed";
@@ -29,9 +26,27 @@ export const getMyShop = async () => {
     }
 }
 
+export const updateMyShop = async (formData) => {
+    try {
+        for (let [key, value] of formData.entries()) {
+            console.log("📤 formData:", key, value);
+            }
+        const response = await api.post('/product/update/my-shop', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        return response.data
+    } catch (error) {
+        const message = error.response?.data?.message || error.message || "update failed";
+        console.error("update error:", message);
+        throw error.response?.data?.message || "update failed";
+    }
+}
+
 export const updateAvailable = async (productId) => {
     try {
-        const response = await api.post('/product/update/available', {productId})
+        const response = await api.post('/product/update/available', { productId })
         return response.data
     } catch (error) {
         const message = error.response?.data?.message || error.message || "update failed";

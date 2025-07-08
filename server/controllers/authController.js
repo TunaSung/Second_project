@@ -35,12 +35,9 @@ exports.signIn = async (req, res) => {
 exports.getUserInfo = [authenticate, async(req, res) => {
     try {
         const user = req.user
-        // const userId = req.user?.id || 2
-        // const user = await User.findByPk(userId)
         if (!user) {
         return res.status(404).json({ error: "User not found" });
         }
-        console.log(user.toJSON())
         res.status(200).json({message: "Find user successfully", user: user.toJSON()})
     } catch (error) {
         res.status(500).json({error: "User not found", details: error.message})
@@ -51,8 +48,6 @@ exports.updateProfileInfo = [authenticate, async (req, res) => {
     try {
         const {username, email, phone, address} = req.body
         const user = req.user
-        // const userId = req.user?.id || 1
-        // const user = await User.findByPk(userId)
 
         if (!user) {
             return res.status(404).json({ message: "User not found" });
@@ -74,8 +69,6 @@ exports.updateCreditCard = [authenticate, async (req, res) => {
     try {
         const {creditCards} = req.body
         const user = req.user
-        // const userId = req.user?.id || 1
-        // const user = await User.findByPk(userId)
 
         if (!user) {
             return res.status(404).json({ message: "User not found" });
@@ -115,8 +108,6 @@ exports.updateAvatarUrl = [authenticate,
     try {
         const user = req.user
         if(!req.file) return res.status(400).json({message: "No file uploaded"})
-        // const userId = req.user?.id || 1
-        // const user = await User.findByPk(userId)
 
         const avatarUrl = `/uploads/avatars/${req.file.filename}`
         user.avatarUrl = avatarUrl

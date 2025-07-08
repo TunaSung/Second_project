@@ -8,7 +8,7 @@ import { FaPlus } from "react-icons/fa";
 import { LuImagePlus } from "react-icons/lu";
 import { MdClose } from "react-icons/md";
 
-function ProductInput() {
+function MyShop() {
 
     const [name, setName] = useState('')
     const [price, setPrice] = useState(0)
@@ -35,7 +35,6 @@ function ProductInput() {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        console.log(name, price, stock, hashTags, imageUrls)
         try {
             const formData = new FormData()
 
@@ -66,13 +65,13 @@ function ProductInput() {
         }
     }
 
-    const handleChange = (e) => {
+    const handleImageChange = (e) => {
         setImageUrls([])
         const file = Array.from(e.target.files)
         setImageUrls(file)
     }
 
-    const handdleClose = () => {
+    const handleClose = () => {
         setIsAddProductOpen(false)
         setName('')
         setPrice(0)
@@ -85,6 +84,7 @@ function ProductInput() {
         <div className="pt-30 bg-[#9EBC8A] text-[#f8f7cf]">
             
             {/* Start add product */}
+            {isAddProductOpen &&
             <motion.div className="fixed-mid p-4 w-120 aspect-square border z-200 bg-[#537D5D] rounded-2xl"
             animate={{scale: isAddProductOpen ? [0, 1.1, 0.9, 1] : [1, 0],
                 opacity: isAddProductOpen ? [0, 1] : [0, 0]
@@ -96,7 +96,7 @@ function ProductInput() {
             >
                 
                 <form onSubmit={handleSubmit} className="w-full h-full p-3 flex flex-col justify-center items-center rounded-xl">
-                    <MdClose onClick={handdleClose} className="absolute right-3 top-3 scale-150 hover:text-red-500 transition-all duration-250 cursor-pointer"/>
+                    <MdClose onClick={handleClose} className="absolute right-3 top-3 scale-150 hover:text-red-500 transition-all duration-250 cursor-pointer"/>
                     <div className="mb-8 flex flex-col justify-center items-center">
                         <label htmlFor="file-input"
                             className="p-10 border rounded-full cursor-pointer hover:bg-[#9EBC8A] transition-all duration-200"
@@ -114,11 +114,10 @@ function ProductInput() {
                             id="file-input"
                             type="file"
                             className="hidden"
-                            onChange={handleChange}
+                            onChange={handleImageChange}
                             multiple
                             required
                         />
-                        {/* <input type="file" id="avatar" accept="image/*" className="p-1 border" required /> */}
                     </div>
 
                     <div className="grid grid-cols-2">
@@ -150,7 +149,9 @@ function ProductInput() {
                     </button>
                 </form>
             </motion.div>
+            }
             {/* End add product */}
+
 
             {/* Start title */}
             <div className="border-b p-4 flex justify-self-center">
@@ -214,13 +215,14 @@ function ProductInput() {
                         <ShopItem
                             key={item.id}
                             productId={item.id}
-                            name={item.name}
-                            price={item.price}
-                            stock={item.stock}
-                            hashTags={item.hashTags}
-                            imageUrls={item.imageUrls}
+                            itemName={item.name}
+                            itemPrice={item.price}
+                            itemStock={item.stock}
+                            itemHashTags={item.hashTags}
+                            itemImageUrls={item.imageUrls}
                             sale={item.sale}
                             available={item.isAvailable}
+                            setItems={setItems}
                         />
                     ))}
                 </div>
@@ -242,4 +244,4 @@ function ProductInput() {
     )
 }
 
-export default ProductInput
+export default MyShop

@@ -1,8 +1,5 @@
 const { Product } = require('../models/Association')
 const authenticate = require('../middleware/JWT');
-const multer = require("multer");
-const path = require("path");
-const fs = require("fs");
 
 exports.getAllProudcts = async (req, res) => {
     try {
@@ -18,9 +15,9 @@ exports.getOneProudct = async (req, res) => {
     try {
         const product = await Product.findByPk(req.params.id);
         if(product){
-            res.status(201).json({product});
+            return res.status(201).json({product});
         } else {
-            res.status(404).json({ message: "Can't find product" });
+            return res.status(404).json({ message: "Can't find product" });
         }
     } catch (error) {
         res.status(500).json({error: "fetch products failed", details: error.message}) 
@@ -37,34 +34,14 @@ exports.getMyShop = [authenticate, async (req, res) => {
         });
         
         if(product){
-            res.status(201).json({product});
+            return res.status(201).json({product});
         } else {
-            res.status(404).json({ message: "Can't find product" });
+            return res.status(404).json({ message: "Can't find product" });
         }
     } catch (error) {
         res.status(500).json({error: "fetch products failed", details: error.message}) 
     }
 }]
-
-// 建立儲存目錄（第一次啟動時會自動建立）
-const uploadDir = path.join(__dirname, "..", "public", "uploads", "products");
-if (!fs.existsSync(uploadDir)){
-    fs.mkdirSync(uploadDir, { recursive: true });
-} 
-
-// 設定 multer 儲存設定
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, uploadDir);
-  },
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    cb(null, `product${Date.now()}${ext}`);
-  },
-});
-
-const upload = multer({ storage });
-exports.multiUpload = upload.array("imageUrls", 5);
 
 exports.uploadProudct = [authenticate, async (req, res) => {
     try {
@@ -98,7 +75,7 @@ exports.updateAvailable = async (req, res) => {
         const product = await Product.findByPk(productId)
 
         if(!product){
-            res.status(404).json({message: "Product not found"})
+            return res.status(404).json({message: "Product not found"})
         }
 
         product.isAvailable = !product.isAvailable
@@ -107,5 +84,44 @@ exports.updateAvailable = async (req, res) => {
         res.status(200).json({message: "Update successfullly"})
     } catch (error) {
         res.status(500).json({error: "Uupdate failed", details:error.message})
+    }
+}
+
+exports.updateMyShop = async (req, res) => {
+    try {
+        const {productId, name, price, stock, hashTags} = req.body
+
+        const product = await Product.findByPk(productId)
+
+        console.log("🔥 收到更新請求：", {
+            productId,
+            name,
+            price,
+            stock,
+            hashTags,
+        });
+
+        console.log("📦 收到圖片：", req.files);
+
+        if(!product){
+            return res.status(404).json({message: "Product not found"})
+        }
+
+        const imageUrls = req.files?.length 
+            ? req.files.map(file => `/uploads/products/${file.filename}`)
+            : product.imageUrls
+
+
+        product.name = name
+        product.price = price
+        product.stock = stock
+        product.hashTags = hashTags
+        product.imageUrls = imageUrls
+        await product.save()
+        
+        res.status(200).json({message: "Update successfully"})
+    } catch (error) {
+        console.error("❌ 更新失敗：", error);
+        res.status(500).json({error: "Update failed", details:error.message})
     }
 }
