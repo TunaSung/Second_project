@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react"
-import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react"
+import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import Cart from "../../pages/Cart";
 import { useAuth } from "../Context/authContext";
 
-// UI and icons
+// UI & icons
 import { IoMdCart } from "react-icons/io";
 import { IoLogIn, IoSearch } from "react-icons/io5";
 import AvatarIcon from "../Feature/AvatarIcon";
@@ -17,25 +17,15 @@ function Navbar() {
     const [isCartOpen, setIsCartOpen] = useState(false)
     const [search, setSearch] = useState("");
 
-    const { isAuthenticated } = useAuth()
+    // login status and categories
+    const { isAuthenticated, categories, subcategories } = useAuth()
 
-    // Product categories
-    const tops = ["T-shirt", "Shirt", "Blouse", "Tank top", "Vest", "Sweater", "Jumper", "Hoodie", "Jacket", "Blazer", "Suit jacket", "Sleeveless top"];
-    const bottoms = ["Pants", "Trousers", "Jeans", "Shorts", "Skirt", "Maxi skirt", "Mini skirt", "Skort"];
-    const outerwear = ["Trench coat", "Coat", "Down jacket", "Leather jacket", "Wool coat", "Track jacket", "Windbreaker"];
-    const underwear = ["Bra", "Underwear", "Panties", "Briefs", "Loungewear", "Pajamas", "Pyjamas", "Robe", "Sports bra"];
-    const accessories = ["Socks", "Tights", "Stockings", "Gloves", "Scarf", "Hat", "Beanie", "Tie", "Neck scarf"];
-    const labels = [{key:1, title: "Tops", contents: tops}, 
-        {key:2, title: "Bottoms", contents: bottoms}, 
-        {key:3, title: "Outerwear", contents: outerwear}, 
-        {key:4, title: "Underwear", contents: underwear}, 
-        {key:5, title: "Accessories", contents: accessories}]
-
-    // functions
+    // Open cart panel
     const handleCartClick = () => {
-        setIsCartOpen(true)
-    }
+        setIsCartOpen(true);
+    };
 
+    // Update search input
     const toggleSearch = (e) => {
         setSearch(e.target.value);
     };
@@ -59,52 +49,59 @@ function Navbar() {
                 {/* start nav middle (category) */}
                 <div className=" h-1/2 self-end "
                 onMouseLeave={() => setHoverIndex(null)}>
+
+                    {/* start parent category */}
                     <div className="h-full grid grid-cols-5 gap-rwd overflow-hidden">
-                        {labels.map(label => (
-                            <button key={label.key} className="h-full text-center"
-                            onMouseEnter={() => setHoverIndex(label.key)}>
-                                <Link to={`/product`} state={{labelIndex: label.key}}>
+                        {categories.map((parent, i) => (
+                            <button key={i} className="h-full text-center"
+                            onMouseEnter={() => setHoverIndex(parent.id)}>
+                                <Link to={`/product`} state={{initialLabel: parent.id}}>
                                     <motion.p
-                                    initial={{y: 0, color: "#D2D0A0"}}
-                                    animate={{y: hoverIndex === label.key ? -12 : 0, color: hoverIndex === label.key ? "#ffffff" : "#D2D0A0"}}
+                                    initial={{y: 0, color: "D2D0A0"}}
+                                    animate={{y: hoverIndex === parent.id ? -12 : 0, color: hoverIndex === parent.id ? "#ffffff" : "#D2D0A0"}}
                                     transition={{duration: 0.2}}
                                     >
-                                        {label.title}
+                                        {parent.name}
                                     </motion.p>
                                 </Link>
                                 <AnimatePresence>
                                     <motion.div className="navbar-menu-mid bg-[#D2D0A0]/95 h-[70%] aspect-square rotate-45"
                                     initial={{opacity: 0}}
-                                    animate={{opacity: hoverIndex === label.key ? 1 : 0}}
+                                    animate={{opacity: hoverIndex === parent.id ? 1 : 0}}
                                     transition={{duration: 0.1}}
                                     ></motion.div>
                                 </AnimatePresence>
                             </button>
                         ))}
                     </div>
+                    {/* end parent category */}
+
+                    {/* start child category */}
                     <motion.div className="absolute w-full navbar-items-mid bg-[#D2D0A0]/95 overflow-hidden rounded-2xl"
                     initial={{opacity: 0, height: 0}}
                     animate={{opacity: hoverIndex !== null ? 1 : 0, height: hoverIndex !== null ? "auto" : 0}}
                     transition={{duration: 0.2}}>
                         <ul className="grid grid-cols-5 gap-2 w-full items-center justify-center p-3">
                             {hoverIndex !== null && (
-                                labels.find(label => label.key === hoverIndex).contents.map((content, index) => (
-                                    <a href="#" key={index} className="text-center text-[#537D5D] hover:text-white max-lg:text-sm">{content}</a>
+                                subcategories.filter(child => child.parentId === hoverIndex).map((sub, i) => (
+                                    <Link to={`/product`} state={{initialLabel: sub.id}} key={i} className="text-center text-[#537D5D] hover:text-white max-lg:text-sm">{sub.name}</Link>
                                 ))
                             )}
                         </ul>
                     </motion.div>
+                    {/* end child category */}
+
                 </div>
                 {/* end nav middle */}
 
-                {/* start nav right (icon, search)*/}
+                {/* start nav right (cart, avatar, search) */}
                 <div className="grid grid-rows-2 gap-1 w-full my-2">
                     <div className="flex justify-end items-center w-full">
                         <div className="h-full flex justify-center items-center">
                             <IoMdCart onClick={handleCartClick} className="text-2xl text-[#D2D0A0] hover:text-amber-300 transition-colors duration-200 cursor-pointer"/>
                         </div>
                         <div className="col-start-3 h-full w-1/4 flex justify-center items-center">
-                            {isAuthenticated ? <AvatarIcon />
+                            {isAuthenticated ? <AvatarIcon/>
                              :
                             <Link to={'/sign'} className="text-2xl cursor-pointer text-[#D2D0A0] hover:text-emerald-400 transition-colors duration-200">
                                 <IoLogIn/>
@@ -121,7 +118,7 @@ function Navbar() {
                         </button>
                     </form>
                 </div>
-                {/* end nav right */}
+                {/* end nav right (cart, avatar, search) */}
             </div>
 
         </nav>
