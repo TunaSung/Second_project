@@ -1,25 +1,26 @@
 import React, { useState, useEffect , useRef } from 'react';
 import { Link, useNavigate } from "react-router-dom";
-import { UserOutlined } from '@ant-design/icons';
 import { motion } from "framer-motion";
-import { Avatar } from 'antd';
-import { IoClose } from "react-icons/io5";
 import { useAuth } from '../Context/authContext';
 
-function useOutsideClick(ref, handler) {
+// UI & icon
+import { IoClose } from "react-icons/io5";
+import { UserOutlined } from '@ant-design/icons';
+import { Avatar } from 'antd';
 
-  useEffect(() => {
-    const listener = (event) => {
-      // ref.current 存在，且點擊目標不在該區塊內，就觸發 handler
-      if (ref.current && !ref.current.contains(event.target)) {
-        handler(event);
-      }
-    };
-    document.addEventListener('mousedown', listener);
-    return () => {
-      document.removeEventListener('mousedown', listener);
-    };
-  }, [ref, handler]);
+
+function useOutsideClick(ref, handler) {
+    useEffect(() => {
+        const listener = (event) => {
+            if (ref.current && !ref.current.contains(event.target)) {
+            handler(event);
+            }
+        };
+        document.addEventListener('mousedown', listener);
+        return () => {
+            document.removeEventListener('mousedown', listener);
+        };
+    }, [ref, handler]);
 }
 
 function AvatarIcon(){
@@ -30,6 +31,7 @@ function AvatarIcon(){
     const { avatarUrl, logout } = useAuth()
     const navigate = useNavigate()
 
+    
     const avatarSrc = avatarUrl ? `${import.meta.env.VITE_API_URL}${avatarUrl}` : null;    
 
     // 當點擊到元件外，將isOpen = false
