@@ -1,37 +1,66 @@
 const { Product } = require('../models/Association')
-const authenticate = require('../middleware/JWT');
+const { ProductInOrder } = require('../models/Association')
+const { Order } = require('../models/Association')
+const { User } = require('../models/Association')
+const { Category } = require('../models/Association')
 const { Op } = require("sequelize");
 
-exports.getAllProudcts = [authenticate, async (req, res) => {
+exports.getAllProducts = async (req, res) => {
     try {
-        const userId = req.user.id
+        const { categoryId } = req.body;
+
+        const category = await Category.findByPk(categoryId);
+        if (!category) {
+            return res.status(404).json({ error: "Category not found" });
+        }
+
+        let whereCategoryIds = [];
+
+        if (category.parentId === null) {
+            const subcategories = await Category.findAll({ where: { parentId: categoryId } });
+            whereCategoryIds = subcategories.map(sub => sub.id);
+        } else {
+            whereCategoryIds = [categoryId];
+        }
+        
+        const whereClause = {
+            isAvailable: true,
+            categoryId: { [Op.in]: whereCategoryIds },
+        };
+
+        // const userId = req.user?.id ?? null;
+
+        // if (userId !== null) {
+        //     whereClause.sellerId = { [Op.ne]: userId };
+        // }
+
         const products = await Product.findAll({
-            where: {
-                isAvailable: true,
-                sellerId: { [Op.ne]: userId }
-            }
+            where: whereClause,
+            order: [['createdAt', 'DESC']],
         });
-        res.status(200).json({products})
+
+        res.status(200).json({ products });
     } catch (error) {
         res.status(500).json({error: "fetch products failed", details: error.message})
-        
     }
-}]
+}
 
-exports.getOneProudct = async (req, res) => {
+exports.getCategory = async (req, res) => {
     try {
-        const product = await Product.findByPk(req.params.id);
-        if(product){
-            return res.status(201).json({product});
+        const categories = await Category.findAll({where: {parentId: null}});
+        const subcategories = await Category.findAll({where: {img: null}})
+        
+        if(categories){
+            return res.status(201).json({categories, subcategories});
         } else {
-            return res.status(404).json({ message: "Can't find product" });
+            return res.status(404).json({ message: "Can't find categories" });
         }
     } catch (error) {
         res.status(500).json({error: "fetch products failed", details: error.message}) 
     }
 }
 
-exports.getMyShop = [authenticate, async (req, res) => {
+exports.getMyShop = async (req, res) => {
     try {
         const userId = req.user.id
 
@@ -48,9 +77,52 @@ exports.getMyShop = [authenticate, async (req, res) => {
     } catch (error) {
         res.status(500).json({error: "fetch products failed", details: error.message}) 
     }
-}]
+}
 
-exports.uploadProudct = [authenticate, async (req, res) => {
+exports.getHistory =  async (req, res) => {
+    try {
+        const userId = req.user?.id || 2
+
+        const order = await Order.findAll({
+            where:{
+                userId: userId,
+                status: 'paid'
+            },
+            include: [
+                {
+                    model: ProductInOrder,
+                    where: {status: 'paid'},
+                    attributes: ['id', 'amount'] ,
+                    include: [
+                        {
+                            model: Product,
+                            attributes: ['id', 'name', 'price', 'imageUrls']
+                        }
+                    ]
+                },
+                {
+                    model: User,
+                    where: {id: userId},
+                    attributes: ['username']
+                }
+                
+            ],
+            order: [['updatedAt', 'DESC']],
+            attributes: ['id', 'merchantTradeNo', 'updatedAt']
+        })
+
+        if(!order){
+            return res.status(404).json({message: "找不到歷史訂單"})
+        }else{
+            return res.status(201).json({message: "找到訂單ㄌ", order});
+        }
+
+    } catch (error) {
+        res.status(500).json({error: "fetch products failed", details: error.message}) 
+    }
+}
+
+exports.uploadProduct = async (req, res) => {
     try {
         const {name, price, stock, hashTags} = req.body
         const userId = req.user.id
@@ -71,7 +143,7 @@ exports.uploadProudct = [authenticate, async (req, res) => {
     } catch (error) {
         res.status(500).json({error: "Upload failed", details: error.message}) 
     }
-}]
+}
 
 
 // 更改上架狀態

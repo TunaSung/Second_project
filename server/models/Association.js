@@ -4,6 +4,7 @@ const Product = require('./Product')
 const ProductInOrder = require('./ProductInOrder')
 const Message = require('./Message')
 const Event = require('./Event')
+const Category = require('./Category')
 
 // user & order
 User.hasMany(Order, { foreignKey: 'userId' });
@@ -26,8 +27,12 @@ ProductInOrder.belongsTo(Product, { foreignKey: 'productId' });
 Order.hasMany(ProductInOrder, { foreignKey: 'orderId' });
 ProductInOrder.belongsTo(Order, { foreignKey: 'orderId' });
 
+// product & category
+Product.belongsTo(Category, { foreignKey: 'categoryId' });
+Category.hasMany(Product, { foreignKey: 'categoryId' });
+
 // msg & product & order
 Message.belongsTo(Product, { foreignKey: 'productId' });
 Message.belongsTo(Order, { foreignKey: 'orderId' });
 
-module.exports = {User, Product, Order, ProductInOrder, Message, Event}
+module.exports = {User, Product, Order, ProductInOrder, Message, Event, Category}

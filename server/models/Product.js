@@ -9,10 +9,9 @@ Product.init({
         price: {type: DataTypes.INTEGER, allowNull:false},
         stock: {type:DataTypes.INTEGER, allowNull:false},
         sale: {type:DataTypes.INTEGER, defaultValue: 0},
-        categoryID: {type: DataTypes.INTEGER},
         isAvailable: { type: DataTypes.BOOLEAN, defaultValue: true },
-
-        imageUrls: {type: DataTypes.JSON, allowNull: false},
+        imageUrls: {type: DataTypes.JSON},
+        categoryId: {type: DataTypes.INTEGER, references: {model: 'categories', key: 'id'}},        
 
         hashTags: {type: DataTypes.STRING, // 預計是回傳array，但MySQL不支持.ARRAY
             get(){ // 要被後端取出的時候把在資料庫的string轉回array

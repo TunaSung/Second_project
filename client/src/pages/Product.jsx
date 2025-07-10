@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useLocation } from 'react-router-dom';
-import { getAllProduct } from "../services/productService";
+import { getProduct } from "../services/productService";
+import { useAuth } from "../components/Context/authContext";
 import 'aos/dist/aos.css';
 
 // UI & icons
@@ -20,11 +21,16 @@ function Product() {
 
     // Get current product category from route state
     const location = useLocation();
-    const labelIndex = location.state?.labelIndex ?? 1;
+    const initialLabel  = location.state?.initialLabel ?? 1;
+    const {categories, subcategories} = useAuth()
+    const initialSub = subcategories.find(s => s.id === initialLabel);
+    const initialParent = initialSub ? initialSub.parentId : initialLabel;
 
     // useState
-    const [products, setProducts] = useState([])
-    const [clickIndex, setClickIndex] = useState(labelIndex);
+    const [products, setProducts] = useState(null)
+    const [parentId, setParentId] = useState(initialParent);
+    const [categorize, setCategorize] = useState(initialLabel)
+    
     const [hovered, setHovered] = useState(null);
     const [page, setPage] = useState(1);
     const isFirstRender = useRef(true)
@@ -42,16 +48,16 @@ function Product() {
     useEffect(() => {
         try {
             const fetchProduct = async () => {
-                const data = await getAllProduct()
+                const data = await getProduct(categorize)
                 setProducts(data)
             }
             fetchProduct()
         } catch (err) {
-            console.log('商品載入失敗', err)
+            console.log('商品資料載入失敗', err)
         }
-    },[])
+    },[categorize])
 
-    if (products.length === 0) {
+    if (products === null) {
         return (
             <div className="w-full h-[50vh] flex justify-center items-center my-25">
                 <l-dot-stream
@@ -63,28 +69,27 @@ function Product() {
         )
     }
 
+    const handleParentCategory = (id) => {
+        setParentId(id)
+        setCategorize(id)
+        setPage(1)
+    }
+
+    const handleChildCategory = (id) => {
+        setCategorize(id)
+        setPage(1)
+    }
+
     // Grid dim
     // Dynamic adjustment 
     const cols = 5;
-    const rows = Math.ceil((products.length > 15) ? 4 : products.length / cols); 
+    const rows = Math.ceil((products.length > 15) ? 4 : (products.length != 0 ? products.length / cols : 1)); 
     const wrapperHeight = 200 * rows;
     const itemsPerPage = 20;
     const startIndex = (page - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const currentProducts = products.slice(startIndex, endIndex);;
     const totalPage = (products.length < itemsPerPage) ? 1 : Math.ceil(products.length/itemsPerPage);
-    
-    // Product categories
-    const tops = ["T-shirt", "Shirt", "Blouse", "Tank top", "Vest", "Sweater", "Jumper", "Hoodie", "Jacket", "Blazer", "Suit jacket", "Sleeveless top"];
-    const bottoms = ["Pants", "Trousers", "Jeans", "Shorts", "Skirt", "Maxi skirt", "Mini skirt", "Skort"];
-    const outerwear = ["Trench coat", "Coat", "Down jacket", "Leather jacket", "Wool coat", "Track jacket", "Windbreaker"];
-    const underwear = ["Bra", "Underwear", "Panties", "Briefs", "Loungewear", "Pajamas", "Pyjamas", "Robe", "Sports bra"];
-    const accessories = ["Socks", "Tights", "Stockings", "Gloves", "Scarf", "Hat", "Beanie", "Tie", "Neck scarf"];
-    const labels = [{key:1, title: "Tops", contents: tops, img:"/imgs/category/cloth.jpg"}, 
-        {key:2, title: "Bottoms", contents: bottoms, img:"/imgs/category/pants.jpg"}, 
-        {key:3, title: "Outerwear", contents: outerwear, img:"/imgs/category/outerwear.jpg"}, 
-        {key:4, title: "Underwear", contents: underwear, img:"/imgs/category/underwear.jpg"}, 
-        {key:5, title: "Accessories", contents: accessories, img:"/imgs/category/accessories.jpg"}]
 
     // Dynamic grid size
     const getRowSizes = () => {
@@ -109,20 +114,22 @@ function Product() {
 
             {/* start category */}
             <div className="mt-10 mb-0 h-20 container-mid grid grid-cols-5 items-end ">
-                {labels.map(label => (
-                    <button key={label.key} onClick={() => setClickIndex(label.key)} className={`border ${label.key === clickIndex ? `h-3/4 text-white text-2xl` : 'h-1/2 text-[#ECFAE5]'} 
-                        w-[85%] transition-all duration-300 flex justify-self-center items-center justify-center 
-                        rounded-t-xl font-bold border-b-0 bg-[#9EBC8A]`}
+                {categories.map((label, i) => (
+                    <button key={i} 
+                    onClick={() => handleParentCategory(label.id)} 
+                    className={`border w-[85%] transition-all duration-300 rounded-t-xl font-bold border-b-0 bg-[#9EBC8A]
+                    ${(label.id === parentId) ? `h-3/4 text-white text-2xl` : 'h-1/2 text-[#ECFAE5]'} 
+                    flex justify-self-center items-center justify-center`}
                     >
-                            <img
-                            src={label.img}
-                            loading="lazy"
-                            className={`
-                                absolute w-full h-full rounded-t-xl object-cover transition-opacity duration-300
-                                ${label.key === clickIndex ? 'opacity-100' : 'opacity-0'}
-                            `}
-                            />
-                            <span className="relative z-10 text-shadow-sm">{label.title}</span>
+                        <img
+                        src={label.img}
+                        loading="lazy"
+                        className={`
+                            absolute w-full h-full rounded-t-xl object-cover transition-opacity duration-300
+                            ${(label.id === parentId) ? 'opacity-100' : 'opacity-0'}
+                        `}
+                        />
+                        <span className="relative z-10 text-shadow-sm">{label.name}</span>
                     </button>
                 ))}
             </div>
@@ -146,19 +153,27 @@ function Product() {
                         modules={[Mousewheel, FreeMode]}
                         className="h-full w-full"
                     >
-                        {labels.find(label => label.key === clickIndex).contents.map((content, index) => (
-                            <SwiperSlide key={index} className="h-20 w-full flex items-center justify-center ">
-                                <button className="transition-all duration-200 text-[#ECFAE5] hover:text-red-500 cursor-grab text-shadow-sm">
-                                    {content}
+                        {subcategories.filter(child => child.parentId === parentId).map((sub, i) => (
+                            <SwiperSlide key={i} className="h-20 w-full flex items-center justify-center ">
+                                <button onClick={() => handleChildCategory(sub.id)} className="transition-all duration-200 text-[#ECFAE5] hover:text-red-500 cursor-grab text-shadow-sm">
+                                    {sub.name}
                                 </button>
                             </SwiperSlide>
-                            ))}
+                        ))}
 
                     </Swiper>
                 </div>
                 {/* end category swiper */}
 
-
+                {currentProducts.length === 0 && (
+                    <div className="absolute inset-0 flex items-center justify-center z-10"
+                    style={{ height: `${wrapperHeight}px` }}
+                    >
+                        <p className="text-2xl font-bold text-[#f8f7cf]">
+                            Currently, there are no products in this category (ಥ _ ಥ)
+                        </p>
+                    </div>
+                    )}
                 {/* start product grid */}
                 {Array.from({ length: rows }, (_, row) => (
                     <div key={row} className="grid transition-all duration-300 gap-2 z-20"

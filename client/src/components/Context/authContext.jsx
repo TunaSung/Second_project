@@ -2,14 +2,20 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { saveToken, clearToken } from "../../services/authService";
 import { userInfo } from '../../services/authService';
 import { getCart } from "../../services/cartService";
+import { getCategory } from "../../services/productService"
 
 const AuthContext = createContext()
 
 export default function AuthProvider({ children }) {
+
+    // useState
     const [isAuthenticated, setIsAuthenticated] = useState(false)
     const [avatarUrl, setAvatarUrl] = useState("");
     const [cartList, setCartList] = useState([])
+    const [categories, setCategories] = useState([])
+    const [subcategories, setSubcategories] = useState([])
 
+    // check token, load user info and cart
     useEffect(() => {
         const fetchUser = async () => {
             const token = localStorage.getItem("token")
@@ -31,10 +37,23 @@ export default function AuthProvider({ children }) {
                 alert("載入使用者資料失敗", err);
             }
         };
-
         fetchUser();
     }, []);
 
+    // load product categories
+    useEffect(() => {
+        try {
+            const fetchCategory = async () => {
+                const data = await getCategory()
+                setCategories(data.categories)
+                setSubcategories(data.subcategories)
+            }
+            fetchCategory()
+        } catch (error) { 
+        }
+    },[])
+
+    // Refresh cart data
     const toggleCart = async () => {
         try {
             const cart = await getCart()
@@ -46,6 +65,7 @@ export default function AuthProvider({ children }) {
         }
     }
 
+    // login → save token and load user/cart
     const login = async (token) => {
         saveToken(token)
         setIsAuthenticated(true)
@@ -61,6 +81,7 @@ export default function AuthProvider({ children }) {
         }
     }
 
+    // logout → clear token and reset state
     const logout = () => {
         clearToken()
         setIsAuthenticated(false)
@@ -69,7 +90,7 @@ export default function AuthProvider({ children }) {
     }
     
     return (
-        <AuthContext.Provider value={{ isAuthenticated, avatarUrl, setAvatarUrl, login, logout, cartList, setCartList, toggleCart }}>
+        <AuthContext.Provider value={{ isAuthenticated, avatarUrl, setAvatarUrl, login, logout, cartList, setCartList, toggleCart, categories, subcategories }}>
             {children}
         </AuthContext.Provider>
     )

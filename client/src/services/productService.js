@@ -15,6 +15,28 @@ export const uploadProduct = async (formData) => {
     }
 }
 
+export const getCategory = async () => {
+    try {
+        const response = await api.get('/product/category')
+        return response.data
+    } catch (error) {
+        const message = error.response?.data?.message || error.message || "get category failed";
+        console.error("get category error:", message);
+        throw error.response?.data?.message || "get category failed";
+    }
+}
+
+export const getProduct = async (categoryId) => {
+    try {
+        const response = await api.post('/product/products', {categoryId})
+        return response.data.products
+    } catch (error) {
+        const message = error.response?.data?.message || error.message || "get product failed";
+        console.error("get product error:", message);
+        throw error.response?.data?.message || "get product failed";
+    }
+}
+
 export const getMyShop = async () => {
     try {
         const response = await api.get('/product/my-shop')
@@ -23,6 +45,18 @@ export const getMyShop = async () => {
         const message = error.response?.data?.message || error.message || "get failed";
         console.error("get error:", message);
         throw error.response?.data?.message || "get failed";
+    }
+}
+
+export const getHistory = async () => {
+    try {
+        const response = await api.get('/product/hitory')
+        console.log(response.data.order)
+        return response.data.order
+    } catch (error) {
+        const message = error.response?.data?.message || error.message || "get history failed";
+        console.error("get history error:", message);
+        throw error.response?.data?.message || "get history failed";
     }
 }
 
@@ -52,16 +86,5 @@ export const updateAvailable = async (productId) => {
         const message = error.response?.data?.message || error.message || "update failed";
         console.error("update error:", message);
         throw error.response?.data?.message || "update failed";
-    }
-}
-
-export const getAllProduct = async () => {
-    try {
-        const response = await api.get('/product/products')
-        return response.data.products
-    } catch (error) {
-        const message = error.response?.data?.message || error.message || "get product failed";
-        console.error("get product error:", message);
-        throw error.response?.data?.message || "get product failed";
     }
 }
