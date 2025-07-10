@@ -81,10 +81,10 @@ function ProductItem({product}){
         
     };
 
+    // Toggle page
     const togglePlus = () => {
         setAmount(amount + 1);
     };
-
     const toggleMinus = () => {
         if (amount > 1) {
             setAmount(amount - 1);
@@ -95,8 +95,6 @@ function ProductItem({product}){
         <div className="w-full h-full flex group">
 
         {/* start img */}
-        {/* <div className='w-full h-full rounded-2xl bg-cover-set border group-hover:w-1/2 group-hover:rounded-r-none transition-all duration-200 z-100'
-        style={{backgroundImage: `url('imgs/kpop/bts-be-jimin.jpg')`}}/> */}
         <div className='w-full h-full bg-cover-set rounded-2xl group-hover:w-1/2 transition-all duration-200 z-150' loading="lazy">
             <Swiper
                 id="product-img"
@@ -123,7 +121,10 @@ function ProductItem({product}){
             
             {/* start title */}
             <div className='flex justify-between mb-2'>
+                {/* start product name */}
                 <p className="text-3xl text-[#537D5D]">{product.name}</p>
+                {/* end product name */}
+
                 {/* start msg btn */}
                 <button className="border w-8 h-8 px-2 rounded-full scale-100 hover:scale-125 transition-all duration-200 overflow-hidden"
                 onMouseEnter={() => {setIsMsgHover(true)}}
@@ -138,6 +139,7 @@ function ProductItem({product}){
                     <TiMessages className="absolute-mid text-xl"/>
                 </button>
                 {/* end msg btn */}
+                
             </div>
             {/* end title */}
 
@@ -168,7 +170,7 @@ function ProductItem({product}){
                 <div className="w-full flex items-center justify-between">
                     
                     {/* start msg btn */}
-                    <div id="amount" className="grid grid-cols-[1fr_1.5fr_1fr] items-center border divide-x text-[#3e6547] border-[#73946B] divide-[#73946B]">
+                    <div id="amount" className="grid grid-cols-[1fr_1.5fr_1fr] mr-2 items-center border divide-x text-[#3e6547] border-[#73946B] divide-[#73946B]">
                         <button onClick={toggleMinus} className="h-full flex justify-center items-center cursor-pointer p-1 disabled:text-[#9EBC8A] disabled:cursor-default" disabled={amount === 1}><FaMinus /></button>
                         <div className="text-center">{amount}</div>
                         <button onClick={togglePlus} className="h-full flex justify-center items-center cursor-pointer p-1 disabled:text-[#9EBC8A] disabled:cursor-default" disabled={amount === product.stock}><FaPlus /></button>
@@ -190,7 +192,7 @@ function ProductItem({product}){
                         </motion.div>
 
                         {/* text */}
-                        <motion.p className="text-lg inline"
+                        <motion.p className="text-sm inline"
                         initial={{color: "#ffffff"}}
                         animate={controlAddText}
                         >

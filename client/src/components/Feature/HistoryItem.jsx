@@ -1,9 +1,6 @@
 import { TiMessages } from "react-icons/ti";
 
-function ShopItem({seller, name, price, sale, stock}){
-
-
-    const hashTags = ["#GentlyUsed", "#XL", "#Fashion", "#Sale", "#Discount", "#Fashion", "#Sale", "#Discount", "#Discount", "#Fashion", "#Sale", "#Discount"];
+function ShopItem({seller, name, price, sale, stock, date}){
 
     return(
         <div id="cart-items" className="">
@@ -21,20 +18,6 @@ function ShopItem({seller, name, price, sale, stock}){
                     </a>
                 </div>
                 <div className="text-center">${price}</div>
-                <div className="text-center">{sale}</div>
-                <div id="amount" className="flex justify-center">
-                    <p className="text-center">{stock}</p>
-                </div>
-                <div className="flex justify-center items-center flex-wrap h-25 overflow-y-scroll cart-scroll">
-                    {hashTags.sort().reverse().map((tag, index) => (
-                        <p
-                            key={index}
-                            className="text-xs inline px-1 rounded-3xl border bg-[#CAE8BD] text-[#1f4428] mr-1 "
-                            >
-                            {tag}
-                        </p>
-                    ))}
-                </div>
             </div>
         </div>
     )

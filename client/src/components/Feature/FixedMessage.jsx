@@ -75,9 +75,9 @@ function FixedMessage() {
             {/* end msg */}
             
             {/* start open */}
-            <motion.button onClick={handleWrapperClick} className="absolute right-1.5 bottom-1.5 -translate-x-0.5 z-20">
+            <motion.button onClick={handleWrapperClick} className={` ${isCLick ? 'absolute right-1.5 bottom-1.5 -translate-x-0.5' : 'absolute-mid'}  z-20`}>
                 {isCLick ? <IoMdCloseCircleOutline className="text-3xl w-full h-full text-gray-400 hover:text-red-600 transition-all duration-200"/> 
-                : <MdMessage className="text-2xl w-full h-full"/>}
+                : <MdMessage className="scale-150 w-full h-full"/>}
             </motion.button>
             {/* end open */}
             
