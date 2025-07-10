@@ -90,15 +90,27 @@ Content-Type: multipart/form-data
 }
 
 ###
-GET  http://localhost:3000/api/product/products
+POST http://localhost:3000/api/product/products
 Content-Type: application/json
 
+{
+    "categoryId": 1
+}
+
 ###
-GET  http://localhost:3000/api/product/product/2
+GET  http://localhost:3000/api/product/category
 Content-Type: application/json
 
 ###
 GET  http://localhost:3000/api/product/my-shop
+Content-Type: application/json
+
+###
+GET  http://localhost:3000/api/product/history
+Content-Type: application/json
+
+###
+GET  http://localhost:3000/api/product/category
 Content-Type: application/json
 
 # test cart controller
