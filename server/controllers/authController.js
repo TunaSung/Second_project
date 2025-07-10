@@ -1,7 +1,6 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const { User } = require('../models/Association')
-const authenticate = require('../middleware/JWT')
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
@@ -32,7 +31,7 @@ exports.signIn = async (req, res) => {
     }
 }
 
-exports.getUserInfo = [authenticate, async(req, res) => {
+exports.getUserInfo = async(req, res) => {
     try {
         const user = req.user
         if (!user) {
@@ -42,9 +41,9 @@ exports.getUserInfo = [authenticate, async(req, res) => {
     } catch (error) {
         res.status(500).json({error: "User not found", details: error.message})
     }
-}]
+}
 
-exports.updateProfileInfo = [authenticate, async (req, res) => {
+exports.updateProfileInfo = async (req, res) => {
     try {
         const {username, email, phone, address} = req.body
         const user = req.user
@@ -63,9 +62,9 @@ exports.updateProfileInfo = [authenticate, async (req, res) => {
     } catch (error) {
         res.status(500).json({error: "Update failed", details: error.message})
     }
-}]
+}
 
-exports.updateCreditCard = [authenticate, async (req, res) => {
+exports.updateCreditCard = async (req, res) => {
     try {
         const {creditCards} = req.body
         const user = req.user
@@ -81,7 +80,7 @@ exports.updateCreditCard = [authenticate, async (req, res) => {
     } catch (error) {
         res.status(500).json({error: "Update failed", details: error.message})
     }
-}]
+}
 
 // 建立儲存目錄（第一次啟動時會自動建立）
 const uploadDir = path.join(__dirname, "..", "public", "uploads", "avatars");
@@ -102,19 +101,20 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-exports.updateAvatarUrl = [authenticate, 
+exports.updateAvatarUrl = [ 
     upload.single("avatar"), 
     async (req, res) => {
-    try {
-        const user = req.user
-        if(!req.file) return res.status(400).json({message: "No file uploaded"})
+        try {
+            const user = req.user
+            if(!req.file) return res.status(400).json({message: "No file uploaded"})
 
-        const avatarUrl = `/uploads/avatars/${req.file.filename}`
-        user.avatarUrl = avatarUrl
-        await user.save();
+            const avatarUrl = `/uploads/avatars/${req.file.filename}`
+            user.avatarUrl = avatarUrl
+            await user.save();
 
-        res.status(200).json({message: `Avatar updated`, avatarUrl})
-    } catch (error) {
-        res.status(500).json({error: "Update failed", details: error.message})
+            res.status(200).json({message: `Avatar updated`, avatarUrl})
+        } catch (error) {
+            res.status(500).json({error: "Update failed", details: error.message})
+        }
     }
-}]
+]

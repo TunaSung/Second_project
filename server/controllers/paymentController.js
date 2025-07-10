@@ -21,62 +21,61 @@ const formatDate = (date) => {
 };
 
 //更改資order跟pios的狀態
-exports.paymentStatus = [authenticate, async (req, res) => {
-    const {ids, MerchantTradeNo} = req.body;
-    const userId = req.user.id
-    console.log(`ids: ${ids}, MerchantTradeNo: ${MerchantTradeNo}`)
-    try {
-      let order = await Order.findOne({
-        where:{
-          userId: userId,
-          status: "pending",
-          merchantTradeNo: null
-        }
-      });
-    
-      if (!order) {
-        return res.status(404).send("No pending order to pay for");
-      };
-  
-      order.merchantTradeNo = MerchantTradeNo;
-      await order.save();
-      
-      await ProductInOrder.update(
-        { status: "unpaid" },
-        {
-          where: {
-            orderId: order.id,
-            productId: {[Op.in]: ids}, //Op.in: ids => 在ids裡陣列裡的productId
-            status: "pending"
-          }
-        }
-      );
-
-      // 3️⃣ 建立新訂單，留給「未被選中」的那些 pios
-      const newOrder = await Order.create({
-        userId,
+exports.paymentStatus = async (req, res) => {
+  const {ids, MerchantTradeNo} = req.body;
+  const userId = req.user.id
+  console.log(`ids: ${ids}, MerchantTradeNo: ${MerchantTradeNo}`)
+  try {
+    let order = await Order.findOne({
+      where:{
+        userId: userId,
         status: "pending",
-        merchantTradeNo: null,
+        merchantTradeNo: null
+      }
+    });
+  
+    if (!order) {
+      return res.status(404).send("No pending order to pay for");
+    };
+
+    order.merchantTradeNo = MerchantTradeNo;
+    await order.save();
+    
+    await ProductInOrder.update(
+      { status: "unpaid" },
+      {
+        where: {
+          orderId: order.id,
+          productId: {[Op.in]: ids}, //Op.in: ids => 在ids裡陣列裡的productId
+          status: "pending"
+        }
+      }
+    );
+
+    // 3️⃣ 建立新訂單，留給「未被選中」的那些 pios
+    const newOrder = await Order.create({
+      userId,
+      status: "pending",
+      merchantTradeNo: null,
+    });
+
+    // 4️⃣ 把「未選中」的 pios 移到 newOrder
+    await ProductInOrder.update(
+      { orderId: newOrder.id },
+      {
+        where: {
+          orderId: order.id,          // 原訂單 ID
+          productId: { [Op.notIn]: ids },  //Op.in: ids => 不在ids裡陣列裡的productId
+          status: "pending",               // 只移動還是pending的
+        },
       });
 
-      // 4️⃣ 把「未選中」的 pios 移到 newOrder
-      await ProductInOrder.update(
-        { orderId: newOrder.id },
-        {
-          where: {
-            orderId: order.id,          // 原訂單 ID
-            productId: { [Op.notIn]: ids },  //Op.in: ids => 不在ids裡陣列裡的productId
-            status: "pending",               // 只移動還是pending的
-          },
-        });
-  
-      return res.status(200).send("Successfully updated order for payment");
-    } catch (err) {
-      console.error("Error updating Order:", err);
-      return res.status(500).send("Unable to updated order for payment");
-    }
+    return res.status(200).send("Successfully updated order for payment");
+  } catch (err) {
+    console.error("Error updating Order:", err);
+    return res.status(500).send("Unable to updated order for payment");
   }
-];
+}
 
 // 全支付需要用到TotalAmount, ItemName
 exports.createPaymentForm = async (req, res) => {
@@ -93,7 +92,7 @@ exports.createPaymentForm = async (req, res) => {
     TradeDesc: "購物車結帳",
     ItemName, // 商品名稱，來自前端傳遞
     // ReturnURL: `${process.env.ECPAY_RETURN_URL}/api/payment/callback` 
-    ReturnURL: ` https://b8ccc1f86b8b.ngrok-free.app/api/payment/callback` 
+    ReturnURL: `https://682057db46d9.ngrok-free.app/api/payment/callback` 
   };
 
   try {
@@ -181,24 +180,22 @@ exports.paymentCallback = async (req, res) => {
         );
 
         // 更新商品銷售量
-      const pios = await ProductInOrder.findAll({
-        where: {
-          orderId: order.id,
-          status: 'paid'
+        const pios = await ProductInOrder.findAll({
+          where: {
+            orderId: order.id,
+            status: 'paid'
+          }
+        });
+
+        for (const { productId, amount } of pios) {
+          const productItem = await Product.findByPk(productId)
+          productItem.sale += amount
+          productItem.stock -= amount
+          if(productItem.stock === 0){
+            productItem.isAvailable = false
+          }
+          await productItem.save();
         }
-      });
-
-      for (const { productId, amount } of pios) {
-        await Product.increment(
-          'sale',
-          { by: amount, where: { id: productId } }
-        );
-
-        await Product.decrement(
-          'stock',
-          { by: amount, where: { id: productId } }
-        )
-      }
 
         console.log('訂單已更新為已付款');
         res.send('1|OK');

@@ -3,7 +3,7 @@ const { ProductInOrder } = require('../models/Association')
 const { Order } = require('../models/Association')
 const authenticate = require('../middleware/JWT')
 
-exports.addToCart = [authenticate, async (req, res) => {
+exports.addToCart = async (req, res) => {
     try {
         const {productId, amount} = req.body
         const userId = req.user.id
@@ -46,9 +46,9 @@ exports.addToCart = [authenticate, async (req, res) => {
     } catch (error) {
         res.status(500).json({error: "Add failed", details: error.message})
     }
-}]
+}
 
-exports.getCart = [authenticate, async (req, res) => {
+exports.getCart = async (req, res) => {
     try {
         const userId = req.user.id
 
@@ -77,9 +77,9 @@ exports.getCart = [authenticate, async (req, res) => {
     } catch (error) {
         res.status(500).json({error: "Get failed", details: error.message})
     }
-}]
+}
 
-exports.updateAmount = [authenticate, async (req, res) => {
+exports.updateAmount = async (req, res) => {
     try {
         const { productId, amount } = req.body;
         const userId = req.user.id
@@ -114,9 +114,9 @@ exports.updateAmount = [authenticate, async (req, res) => {
     } catch (error) {
         res.status(500).json({error: "update amount failed", details: error.message})
     }
-}]
+}
 
-exports.deleteItem = [authenticate, async (req, res) => {
+exports.deleteItem = async (req, res) => {
     try {
         const { productId } = req.body;
         const userId = req.user.id
@@ -150,4 +150,4 @@ exports.deleteItem = [authenticate, async (req, res) => {
     } catch (error) {
         res.status(500).json({error: "delete item failed", details: error.message})
     }
-}]
+}
