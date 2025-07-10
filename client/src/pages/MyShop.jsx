@@ -122,14 +122,15 @@ function MyShop() {
 
                     <div className="grid grid-cols-2">
 
-                        <div className="flex flex-col gap-rwd">
+                        <div className="flex flex-col gap-3">
                             <label htmlFor="name">Name: </label>
                             <label htmlFor="price">Price: </label>
                             <label htmlFor="stock">Stock: </label>
                             <label htmlFor="hashTags">Hashtag: </label>
+                            <label htmlFor="category">Category: </label>
                         </div>
 
-                        <div className="flex flex-col gap-rwd">
+                        <div className="flex flex-col gap-3">
                             <input type="text" id="name" value={name} onChange={(e) => setName(e.target.value)}
                             className="border rounded-sm pl-1 focus:bg-[#f8f7cf] focus:text-[#537D5D]" required/>
 
