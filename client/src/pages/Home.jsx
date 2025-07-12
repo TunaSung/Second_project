@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { motion, useScroll, useTransform} from "framer-motion";
+import { Link } from "react-router-dom";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 // UI and icons
 import Hero from '../components/Layout/Hero';

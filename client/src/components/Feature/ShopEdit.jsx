@@ -14,17 +14,17 @@ function ProductForm({
   subcategories,
   onSubmit,
 }) {
+  // useState
   const [name, setName] = useState(initialValues.name || "");
   const [price, setPrice] = useState(initialValues.price || 0);
   const [stock, setStock] = useState(initialValues.stock || 0);
   const [hashTags, setHashTags] = useState(initialValues.hashTags || "");
   const [imageUrls, setImageUrls] = useState([]);
-  const [categoryId, setCategoryId] = useState(initialValues.categoryId || null);
+  const [categoryId, setCategoryId] = useState(
+    initialValues.categoryId || null
+  );
 
-  useEffect(() => {
-    console.log("📦 imageUrls:", imageUrls);
-  }, [imageUrls]);
-
+  // function of submit
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -38,33 +38,24 @@ function ProductForm({
       formData.append("hashTags", hashTags);
       formData.append("category", categoryId);
 
-      imageUrls.forEach(file => {
+      imageUrls.forEach((file) => {
         formData.append("imageUrls", file);
       });
 
-      await onSubmit(formData); // 🔁 可重用的提交函式
+      await onSubmit(formData);
       toast.success(isEdit ? "商品更新成功" : "商品上傳成功");
       onSubmitSuccess?.();
       onClose();
-
     } catch (err) {
-      console.error("❌ 提交失敗", err);
+      console.error("提交失敗", err);
       toast.error("提交失敗，請稍後再試");
     }
   };
 
+  // image change handler
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
     setImageUrls(files);
-  };
-
-  const resetForm = () => {
-    setName("");
-    setPrice(0);
-    setStock(0);
-    setHashTags("");
-    setImageUrls([]);
-    setCategoryId(null);
   };
 
   return (
@@ -79,13 +70,21 @@ function ProductForm({
         opacity: { duration: 0.6 },
       }}
     >
-      <form onSubmit={handleSubmit} className="w-full h-full p-3 flex flex-col justify-center items-center rounded-xl">
-        <MdClose onClick={onClose} className="absolute right-3 top-3 scale-150 hover:text-red-500 cursor-pointer" />
-
-        {/* 圖片區塊 */}
+      {/* start form */}
+      <form
+        onSubmit={handleSubmit}
+        className="w-full h-full p-3 flex flex-col justify-center items-center rounded-xl"
+      >
+        <MdClose
+          onClick={onClose}
+          className="absolute right-3 top-3 scale-150 hover:text-red-500 cursor-pointer"
+        />
+        {/* start img input */}
         <div className="flex flex-col justify-center items-center">
-          <label htmlFor="product-image"
-            className="p-6 border rounded-full cursor-pointer hover:bg-[#9EBC8A] transition-all">
+          <label
+            className="p-6 border rounded-full cursor-pointer hover:bg-[#9EBC8A] transition-all"
+            htmlFor="product-image"
+          >
             <LuImagePlus className="scale-150" />
           </label>
           {imageUrls.length > 0 && (
@@ -96,104 +95,110 @@ function ProductForm({
             </ul>
           )}
           <input
+            className="hidden"
             id="product-image"
             type="file"
-            className="hidden"
             onChange={handleImageChange}
             multiple
             required={!isEdit}
           />
         </div>
+        {/* end img input */}
 
-        {/* 資料輸入 */}
+        {/* start info input */}
         <table className="table-auto w-full border-separate border-spacing-2 my-3">
-            <tbody className="w-full">
-                <tr className="align-center space--4">
-                    <th className="pr-4 text-right py-2">
-                        <label htmlFor="name">Name:</label>
-                    </th>
-                    <td className="w-full">
-                        <input
-                        type="text"
-                        id="name"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        className="w-full border rounded-sm pl-2 py-1 focus:bg-[#f8f7cf] focus:text-[#537D5D] focus:outline-0"
-                        required
-                        />
-                    </td>
-                </tr>
+          <tbody className="w-full">
+            <tr className="align-center space--4">
+              <th className="pr-4 text-right py-2">
+                <label htmlFor="name">Name:</label>
+              </th>
+              <td className="w-full">
+                <input
+                  className="w-full border rounded-sm pl-2 py-1 focus:bg-[#f8f7cf] focus:text-[#537D5D] focus:outline-0"
+                  type="text"
+                  id="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                />
+              </td>
+            </tr>
 
-                <tr className="align-center">
-                    <th className="pr-4 text-right py-2">
-                        <label htmlFor="price">Price:</label>
-                    </th>
-                    <td>
-                        <input
-                        type="number"
-                        id="price"
-                        value={price}
-                        onChange={(e) => setPrice(e.target.value)}
-                        className="w-full border rounded-sm pl-2 py-1 focus:bg-[#f8f7cf] focus:text-[#537D5D] focus:outline-0"
-                        required
-                        />
-                    </td>
-                </tr>
+            <tr className="align-center">
+              <th className="pr-4 text-right py-2">
+                <label htmlFor="price">Price:</label>
+              </th>
+              <td>
+                <input
+                  className="w-full border rounded-sm pl-2 py-1 focus:bg-[#f8f7cf] focus:text-[#537D5D] focus:outline-0"
+                  type="number"
+                  id="price"
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
+                  required
+                />
+              </td>
+            </tr>
 
-                <tr className="align-center">
-                    <th className="pr-4 text-right py-2">
-                        <label htmlFor="stock">Stock:</label>
-                    </th>
-                    <td>
-                        <input
-                        type="number"
-                        id="stock"
-                        value={stock}
-                        onChange={(e) => setStock(e.target.value)}
-                        className="w-full border rounded-sm pl-2 py-1 focus:bg-[#f8f7cf] focus:text-[#537D5D] focus:outline-0"
-                        required
-                        />
-                    </td>
-                </tr>
+            <tr className="align-center">
+              <th className="pr-4 text-right py-2">
+                <label htmlFor="stock">Stock:</label>
+              </th>
+              <td>
+                <input
+                  className="w-full border rounded-sm pl-2 py-1 focus:bg-[#f8f7cf] focus:text-[#537D5D] focus:outline-0"
+                  type="number"
+                  id="stock"
+                  value={stock}
+                  onChange={(e) => setStock(e.target.value)}
+                  required
+                />
+              </td>
+            </tr>
 
-                <tr className="align-center">
-                    <th className="pr-4 text-right py-2">
-                        <label htmlFor="hashTags">Hashtag:</label>
-                    </th>
-                    <td>
-                        <input
-                        type="text"
-                        id="hashTags"
-                        value={hashTags}
-                        onChange={(e) => setHashTags(e.target.value)}
-                        className="w-full border rounded-sm pl-2 py-1 focus:bg-[#f8f7cf] focus:text-[#537D5D] focus:outline-0"
-                        />
-                    </td>
-                </tr>
+            <tr className="align-center">
+              <th className="pr-4 text-right py-2">
+                <label htmlFor="hashTags">Hashtag:</label>
+              </th>
+              <td>
+                <input
+                  className="w-full border rounded-sm pl-2 py-1 focus:bg-[#f8f7cf] focus:text-[#537D5D] focus:outline-0"
+                  type="text"
+                  id="hashTags"
+                  value={hashTags}
+                  onChange={(e) => setHashTags(e.target.value)}
+                />
+              </td>
+            </tr>
 
-                <tr className="align-center">
-                    <th className="pr-4 text-right py-2">
-                        <label htmlFor="category">Category:</label>
-                    </th>
-                    <td>
-                        <SelectTree
-                        categories={categories}
-                        subcategories={subcategories}
-                        value={categoryId}
-                        onChange={setCategoryId}
-                        />
-                    </td>
-                </tr>
-            </tbody>
+            <tr className="align-center">
+              <th className="pr-4 text-right py-2">
+                <label htmlFor="category">Category:</label>
+              </th>
+              <td>
+                <SelectTree
+                  categories={categories}
+                  subcategories={subcategories}
+                  value={categoryId}
+                  onChange={setCategoryId}
+                />
+              </td>
+            </tr>
+          </tbody>
         </table>
+        {/* end info input */}
 
-
-        {/* 送出 */}
-        <button type="submit" className="border py-2 px-6 rounded-2xl
-          hover:bg-[#f8f7cf] hover:text-[#537D5D] hover:border-[#9bda8b] transition-all duration-200">
+        {/* start submit btn */}
+        <button
+          type="submit"
+          className="border py-2 px-6 rounded-2xl
+        hover:bg-[#f8f7cf] hover:text-[#537D5D] hover:border-[#9bda8b] transition-all duration-200"
+        >
           {isEdit ? "Update" : "Add to shop"}
         </button>
+        {/* end submit btn */}
       </form>
+      {/* end form */}
     </motion.div>
   );
 }
