@@ -81,9 +81,9 @@ exports.getMyShop = async (req, res) => {
 
 exports.getHistory =  async (req, res) => {
     try {
-        const userId = req.user?.id || 2
+        const userId = req.user.id
 
-        const order = await Order.findAll({
+        let completedOrder = await Order.findAll({
             where:{
                 userId: userId,
                 status: 'paid'
@@ -92,7 +92,7 @@ exports.getHistory =  async (req, res) => {
                 {
                     model: ProductInOrder,
                     where: {status: 'paid'},
-                    attributes: ['id', 'amount'] ,
+                    attributes: ['id', 'amount', 'updatedAt'] ,
                     include: [
                         {
                             model: Product,
@@ -111,12 +111,39 @@ exports.getHistory =  async (req, res) => {
             attributes: ['id', 'merchantTradeNo', 'updatedAt']
         })
 
-        if(!order){
-            return res.status(404).json({message: "找不到歷史訂單"})
-        }else{
-            return res.status(201).json({message: "找到訂單ㄌ", order});
-        }
+        let pendingOrder = await Order.findAll({
+            where:{
+                userId: userId,
+                status: 'pending'
+            },
+            include: [
+                {
+                    model: ProductInOrder,
+                    where: {status: 'unpaid'},
+                    attributes: ['id', 'amount', 'updatedAt'] ,
+                    include: [
+                        {
+                            model: Product,
+                            attributes: ['id', 'name', 'price', 'imageUrls']
+                        }
+                    ]
+                },
+                {
+                    model: User,
+                    where: {id: userId},
+                    attributes: ['username']
+                }
+                
+            ],
+            order: [['updatedAt', 'DESC']],
+            attributes: ['id', 'merchantTradeNo', 'updatedAt']
+        })
 
+        completedOrder = completedOrder.length > 0 ? completedOrder : []
+        pendingOrder = pendingOrder.length > 0 ? pendingOrder : []
+
+
+        return res.status(200).json({message: "找到訂單ㄌ",completedOrder, pendingOrder});
     } catch (error) {
         res.status(500).json({error: "fetch products failed", details: error.message}) 
     }
@@ -124,7 +151,7 @@ exports.getHistory =  async (req, res) => {
 
 exports.uploadProduct = async (req, res) => {
     try {
-        const {name, price, stock, hashTags} = req.body
+        const {name, price, stock, hashTags, category} = req.body
         const userId = req.user.id
         
         const imageUrls = req.files.map(file => `/uploads/products/${file.filename}`);
@@ -135,7 +162,8 @@ exports.uploadProduct = async (req, res) => {
             stock: stock,
             hashTags: hashTags,
             imageUrls: imageUrls,
-            sellerId: userId
+            sellerId: userId,
+            categoryId: category
             
         })
 

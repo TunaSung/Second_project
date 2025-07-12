@@ -50,9 +50,9 @@ export const getMyShop = async () => {
 
 export const getHistory = async () => {
     try {
-        const response = await api.get('/product/hitory')
-        console.log(response.data.order)
-        return response.data.order
+        const response = await api.get('/product/history')
+        console.log('responseData: ',response.data)
+        return response.data
     } catch (error) {
         const message = error.response?.data?.message || error.message || "get history failed";
         console.error("get history error:", message);
