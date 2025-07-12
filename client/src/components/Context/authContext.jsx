@@ -6,7 +6,7 @@ import { getCategory } from "../../services/productService"
 
 const AuthContext = createContext()
 
-export default function AuthProvider({ children }) {
+export function AuthProvider({ children }) {
 
     // useState
     const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -31,7 +31,6 @@ export default function AuthProvider({ children }) {
                     const productList = cart.pios.reverse()
                     setCartList(productList)
                 }
-                console.log(cartList)
                 console.log('載入使用者資料成功')
             } catch (err) {
                 alert("載入使用者資料失敗", err);
