@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { MdModeEdit } from "react-icons/md";
 import { updateAvailable, updateMyShop, getMyShop } from "../../services/productService";
+import { useAuth } from '../Context/authContext'
 import { MdClose } from "react-icons/md";
 import { LuImagePlus } from "react-icons/lu";
+import ProductForm from "./ShopEdit";
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -17,7 +19,7 @@ import '../../style/Swiper.css'
 import { EffectFade, Pagination } from 'swiper/modules';
 import { toast } from "react-toastify";
 
-function ShopItem({productId, available, itemName, itemPrice, sale, itemStock, itemHashTags, itemImageUrls, setItems}){
+function ShopItem({categories, subcategories, productId, available, itemName, itemPrice, sale, itemStock, itemHashTags, itemImageUrls, itemCategoryId, setItems}){
 
 
     const [name, setName] = useState(itemName)
@@ -25,6 +27,7 @@ function ShopItem({productId, available, itemName, itemPrice, sale, itemStock, i
     const [stock, setStock] = useState(itemStock)
     const [hashTags, setHashTags] = useState(itemHashTags)
     const [imageUrls, setImageUrls] = useState([])
+    const [categoryId, setCategoryId] = useState(itemCategoryId)
     const [isUpdateOpen, setIsUpdateOpen] = useState(false)
     const [isAvailable, setIsAvailable] = useState(available)
     const [isConfirmOpen, setIsConfirmOpen] = useState(false)
@@ -60,7 +63,8 @@ function ShopItem({productId, available, itemName, itemPrice, sale, itemStock, i
             formData.append('price', price)
             formData.append('stock', stock)
             formData.append('hashTags', hashTags)
-            
+            formData.append('category', categoryId)
+
             if (imageUrls.length > 0) {
                 imageUrls.forEach(file => {
                     formData.append('imageUrls', file)
@@ -101,80 +105,24 @@ function ShopItem({productId, available, itemName, itemPrice, sale, itemStock, i
 
             {/* Start update product */}
             {isUpdateOpen &&
-            <motion.div className="fixed-mid p-4 w-120 aspect-square border z-200 bg-[#537D5D] rounded-2xl"
-            animate={{scale: isUpdateOpen ? [0, 1.1, 0.9, 1] : [1, 0],
-                opacity: isUpdateOpen ? [0, 1] : [0, 0]
-            }}
-            transition={{
-                scale: {duration: 0.8, times: [0, 0.7, 0.85, 1], ease: 'easeInOut'},
-                opacity: {duration: 0.6}
-            }}
-            >
-                
-                <form onSubmit={handleUpdate} className="w-full h-full p-3 flex flex-col justify-center items-center rounded-xl">
-                    <MdClose onClick={handleClose} className="absolute right-3 top-3 scale-150 hover:text-red-500 transition-all duration-250 cursor-pointer"/>
-                    <div className="mb-8 flex flex-col justify-center items-center">
-                        <label htmlFor="edit-input"
-                            className="p-10 border rounded-full cursor-pointer hover:bg-[#9EBC8A] transition-all duration-200"
-                        >
-                            <LuImagePlus className="scale-150"/>
-                        </label>
-                        <div>
-                            {imageUrls.length > 0 ? (
-                                <ul className="mt-4 h-10 space-x-1 text-gray-700 overflow-y-auto">
-                                    {imageUrls.map((file, idx) => (
-                                        <li key={idx}>{file.name}</li>
-                                    ))}
-                                </ul>
-                            )
-                            :
-                            <ul className="mt-4 h-10 space-x-1 text-gray-700 overflow-y-auto">
-                                {itemImageUrls.map((file, idx) => (
-                                    <li key={idx}>{file}</li>
-                                ))}
-                            </ul>
-                        }
-                        </div>
-                        <input
-                            id="edit-input"
-                            type="file"
-                            name="imageUrls"
-                            className="hidden"
-                            onChange={toggleImageChange}
-                            multiple
-                        />
-                    </div>
-
-                    <div className="grid grid-cols-2">
-
-                        <div className="flex flex-col gap-rwd">
-                            <label htmlFor="editName">Name: </label>
-                            <label htmlFor="editPrice">Price: </label>
-                            <label htmlFor="editStock">Stock: </label>
-                            <label htmlFor="editHashTags">Hashtag: </label>
-                        </div>
-
-                        <div className="flex flex-col gap-rwd">
-                            <input type="text" id="editName" value={name} onChange={(e) => setName(e.target.value)}
-                            className="border rounded-sm pl-1 focus:bg-[#f8f7cf] focus:text-[#537D5D]" required/>
-
-                            <input type="number" id="editPrice" value={price} onChange={(e) => setPrice(e.target.value)}
-                            className="border rounded-sm pl-1 focus:bg-[#f8f7cf] focus:text-[#537D5D]" required/>
-
-                            <input type="number" id="editStock" value={stock} onChange={(e) => setStock(e.target.value)}
-                            className="border rounded-sm pl-1 focus:bg-[#f8f7cf] focus:text-[#537D5D]" required/>
-
-                            <input type="text" id="editHashTags" value={hashTags} onChange={(e) => setHashTags(e.target.value)}
-                            className="border rounded-sm pl-1 focus:bg-[#f8f7cf] focus:text-[#537D5D]"/>
-                        </div>
-                    </div>
-                    <button type="submit" className="mt-10 border py-2 px-6 rounded-2xl
-                     hover:bg-[#f8f7cf] hover:text-[#537D5D] hover:border-[#9bda8b] transition-all duration-200">
-                        Update
-                    </button>
-                </form>
-            </motion.div>
+                <ProductForm
+                    isEdit={true}
+                    initialValues={{
+                    id: productId,
+                    name: itemName,
+                    price: itemPrice,
+                    stock: itemStock,
+                    hashTags: itemHashTags,
+                    categoryId: itemCategoryId
+                    }}
+                    onClose={handleClose}
+                    onSubmit={updateMyShop}
+                    onSubmitSuccess={() => getMyShop().then(setItems)}
+                    categories={categories}
+                    subcategories={subcategories}
+                />
             }
+
             {/* End update product */}
 
             <div id="container" className="mt-4 w-full border py-4 pl-10 hover:bg-[#537D5D] grid grid-cols-[3fr_1fr_1fr_1fr_2fr_1fr] items-center">

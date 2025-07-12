@@ -2,11 +2,16 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { uploadProduct, getMyShop } from "../services/productService";
 import { toast } from "react-toastify";
+import { useAuth } from '../components/Context/authContext'
+
+
 // UI
+import SelectTree from "../components/Feature/SelectTree";
 import ShopItem from "../components/Feature/ShopItem";
 import { FaPlus } from "react-icons/fa";
 import { LuImagePlus } from "react-icons/lu";
 import { MdClose } from "react-icons/md";
+import ProductForm from "../components/Feature/ShopEdit";
 
 function MyShop() {
 
@@ -15,8 +20,11 @@ function MyShop() {
     const [stock, setStock] = useState(0)
     const [imageUrls, setImageUrls] = useState([])
     const [hashTags, setHashTags] = useState('')
+    const [categoryId, setCategoryId] = useState(null)
     const [items, setItems] = useState([])
     const [isAddProductOpen, setIsAddProductOpen] = useState(false)
+
+    const { categories, subcategories } = useAuth()
     
     useEffect(() => {
         const fetchMyShop = async () => {
@@ -32,45 +40,6 @@ function MyShop() {
         fetchMyShop()
     }, [])
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-
-        try {
-            const formData = new FormData()
-
-            formData.append('name', name)
-            formData.append('price', price)
-            formData.append('stock', stock)
-            formData.append('hashTags', hashTags)
-            
-            imageUrls.forEach((file) => {
-                formData.append('imageUrls', file)
-            })
-
-            const upload = await uploadProduct(formData)
-            toast.success('商品上傳成功')
-
-            setIsAddProductOpen(false)
-            setName("")
-            setPrice(0)
-            setStock(0)
-            setHashTags('')
-            setImageUrls([])
-
-            await getMyShop().then(setItems)
-
-        } catch (error) {
-            console.log('商品上傳失敗', error)
-            toast.error('商品上傳失敗')
-        }
-    }
-
-    const handleImageChange = (e) => {
-        setImageUrls([])
-        const file = Array.from(e.target.files)
-        setImageUrls(file)
-    }
-
     const handleClose = () => {
         setIsAddProductOpen(false)
         setName('')
@@ -80,76 +49,20 @@ function MyShop() {
         setImageUrls([])
     }
 
+
     return (
         <div className="pt-30 bg-[#9EBC8A] text-[#f8f7cf]">
             
             {/* Start add product */}
             {isAddProductOpen &&
-            <motion.div className="fixed-mid p-4 w-120 aspect-square border z-200 bg-[#537D5D] rounded-2xl"
-            animate={{scale: isAddProductOpen ? [0, 1.1, 0.9, 1] : [1, 0],
-                opacity: isAddProductOpen ? [0, 1] : [0, 0]
-            }}
-            transition={{
-                scale: {duration: 0.8, times: [0, 0.7, 0.85, 1], ease: 'easeInOut'},
-                opacity: {duration: 0.6}
-            }}
-            >
-                
-                <form onSubmit={handleSubmit} className="w-full h-full p-3 flex flex-col justify-center items-center rounded-xl">
-                    <MdClose onClick={handleClose} className="absolute right-3 top-3 scale-150 hover:text-red-500 transition-all duration-250 cursor-pointer"/>
-                    <div className="mb-8 flex flex-col justify-center items-center">
-                        <label htmlFor="file-input"
-                            className="p-10 border rounded-full cursor-pointer hover:bg-[#9EBC8A] transition-all duration-200"
-                        >
-                            <LuImagePlus className="scale-150"/>
-                        </label>
-                        {imageUrls.length > 0 && (
-                            <ul className="mt-4 h-10 space-x-1 text-gray-700 overflow-y-auto">
-                            {imageUrls.map((file, idx) => (
-                                <li key={idx}>{file.name}</li>   // 用 file.name 顯示檔名
-                            ))}
-                            </ul>
-                        )}
-                        <input
-                            id="file-input"
-                            type="file"
-                            className="hidden"
-                            onChange={handleImageChange}
-                            multiple
-                            required
-                        />
-                    </div>
-
-                    <div className="grid grid-cols-2">
-
-                        <div className="flex flex-col gap-3">
-                            <label htmlFor="name">Name: </label>
-                            <label htmlFor="price">Price: </label>
-                            <label htmlFor="stock">Stock: </label>
-                            <label htmlFor="hashTags">Hashtag: </label>
-                            <label htmlFor="category">Category: </label>
-                        </div>
-
-                        <div className="flex flex-col gap-3">
-                            <input type="text" id="name" value={name} onChange={(e) => setName(e.target.value)}
-                            className="border rounded-sm pl-1 focus:bg-[#f8f7cf] focus:text-[#537D5D]" required/>
-
-                            <input type="number" id="price" value={price} onChange={(e) => setPrice(e.target.value)}
-                            className="border rounded-sm pl-1 focus:bg-[#f8f7cf] focus:text-[#537D5D]" required/>
-
-                            <input type="number" id="stock" value={stock} onChange={(e) => setStock(e.target.value)}
-                            className="border rounded-sm pl-1 focus:bg-[#f8f7cf] focus:text-[#537D5D]" required/>
-
-                            <input type="text" id="hashTags" value={hashTags} onChange={(e) => setHashTags(e.target.value)}
-                            className="border rounded-sm pl-1 focus:bg-[#f8f7cf] focus:text-[#537D5D]"/>
-                        </div>
-                    </div>
-                    <button type="submit" className="mt-10 border py-2 px-6 rounded-2xl
-                     hover:bg-[#f8f7cf] hover:text-[#537D5D] hover:border-[#9bda8b] transition-all duration-200">
-                        Add to shop
-                    </button>
-                </form>
-            </motion.div>
+                <ProductForm
+                    isEdit={false}
+                    onClose={handleClose}
+                    onSubmit={uploadProduct}
+                    onSubmitSuccess={() => getMyShop().then(setItems)}
+                    categories={categories}
+                    subcategories={subcategories}
+                />
             }
             {/* End add product */}
 
@@ -221,9 +134,12 @@ function MyShop() {
                             itemStock={item.stock}
                             itemHashTags={item.hashTags}
                             itemImageUrls={item.imageUrls}
+                            itemCategoryId={item.categoryId}
                             sale={item.sale}
                             available={item.isAvailable}
                             setItems={setItems}
+                            categories={categories}
+                            subcategories={subcategories}
                         />
                     ))}
                 </div>
