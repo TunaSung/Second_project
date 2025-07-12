@@ -15,6 +15,7 @@ function Navbar() {
     // useState
     const [hoverIndex, setHoverIndex] = useState(null)
     const [isCartOpen, setIsCartOpen] = useState(false)
+    const [isMenuOpen, setIsMenuOpen] = useState(false)
     const [search, setSearch] = useState("");
 
     // login status and categories
@@ -25,6 +26,9 @@ function Navbar() {
         setIsCartOpen(true);
     };
 
+    const toggleMenuOpen = () => {
+        setIsMenuOpen(!isMenuOpen)
+    }
     // Update search input
     const toggleSearch = (e) => {
         setSearch(e.target.value);
@@ -96,14 +100,17 @@ function Navbar() {
 
                 {/* start nav right (cart, avatar, search) */}
                 <div className="grid grid-rows-2 gap-1 w-full my-2">
-                    <div className="flex justify-end items-center w-full">
-                        <div className="h-full flex justify-center items-center">
-                            <IoMdCart onClick={handleCartClick} className="text-2xl text-[#D2D0A0] hover:text-amber-300 transition-colors duration-200 cursor-pointer"/>
-                        </div>
-                        <div className="col-start-3 h-full w-1/4 flex justify-center items-center">
-                            {isAuthenticated ? <AvatarIcon/>
+                    <div className="flex justify-end items-center gap-1 w-full">
+                        <motion.div className="h-full flex justify-center items-center"
+                        animate={{translateX: isMenuOpen ? -12 : 0}}
+                        transition={{duration: 0.3}}
+                        >
+                            <IoMdCart onClick={handleCartClick} className="text-2xl text-[#D2D0A0] hover:text-[#e8e679] transition-colors duration-200 cursor-pointer"/>
+                        </motion.div>
+                        <div className="h-full w-1/5 flex justify-center items-center">
+                            {isAuthenticated ? <AvatarIcon isMenuOpen={isMenuOpen} toggleMenuOpen={toggleMenuOpen} />
                              :
-                            <Link to={'/sign'} className="text-2xl cursor-pointer text-[#D2D0A0] hover:text-emerald-400 transition-colors duration-200">
+                            <Link to={'/sign'} className="text-2xl cursor-pointer text-[#D2D0A0] hover:text-[#91c883] transition-colors duration-200">
                                 <IoLogIn/>
                             </Link>
                             }
