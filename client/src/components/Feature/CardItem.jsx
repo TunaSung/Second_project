@@ -60,7 +60,7 @@ function CardItem( {productId, title, amount, price, stock, hashTags, imageUrls,
             {/* start product img */}
             <Swiper
                 id="product-img"
-                loop={true}
+                loop={imageUrls > 3}
                 effect={'fade'}
                 grabCursor={true}
                 pagination={{clickable: true}}
