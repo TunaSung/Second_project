@@ -119,7 +119,7 @@ function Cart({ isCartOpen, setIsCartOpen }) {
             <div className="cart-container overflow-y-scroll cart-scroll mb-2">
                 <div className="h-full w-full">
                     {cartList.map((item) => (
-                        <CardItem key={item.key} productId={item.product.id} title={item.product.name} amount={item.amount} price={item.product.price} stock={item.product.stock} 
+                        <CardItem key={item.id} productId={item.product.id} title={item.product.name} amount={item.amount} price={item.product.price} stock={item.product.stock} 
                         hashTags={item.product.hashTags} imageUrls={item.product.imageUrls} onClickChange={handleCheckChange} isChecked={selectedItems.has(item.product.id)}/>
                     ))}
                 </div>
