@@ -1,14 +1,17 @@
 import { useState, useEffect } from "react"
 import { useAuth } from "../components/Context/authContext";
-import HistioryItem from "../components/Feature/HistoryItem"
+import { motion } from "framer-motion";
+import CompletedOrder from "../components/Layout/CompletedOrder";
+import PendingOrder from "../components/Layout/PendingOrder";
+import { userInfo, updateInfo, updateAvatar } from "../services/authService";
+import { getHistory } from "../services/productService";
+
 import { RiImageEditFill } from "react-icons/ri";
 import { MdAddCard } from "react-icons/md";
-import { motion } from "framer-motion"
-import { userInfo, updateInfo, updateAvatar } from "../services/authService";
 import { UserOutlined } from '@ant-design/icons';
 import { Avatar, Space } from 'antd';
-import { toast } from "react-toastify";
 import 'aos/dist/aos.css';
+import { toast } from "react-toastify";
 
 
 const items = [
@@ -77,11 +80,15 @@ function Personal() {
     const [phone, setPhone] = useState("");
     const [address, setAddress] = useState("");
     const [isEdited, setIsEdited] = useState(false)
-    const [isHoverd, setIsHovered] = useState(false)
+    const [isHovered, setIsHovered] = useState(false)
     const [isFormShow, setIsFormShow] = useState(false)
     const [bankCode, setBankCode] = useState("");
     const [accountNumber, setAccountNumber] = useState("");
     const [accountName, setAccountName] = useState("");
+
+    const [isCompleted, setIsCompleted] = useState(true)
+    const [completedOrder, setCompletedOrder] = useState([])
+    const [pendingOrder, setPendingOrder] = useState([])
 
     const { setAvatarUrl } = useAuth();
 
@@ -99,6 +106,20 @@ function Personal() {
             }
         }
         fetchProfile()
+    }, [])
+
+    useEffect(() => {
+        const fetchOrder = async () => {
+            try {
+                const order = await getHistory()
+                setCompletedOrder(order?.completedOrder || [])
+                setPendingOrder(order?.pendingOrder || [])
+                console.log('載入訂單成功', order.completedOrder, order.pendingOrder)
+            } catch (error) {
+                console.log("載入歷史訂單失敗", error)
+            }
+        }
+        fetchOrder()
     }, [])
 
     if (!profile || !profile.email) {
@@ -178,97 +199,98 @@ function Personal() {
                         {/* Start info */}
                         <form onSubmit={handleProflieInfo} className="w-full">
                             <table className="table-auto w-full">
+                                <tbody>
 
-                                {/* Start username */}
-                                <tr>
-                                    <td className="pb-8">
-                                        <label htmlFor="">Username</label>
-                                    </td>
-                                    <td className="pb-8">
-                                        <div>
-                                            {profile.username}
-                                        </div>
-                                    </td>
-                                </tr>
-                                {/* End username */}
+                                    {/* Start username */}
+                                    <tr>
+                                        <td className="pb-8">
+                                            <label htmlFor="">Username</label>
+                                        </td>
+                                        <td className="pb-8">
+                                            <div>
+                                                {profile.username}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {/* End username */}
 
-                                {/* Start email */}
-                                <tr>
-                                    <td className="pb-8">
-                                        <label htmlFor="">Email</label>
-                                    </td>
-                                    <td className="pb-8">
-                                        <span className="mr-2">
-                                            {!isEdited ? (
-                                                email.slice(0,3) + "*".repeat(atIndex-3) + email.slice(atIndex)
-                                            )
-                                            : (
-                                                <input type="email" className="border rounded-md pl-1"
-                                                value={email} 
-                                                onChange={(e) => {setEmail(e.target.value)}}
-                                                />
-                                            )
-                                            }
-                                        </span>
-                                    </td>
-                                </tr>
-                                {/* End email */}
+                                    {/* Start email */}
+                                    <tr>
+                                        <td className="pb-8">
+                                            <label htmlFor="">Email</label>
+                                        </td>
+                                        <td className="pb-8">
+                                            <span className="mr-2">
+                                                {!isEdited ? (
+                                                    email.slice(0,3) + "*".repeat(atIndex-3) + email.slice(atIndex)
+                                                )
+                                                : (
+                                                    <input type="email" className="border rounded-md pl-1"
+                                                    value={email} 
+                                                    onChange={(e) => {setEmail(e.target.value)}}
+                                                    />
+                                                )
+                                                }
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    {/* End email */}
 
-                                {/* Start phone num */}
-                                <tr>
-                                    <td className="pb-8">
-                                        <label htmlFor="">Phone Number</label>
-                                    </td>
-                                    <td className="pb-8">
-                                        <span className="mr-2">
-                                            {!isEdited ? (
-                                                "*".repeat(7) + profile.phone.slice(-3)
-                                            )
-                                            : (
-                                                <input type="tel" className="border rounded-md pl-1"
-                                                value={phone} 
-                                                onChange={(e) => {setPhone(e.target.value)}}
-                                                />
-                                            )
-                                            }
-                                        </span>
-                                    </td>
-                                </tr>
-                                {/* End phone num */}
+                                    {/* Start phone num */}
+                                    <tr>
+                                        <td className="pb-8">
+                                            <label htmlFor="">Phone Number</label>
+                                        </td>
+                                        <td className="pb-8">
+                                            <span className="mr-2">
+                                                {!isEdited ? (
+                                                    "*".repeat(7) + profile.phone.slice(-3)
+                                                )
+                                                : (
+                                                    <input type="tel" className="border rounded-md pl-1"
+                                                    value={phone} 
+                                                    onChange={(e) => {setPhone(e.target.value)}}
+                                                    />
+                                                )
+                                                }
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    {/* End phone num */}
 
-                                {/* Start address */}
-                                <tr>
-                                    <td className="pb-8">
-                                        <label htmlFor="">Address</label>
-                                    </td>
-                                    <td className="pb-8">
-                                        <span className="mr-2">
-                                            {!isEdited ? (
-                                                profile.address
-                                            )
-                                            : (
-                                                <input type="tel" className="border rounded-md pl-1"
-                                                value={address} 
-                                                onChange={(e) => {setAddress(e.target.value)}}
-                                                />
-                                            )
-                                            }
-                                        </span>
-                                    </td>
-                                </tr>
-                                {/* End address */}
+                                    {/* Start address */}
+                                    <tr>
+                                        <td className="pb-8">
+                                            <label htmlFor="">Address</label>
+                                        </td>
+                                        <td className="pb-8">
+                                            <span className="mr-2">
+                                                {!isEdited ? (
+                                                    profile.address
+                                                )
+                                                : (
+                                                    <input type="tel" className="border rounded-md pl-1"
+                                                    value={address} 
+                                                    onChange={(e) => {setAddress(e.target.value)}}
+                                                    />
+                                                )
+                                                }
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    {/* End address */}
 
-                                {/* Start btn */}
-                                <tr>
-                                    <td className=""></td>
-                                    <td className="">
-                                        <div>
-                                            <button type="submit" className="border px-5 py-2 rounded">{isEdited ? 'Save' : 'Edit'}</button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                {/* Start btn */}
-
+                                    {/* Start btn */}
+                                    <tr>
+                                        <td className=""></td>
+                                        <td className="">
+                                            <div>
+                                                <button type="submit" className="border px-5 py-2 rounded">{isEdited ? 'Save' : 'Edit'}</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {/* Start btn */}
+                                </tbody>
                             </table>
                         </form>
                         {/* End info */}
@@ -294,7 +316,7 @@ function Personal() {
                                     <motion.label htmlFor="file-input"
                                         className="absolute-mid w-full bg-[#f1f0c7]/30 aspect-square rounded-full border flex justify-center items-center cursor-pointer z-50"
                                         initial={{scale: 0}}
-                                        animate={{scale: isHoverd ? 1 : 0}}
+                                        animate={{scale: isHovered ? 1 : 0}}
                                         transition={{ type: "spring", stiffness: 300, damping: 20 }}
                                     >
                                         <RiImageEditFill className="scale-175"/>
@@ -310,11 +332,13 @@ function Personal() {
                             </form>
                             {/* End avatar */}
 
-
+                            {/* start add icon */}
                             <button onClick={()=>setIsFormShow(true)} className="border p-3 rounded-full group hover:bg-[#f1f0c7] transition-all duration-250">
                                 <MdAddCard className="scale-125 group-hover:text-[#537D5D]"/>
                             </button>
+                            {/* end add icon */}
 
+                            {/* start credit card */}
                             <motion.form className="fixed-mid w-120 aspect-[2/1] border  bg-[#f1f0c7] text-[#537D5D] p-8"
                                 initial={{scale: 0, opacity: 0}}
                                 animate={{scale: isFormShow ? 1 : 0, opacity: isFormShow ? 1 : 0}}
@@ -358,7 +382,7 @@ function Personal() {
                                     </button>
                                 </div>
                             </motion.form>
-
+                            {/* end credit card */}
                         </div>
                     </div>
 
@@ -377,27 +401,51 @@ function Personal() {
                         <div className="absolute px-3 left-5 -top-5 text-4xl font-bold  drop-shadow-[1px_1px_2px_rgba(0,0,0,0.3)]">History</div>
                     </div>
                     {/* End title */}
-
-                    <div id="classification" className="w-full pl-10 grid grid-cols-[4fr_1fr_1fr_1fr_1fr]">
-                        <div></div>
-                        <div className="text-center">Price</div>
-                        <div className="text-center">Sale</div>
-                        <div className="text-center">Stock</div>
-                        <div className="text-center">Hashtag</div>
+                    
+                    {/* start order */}
+                    <div className="w-[90%] min-h-100">
+                        <div className="w-full h-15 pl-8 flex items-end">
+                            <motion.button  className="border border-b-0 w-35 h-3/4 px-3 rounded-t-xl"
+                            animate={{height: isCompleted ? '100%' : "66.66%",
+                                fontSize: isCompleted ? '18px' : "14px"
+                            }}
+                            onClick={() => setIsCompleted(true)}
+                            >
+                                Completed
+                            </motion.button>
+                            <motion.button  className="border border-b-0 w-35 2/3 px-3 rounded-t-xl"
+                            animate={{height: isCompleted ? '66.66%' : "100%",
+                                fontSize: isCompleted ? '14px' : "18px"
+                            }}
+                            onClick={() => setIsCompleted(false)}
+                            >
+                                Pending
+                            </motion.button>
+                        </div>
+                        <div className="flex flex-col gap-rwd rounded-xl ">
+                            {isCompleted ? 
+                                (completedOrder.length > 0 ?
+                                    (completedOrder.map((item, i) => (
+                                        <CompletedOrder key={i} merchantTradeNo={item.merchantTradeNo} date={item.updatedAt} pios={item.pios} seller={item.user.username} />
+                                    )))
+                                    :
+                                    <div className="w-full h-100 text-3xl flex justify-center items-center">No completed orders</div>
+                                )
+                                :
+                                (pendingOrder.length > 0 ?
+                                    (pendingOrder.map((item, i) => (
+                                        <PendingOrder key={i} merchantTradeNo={item.merchantTradeNo} date={item.updatedAt} pios={item.pios} seller={item.user.username} />
+                                    )))
+                                    :
+                                    <div className="w-full h-100 text-3xl flex justify-center items-center">No pending orders</div>
+                                )
+                            }
+                        </div>
                     </div>
-                    <div id="cart-item" className="w-full ">
-                        {items.map((item, index) => (
-                            <HistioryItem seller={item.seller} key={item.id} name={item.name} price={item.price} stock={item.stock} sale={item.sale}/> 
-                        ))}
-                    </div>
+                    {/* end order */}
 
                 </div>
                 {/* End history */}
-
-                
-
-
-
             </div>
         </div>
     )
