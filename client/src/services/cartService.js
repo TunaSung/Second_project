@@ -13,7 +13,7 @@ export const addToCart = async (productId, amount) => {
 
 export const getCart = async () => {
     try {
-        const response = await api.get('/cart/')
+        const response = await api.get('/cart')
         return response.data.order
     } catch (error) {
         const message = error.response?.data?.message || error.message || "get cart failed";
