@@ -154,7 +154,7 @@ function ShopItem({
           {/* Start Image Carousel */}
           <Swiper
             id="my-shop-img"
-            loop={true}
+            loop={itemImageUrls > 3}
             effect={"fade"}
             grabCursor={true}
             pagination={{ clickable: true }}
@@ -223,7 +223,7 @@ function ShopItem({
         {/* Start Edit Button */}
         <div className="flex justify-center items-center gap-3">
           <button onClick={() => setIsUpdateOpen(true)}>
-            <MdModeEdit className="hover:text-sky-400 scale-125" />
+            <MdModeEdit className="hover:text-[#91C8E4] scale-125" />
           </button>
         </div>
         {/* End Edit Button */}

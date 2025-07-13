@@ -101,11 +101,12 @@ function ProductItem({ product }) {
       >
         <Swiper
           id="product-img"
-          loop={true}
+          loop={product.imageUrls.length > 3}
           effect={"fade"}
           grabCursor={true}
           pagination={{ clickable: true }}
           modules={[EffectFade, Pagination]}
+          lazy={{ loadOnTransitionStart: true, loadPrevNext: true }}
           className="w-full h-full"
         >
           {product.imageUrls.map((fileUrl, index) => (
