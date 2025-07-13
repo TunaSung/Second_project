@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 // UI and icons
@@ -29,10 +29,20 @@ function Home() {
 
     // useState
     const [search, setSearch] = useState("");
+    const navigate = useNavigate()
 
     // Search input
     const toggleSearch = (e) => {
         setSearch(e.target.value);
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (search.trim() === '') {
+            navigate("/product");
+        } else {
+            navigate(`/product?keyword=${encodeURIComponent(search.trim())}`);
+        }
     };
     
     // Framer scroll animate
@@ -70,9 +80,19 @@ function Home() {
 
                 {/* search bar */}
                 <div className="absolute-mid w-1/3 h-1/5 flex items-center justify-center bg-white/70 border z-50 p-5">
-                    <form action="" className=" border w-full bg-white flex items-center justify-center">
-                        <input value={search} onChange={toggleSearch} placeholder="Enter product name" className="h-15 w-full px-2 text-xl focus:outline-0"/>
-                        <Link to={'/product'} className="h-15 aspect-5/3 bg-[#D2D0A0] text-[#537D5D] flex items-center justify-center hover:text-white hover:text-lg transition-all duration-300"><IoSearch />Search</Link>
+                    <form onSubmit={handleSubmit} className="border w-full bg-white flex items-center justify-center">
+                    <input
+                        value={search}
+                        onChange={toggleSearch}
+                        placeholder="Enter product name"
+                        className="h-15 w-full px-2 text-xl focus:outline-0"
+                    />
+                    <button
+                        type="submit"
+                        className="h-15 aspect-5/3 bg-[#D2D0A0] text-[#537D5D] flex items-center justify-center hover:text-white hover:text-lg transition-all duration-300"
+                    >
+                        <IoSearch />Search
+                    </button>
                     </form>
                 </div>
 

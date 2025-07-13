@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "../Context/authContext";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // UI & icons
 import Cart from "../../pages/Cart";
@@ -16,6 +16,9 @@ function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [search, setSearch] = useState("");
 
+  // useNavigate
+  const navigate = useNavigate()
+
   // login status and categories
   const { isAuthenticated, categories, subcategories } = useAuth();
 
@@ -27,9 +30,19 @@ function Navbar() {
   const toggleMenuOpen = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-  // Update search input
+    
+
+  // Search input
   const toggleSearch = (e) => {
-    setSearch(e.target.value);
+      setSearch(e.target.value);
+  };
+  const handleSubmit = (e) => {
+      e.preventDefault();
+      if (search.trim() === '') {
+          navigate("/product");
+      } else {
+          navigate(`/product?keyword=${encodeURIComponent(search.trim())}`);
+      }
   };
 
   return (
@@ -142,14 +155,14 @@ function Navbar() {
           </div>
 
           <form
-            action=""
+            onSubmit={handleSubmit}
             className="h-full px-3 border-1 border-[#D2D0A0] rounded-2xl flex items-center justify-center"
           >
             <input
               type="text"
               value={search}
               onChange={toggleSearch}
-              className="w-full outline-none text-white placeholder-white"
+              className="w-full outline-none text-[#D2D0A0] placeholder-white"
             />
             <button
               type="submit"

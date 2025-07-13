@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useSearchParams, useNavigate  } from "react-router-dom";
 import { useAuth } from "../components/Context/authContext";
 import "aos/dist/aos.css";
 
 // API Service
-import { getProduct } from "../services/productService";
+import { getProduct, searchProductsByName } from "../services/productService";
 
 // UI & icons
 import ProductItem from "../components/Feature/ProductItem";
@@ -19,6 +19,11 @@ import "../style/Swiper.css";
 import { Mousewheel, FreeMode } from "swiper/modules";
 
 function Product() {
+
+  const [searchParams] = useSearchParams();
+  const keyword = searchParams.get('keyword');
+  const navigate = useNavigate();
+
   // Get current product category from route state
   const location = useLocation();
   const initialLabel = location.state?.initialLabel ?? 1;
@@ -48,19 +53,25 @@ function Product() {
 
   // Fetch product data when component mounts or category changes
   useEffect(() => {
+    const fetchProduct = async () => {
     try {
-      const fetchProduct = async () => {
-        const data = await getProduct(categorize);
-        setProducts(data);
-      };
-      fetchProduct();
+      if (keyword) {
+        const result = await searchProductsByName(keyword);
+        setProducts(result);
+      } else {
+        const result = await getProduct(categorize);
+        setProducts(result);
+      }
     } catch (err) {
       console.log("商品資料載入失敗", err);
     }
+  };
+
+  fetchProduct();
   }, [categorize]);
 
   // If products is null, show loading animation
-  if (products === null) {
+  if (!products) {
     return (
       <div className="w-full h-[50vh] flex justify-center items-center my-25">
         <l-dot-stream size="60" speed="2.5" color="black"></l-dot-stream>
@@ -73,23 +84,31 @@ function Product() {
     setParentId(id);
     setCategorize(id);
     setPage(1);
+    navigate('/product');
   };
   const handleChildCategory = (id) => {
     setCategorize(id);
     setPage(1);
+    navigate('/product');
   };
 
   // Grid dim
   // Dynamic adjustment
   const cols = 5;
   const rows = Math.ceil(
-    products.length > 15 ? 4 : products.length != 0 ? products.length / cols : 1
+    products && products.length > 15
+      ? 4
+      : products && products.length !== 0
+      ? products.length / cols
+      : 1
   );
   const wrapperHeight = 200 * rows;
   const itemsPerPage = 20;
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentProducts = products.slice(startIndex, endIndex);
+  const currentProducts = products
+  ? products.slice(startIndex, endIndex)
+  : [];
   const totalPage =
     products.length < itemsPerPage
       ? 1

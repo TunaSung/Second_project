@@ -60,6 +60,17 @@ export const getHistory = async () => {
     }
 }
 
+export const searchProductsByName = async (keyword) => {
+    try {
+        const response = await api.post(`/product/search?keyword=${keyword}`)
+        return response.data.products
+    } catch (error) {
+        const message = error.response?.data?.message || error.message || "get product failed";
+        console.error("get product error:", message);
+        throw error.response?.data?.message || "get product failed";
+    }
+}
+
 export const updateMyShop = async (formData) => {
     try {
         for (let [key, value] of formData.entries()) {

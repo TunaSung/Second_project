@@ -45,6 +45,30 @@ exports.getAllProducts = async (req, res) => {
     }
 }
 
+exports.getProductSearch = async (req, res) => {
+    try {
+        const { keyword } = req.query;
+        if (!keyword) {
+        return res.status(400).json({ error: "Missing keyword" });
+        }
+        
+
+        const products = await Product.findAll({
+        where: {
+            name: {
+            [Op.like]: `%${keyword}%`
+            },
+            isAvailable: true,
+        },
+        order: [['createdAt', 'DESC']],
+        });
+
+    res.status(200).json({ products });
+  } catch (error) {
+    res.status(500).json({ error: 'Search failed', details: error.message });
+  }
+}
+
 exports.getCategory = async (req, res) => {
     try {
         const categories = await Category.findAll({where: {parentId: null}});
