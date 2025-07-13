@@ -36,7 +36,6 @@ function ShopItem({
   itemCategoryId,
   setItems,
 }) {
-
   // useState
   const [name, setName] = useState(itemName);
   const [price, setPrice] = useState(itemPrice);
@@ -44,8 +43,8 @@ function ShopItem({
   const [hashTags, setHashTags] = useState(itemHashTags);
   const [imageUrls, setImageUrls] = useState([]);
   const [categoryId, setCategoryId] = useState(itemCategoryId);
-  const [parentName, setParentName] = useState('')
-  const [childName, setChildName] = useState('')
+  const [parentName, setParentName] = useState("");
+  const [childName, setChildName] = useState("");
   const [isUpdateOpen, setIsUpdateOpen] = useState(false);
   const [isAvailable, setIsAvailable] = useState(available);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
@@ -56,11 +55,11 @@ function ShopItem({
   }, [imageUrls]);
 
   useEffect(() => {
-    const child = subcategories.find(sub => sub.id === itemCategoryId)
-    setChildName(child.name)
-    const parent = categories.find(cat => cat.id === child.parentId)
-    setParentName(parent.name)
-  }, [])
+    const child = subcategories.find((sub) => sub.id === itemCategoryId);
+    setChildName(child.name);
+    const parent = categories.find((cat) => cat.id === child.parentId);
+    setParentName(parent.name);
+  }, []);
 
   // useEffect to log other state changes
   const handleConfirmOpen = () => {
@@ -87,7 +86,7 @@ function ShopItem({
     setPrice(itemPrice);
     setStock(itemStock);
     setHashTags(itemHashTags);
-    setCategoryId(itemCategoryId)
+    setCategoryId(itemCategoryId);
     setImageUrls([]);
   };
 
