@@ -28,14 +28,17 @@ export function AuthProvider({ children }) {
                 const user = await userInfo();
                 setAvatarUrl(user.avatarUrl || "");
                 setUsername(user.username || "")
+
                 const cart = await getCart()
-                if(cart.pios.length > 0) {
-                    const productList = cart.pios.reverse()
-                    setCartList(productList)
+                    if (cart?.pios?.length > 0) {
+                        const productList = cart.pios.reverse()
+                        setCartList(productList)
+                    } else {
+                        setCartList([])
                 }
                 console.log('載入使用者資料成功')
             } catch (err) {
-                alert("載入使用者資料失敗", err);
+                console.log("載入使用者資料失敗", err);
             }
         };
         fetchUser();
@@ -51,12 +54,14 @@ export function AuthProvider({ children }) {
             }
             fetchCategory()
         } catch (error) { 
+            console.error("載入分類失敗", error);
         }
     },[])
 
     // Refresh cart data
     const toggleCart = async () => {
         try {
+            if (!isAuthenticated) return;
             const cart = await getCart()
             const productList = cart.pios.reverse()
             setCartList(productList)
@@ -73,9 +78,15 @@ export function AuthProvider({ children }) {
         try {
             const user = await userInfo();
             setAvatarUrl(user.avatarUrl || "");
+            setUsername(user.username || "")
+
             const cart = await getCart()
-            const productList = cart.pios.reverse()
-            setCartList(productList)
+            if (cart?.pios?.length > 0) {
+                const productList = cart.pios.reverse()
+                setCartList(productList)
+            } else {
+                setCartList([])
+            }
             console.log('載入使用者資料成功')
         } catch (err) {
             console.warn("載入使用者資料失敗");
