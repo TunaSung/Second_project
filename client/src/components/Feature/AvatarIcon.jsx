@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useAuth } from "../Context/authContext";
@@ -22,10 +22,14 @@ function useOutsideClick(ref, handler) {
   }, [ref, handler]);
 }
 
+
+
 function AvatarIcon({ isMenuOpen, toggleMenuOpen }) {
   // useState
   const containerRef = useRef(null);
-  const { avatarUrl, logout } = useAuth();
+  const { username, avatarUrl, logout } = useAuth();
+
+  // useNavigate
   const navigate = useNavigate();
 
   // If there is an avatarUrl, convert it to a full URL
@@ -79,7 +83,7 @@ function AvatarIcon({ isMenuOpen, toggleMenuOpen }) {
 
         <div className="h-full bg-[#D2D0A0] rounded-sm text-sm">
           <div className="w-full text-center text-[#537D5D] cursor-default my-2">
-            Hi~ Tuna
+            Hi~ {username}
           </div>
 
           <Link

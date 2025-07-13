@@ -11,6 +11,7 @@ export function AuthProvider({ children }) {
     // useState
     const [isAuthenticated, setIsAuthenticated] = useState(false)
     const [avatarUrl, setAvatarUrl] = useState("");
+    const [username, setUsername] = useState("")
     const [cartList, setCartList] = useState([])
     const [categories, setCategories] = useState([])
     const [subcategories, setSubcategories] = useState([])
@@ -26,6 +27,7 @@ export function AuthProvider({ children }) {
             try {
                 const user = await userInfo();
                 setAvatarUrl(user.avatarUrl || "");
+                setUsername(user.username || "")
                 const cart = await getCart()
                 if(cart.pios.length > 0) {
                     const productList = cart.pios.reverse()
@@ -89,7 +91,7 @@ export function AuthProvider({ children }) {
     }
     
     return (
-        <AuthContext.Provider value={{ isAuthenticated, avatarUrl, setAvatarUrl, login, logout, cartList, setCartList, toggleCart, categories, subcategories }}>
+        <AuthContext.Provider value={{ isAuthenticated, username, avatarUrl, setAvatarUrl, login, logout, cartList, setCartList, toggleCart, categories, subcategories }}>
             {children}
         </AuthContext.Provider>
     )
