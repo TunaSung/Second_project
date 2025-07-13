@@ -29,7 +29,6 @@ function MyShop() {
     const fetchMyShop = async () => {
       try {
         const myShop = await getMyShop();
-        console.log(myShop);
         setItems(myShop);
       } catch (err) {
         console.log("資料匯入失敗", err);
