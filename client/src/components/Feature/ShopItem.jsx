@@ -219,7 +219,7 @@ function ShopItem({
             ))}
         </div>
         {/* End Item's HashTags */}
-
+ 
         {/* Start Edit Button */}
         <div className="flex justify-center items-center gap-3">
           <button onClick={() => setIsUpdateOpen(true)}>
