@@ -36,6 +36,7 @@ function ShopItem({
   itemCategoryId,
   setItems,
 }) {
+
   // useState
   const [name, setName] = useState(itemName);
   const [price, setPrice] = useState(itemPrice);
@@ -43,6 +44,8 @@ function ShopItem({
   const [hashTags, setHashTags] = useState(itemHashTags);
   const [imageUrls, setImageUrls] = useState([]);
   const [categoryId, setCategoryId] = useState(itemCategoryId);
+  const [parentName, setParentName] = useState('')
+  const [childName, setChildName] = useState('')
   const [isUpdateOpen, setIsUpdateOpen] = useState(false);
   const [isAvailable, setIsAvailable] = useState(available);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
@@ -51,6 +54,13 @@ function ShopItem({
   useEffect(() => {
     console.log("🟢 最新的 imageUrls", imageUrls);
   }, [imageUrls]);
+
+  useEffect(() => {
+    const child = subcategories.find(sub => sub.id === itemCategoryId)
+    setChildName(child.name)
+    const parent = categories.find(cat => cat.id === child.parentId)
+    setParentName(parent.name)
+  }, [])
 
   // useEffect to log other state changes
   const handleConfirmOpen = () => {
@@ -77,6 +87,7 @@ function ShopItem({
     setPrice(itemPrice);
     setStock(itemStock);
     setHashTags(itemHashTags);
+    setCategoryId(itemCategoryId)
     setImageUrls([]);
   };
 
@@ -108,7 +119,7 @@ function ShopItem({
         id="container"
         className="mt-4 w-full border py-4 pl-10 hover:bg-[#537D5D] grid grid-cols-[3fr_1fr_1fr_1fr_2fr_1fr] items-center"
       >
-        <div className="flex items-center">
+        <div className="flex items-center pl-2">
           {/* Start Edit Available Confirm Open */}
           {isConfirmOpen ? (
             <div className="fixed-mid w-80 h-30 p-5 z-100 flex flex-col justify-center items-center border bg-[#f8f7cf]">
@@ -167,11 +178,14 @@ function ShopItem({
           {/* End Image Carousel */}
 
           {/* Start Item's Name */}
-          <a href="#!">
-            <label htmlFor="cart-item">
-              <h3 id="cart-item-title" className="w-30 line-clamp-2">
+          <a href="#!" className="w-3/5">
+            <label htmlFor="cart-item" className="">
+              <h3 id="cart-item-title" className="line-clamp-1">
                 {itemName}
               </h3>
+              <p className="text-xs line-clamp-1">
+                {parentName} : {childName}
+              </p>
             </label>
           </a>
           {/* End Item's Name */}
