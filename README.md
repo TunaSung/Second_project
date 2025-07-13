@@ -1,5 +1,6 @@
-﻿# Second-roject   
-正在寫串後端(ಥ _ ಥ)  
+﻿# Second-roject  
+基本的後端功能串的差不多了  
+接耶下來開搞web socket(ಥ _ ಥ)  
 這是一個類似二手衣網站的東西  
 除了優化First Project的後端功能完整性  
 也會新增Socket.io來實現即時通訊  
@@ -24,7 +25,6 @@
   
 # 一些first project沒用過的例如placeholder往上跳，還有用個profile page
 ![header](./readmeImage/sign.png)  
-![header](./readmeImage/profile.png)
 
 
 
