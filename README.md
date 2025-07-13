@@ -25,7 +25,6 @@
   
 # 一些first project沒用過的例如placeholder往上跳，還有用個profile page
 ![header](./readmeImage/sign.png)  
-![header](./readmeImage/profile.png)
 
 
 
