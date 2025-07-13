@@ -69,7 +69,7 @@ exports.getCart = async (req, res) => {
         })
 
         if(!order){
-            return res.status(400).json({message: "Get failed"})
+            return res.status(400).json({message: "Get failed", order: []})
         }else{
             return res.status(200).json({message: "Get successfully", order})
         }
