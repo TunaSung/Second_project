@@ -1,24 +1,34 @@
 const express = require('express')
+const http = require('http')
 const cors = require('cors')
+const { Server } = require('socket.io')
 require('dotenv').config();
+
 const authRoute = require('./routes/authRoute')
 const productRoute = require('./routes/productRoute')
 const cartRoute = require('./routes/cartRoute')
 const eventRoute = require('./routes/eventRoute')
 const paymentRoutes = require("./routes/paymentRoutes");
-const sqlize = require('./config/database')
+
 const path = require('path')
 const bodyParser = require('body-parser');
 
+const sqlize = require('./config/database')
+
 const app = express()
-const origins = (process.env.CORS_ORIGINS || "http://localhost:5173")
-  .split(",");
+const server = http.createServer(app)
+const origins = (process.env.CORS_ORIGINS || "http://localhost:5173").split(",");
 
 const corsOptions = {
   origin: origins,
   credentials: true, // ← 這行會讓 res header 帶上 Access-Control-Allow-Credentials: true
 };
+
 app.use(cors(corsOptions)); // 全域套用
+
+const io = new Server(server, {
+  cors: corsOptions
+})
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
