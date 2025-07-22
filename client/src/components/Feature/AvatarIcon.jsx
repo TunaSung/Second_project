@@ -27,7 +27,7 @@ function useOutsideClick(ref, handler) {
 function AvatarIcon({ isMenuOpen, toggleMenuOpen }) {
   // useState
   const containerRef = useRef(null);
-  const { username, avatarUrl, logout } = useAuth();
+  const { currentUser, avatarUrl, logout } = useAuth();
 
   // useNavigate
   const navigate = useNavigate();
@@ -83,7 +83,7 @@ function AvatarIcon({ isMenuOpen, toggleMenuOpen }) {
 
         <div className="h-full bg-[#D2D0A0] rounded-sm text-sm">
           <div className="w-full text-center text-[#537D5D] cursor-default my-2">
-            Hi~ {username}
+            Hi~ {currentUser.username}
           </div>
 
           <Link
