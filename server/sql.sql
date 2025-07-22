@@ -70,3 +70,12 @@ VALUES
 ('Beanie', 5),
 ('Tie', 5),
 ('Neck scarf', 5);
+
+
+SELECT * FROM `msgs`;
+
+INSERT INTO msgs (senderId, receiverId, roomId, content, createdAt, updatedAt)
+VALUES
+(1, 2, '2_1', '吃使', NOW(), NOW());
+
+SELECT * FROM categories ORDER BY id DESC LIMIT 10;
