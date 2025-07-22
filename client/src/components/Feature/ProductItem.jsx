@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "../Context/authContext";
+import { useChat } from "../Context/chatContext";
+import { subscribeRoom } from "../../services/socketService";
 import { motion, useAnimation } from "framer-motion";
 import { toast } from "react-toastify";
 
@@ -29,7 +31,17 @@ function ProductItem({ product }) {
   const [amount, setAmount] = useState(1);
 
   // useAuth
-  const { toggleCart } = useAuth();
+  const { currentUser, toggleCart } = useAuth();
+  const { setActiveRoom, setIsChatOpen } = useChat();
+
+  const handleStartChat = () => {
+    const receiverId = product.sellerId;
+    const roomId = [currentUser.id, receiverId].sort().join("_");
+
+    subscribeRoom(roomId); // Socket.io 加入房間
+    setActiveRoom({ roomId, receiverId }); // 設定聊天室資料
+    setIsChatOpen(true); // 開啟聊天室元件
+  };
 
   // useAnimation
   const controlAddSvg = useAnimation();
@@ -135,6 +147,7 @@ function ProductItem({ product }) {
 
           {/* start msg btn */}
           <button
+            onClick={handleStartChat}
             className="border w-8 h-8 px-2 rounded-full scale-100 hover:scale-125 transition-all duration-200 overflow-hidden"
             onMouseEnter={() => {
               setIsMsgHover(true);

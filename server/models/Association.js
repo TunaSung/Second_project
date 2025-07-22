@@ -16,10 +16,10 @@ Product.belongsTo(User, { foreignKey: 'sellerId', as: 'seller' });
 
 
 // user & msg
-User.hasMany(Message, { foreignKey: 'fromUserId', as: 'sentMessages' });
-User.hasMany(Message, { foreignKey: 'toUserId', as: 'receivedMessages' });
-Message.belongsTo(User, { foreignKey: 'fromUserId', as: 'sender' });
-Message.belongsTo(User, { foreignKey: 'toUserId', as: 'receiver' });
+User.hasMany(Message, { foreignKey: 'senderId', as: 'sentMessages' });
+User.hasMany(Message, { foreignKey: 'receiverId', as: 'receivedMessages' });
+Message.belongsTo(User, { foreignKey: 'senderId', as: 'sender' });
+Message.belongsTo(User, { foreignKey: 'receiverId', as: 'receiver' });
 
 // product & pio & order
 Product.hasMany(ProductInOrder, { foreignKey: 'productId' });

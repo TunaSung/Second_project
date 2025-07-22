@@ -5,11 +5,11 @@ class Message extends Model{}
 
 Message.init({
         id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-        message: {type: DataTypes.TEXT, allowNull: false},
-        fromUserId: {type: DataTypes.INTEGER, allowNull: false, references: {model: "users", key: "id"}},
-        toUserId: {type: DataTypes.INTEGER, allowNull: false, references: {model: "users", key: "id"}},
-        productId: {type: DataTypes.INTEGER, references: {model: "products", key: "id"}},
-        orderId: {type: DataTypes.INTEGER, references: {model: "orders", key: "id"}},
+        senderId: {type: DataTypes.INTEGER, allowNull: false, references: {model: "users", key: "id"}},
+        receiverId: {type: DataTypes.INTEGER, allowNull: false, references: {model: "users", key: "id"}},
+        content: {type: DataTypes.TEXT},
+        roomId: {type: DataTypes.STRING, defaultValue: false },
+        messageType: {type: DataTypes.ENUM('text', 'image'), defaultValue: 'text'},
         isRead: {type: DataTypes.BOOLEAN, defaultValue: false}
     },
     {sequelize: sqlize, modelName:'msg', tableName:'msgs', timestamps: true}

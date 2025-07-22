@@ -9,6 +9,9 @@ const productRoute = require('./routes/productRoute')
 const cartRoute = require('./routes/cartRoute')
 const eventRoute = require('./routes/eventRoute')
 const paymentRoutes = require("./routes/paymentRoutes");
+const messageRoute = require('./routes/messageRoute')
+
+const socketHandler = require('./socket/socketHandler')
 
 const path = require('path')
 const bodyParser = require('body-parser');
@@ -29,6 +32,7 @@ app.use(cors(corsOptions)); // 全域套用
 const io = new Server(server, {
   cors: corsOptions
 })
+socketHandler(io)
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
@@ -42,6 +46,8 @@ app.use('/api/product', productRoute)
 app.use('/api/cart', cartRoute)
 
 app.use('/api/event', eventRoute)
+
+app.use('/api/msg', messageRoute)
 
 app.use('/api/payment', bodyParser.urlencoded({ extended: true }));
 app.use('/api/payment', bodyParser.json());
@@ -65,6 +71,6 @@ sqlize.sync().then(() => {
 // }
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, "0.0.0.0", ()=>{
+server.listen(PORT, "0.0.0.0", ()=>{
     console.log(`伺服器運行在 http://localhost:${PORT}`);
 })

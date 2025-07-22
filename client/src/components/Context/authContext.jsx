@@ -11,7 +11,7 @@ export function AuthProvider({ children }) {
     // useState
     const [isAuthenticated, setIsAuthenticated] = useState(false)
     const [avatarUrl, setAvatarUrl] = useState("");
-    const [username, setUsername] = useState("")
+    const [currentUser, setCurrentUser] = useState("")
     const [cartList, setCartList] = useState([])
     const [categories, setCategories] = useState([])
     const [subcategories, setSubcategories] = useState([])
@@ -27,7 +27,7 @@ export function AuthProvider({ children }) {
             try {
                 const user = await userInfo();
                 setAvatarUrl(user.avatarUrl || "");
-                setUsername(user.username || "")
+                setCurrentUser(user || "")
 
                 const cart = await getCart()
                     if (cart?.pios?.length > 0) {
@@ -78,7 +78,7 @@ export function AuthProvider({ children }) {
         try {
             const user = await userInfo();
             setAvatarUrl(user.avatarUrl || "");
-            setUsername(user.username || "")
+            setCurrentUser(user || "")
 
             const cart = await getCart()
             if (cart?.pios?.length > 0) {
@@ -97,12 +97,14 @@ export function AuthProvider({ children }) {
     const logout = () => {
         clearToken()
         setIsAuthenticated(false)
+        setUserId("")
+        setUsername("")
         setAvatarUrl("")
         setCartList([])
     }
     
     return (
-        <AuthContext.Provider value={{ isAuthenticated, username, avatarUrl, setAvatarUrl, login, logout, cartList, setCartList, toggleCart, categories, subcategories }}>
+        <AuthContext.Provider value={{ isAuthenticated, currentUser, avatarUrl, setAvatarUrl, login, logout, cartList, setCartList, toggleCart, categories, subcategories }}>
             {children}
         </AuthContext.Provider>
     )
