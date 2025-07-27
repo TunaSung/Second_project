@@ -1,18 +1,19 @@
 import { useState } from "react";
 import { useAuth } from "../Context/authContext";
 import { useChat } from "../Context/chatContext";
-import { subscribeRoom } from "../../services/socketService";
+
+// library
 import { motion, useAnimation } from "framer-motion";
 import { toast } from "react-toastify";
 
 // API Service
+import { userInfoById } from "../../services/authService"
 import { addToCart } from "../../services/cartService";
 
 // Ui & icons
 import Cloth from "../SVG/Cloth";
-import { FaPlus, FaMinus } from "react-icons/fa";
+import { FaPlus, FaMinus, FaCartPlus } from "react-icons/fa";
 import { TiMessages } from "react-icons/ti";
-import { FaCartPlus } from "react-icons/fa";
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -30,26 +31,50 @@ function ProductItem({ product }) {
   const [isAnimating, setIsAnimating] = useState(false);
   const [amount, setAmount] = useState(1);
 
-  // useAuth
+  // useContext
   const { currentUser, toggleCart } = useAuth();
-  const { setActiveRoom, setIsChatOpen } = useChat();
+  const { setActiveRoom, setIsChatOpen, setChatList } = useChat();
 
-  const handleStartChat = () => {
+  const handleStartChat = async() => {
     const receiverId = product.sellerId;
     const roomId = [currentUser.id, receiverId].sort().join("_");
 
-    subscribeRoom(roomId); // Socket.io 加入房間
-    setActiveRoom({ roomId, receiverId }); // 設定聊天室資料
-    setIsChatOpen(true); // 開啟聊天室元件
+    try {
+      const user = await userInfoById(receiverId)
+
+      // 1️⃣ 先更新 chatList，shape 要跟 ChatContext 一致
+    setChatList(prev => {
+      // 如果已經有這個 roomId，就不重複加
+      if (prev.find(r => r.roomId === roomId)) return prev;
+
+      // 否則 append，一定要有 receiver 物件
+      return [
+        ...prev,
+        {
+          roomId,
+          receiverId,
+          receiver: {
+            id: user.id,              // 或至少 receiverId
+            username: user.username,
+            avatarUrl: user.avatarUrl
+          }
+        }
+      ];
+    });
+
+      setActiveRoom({ roomId, receiverId }); // 設定聊天室資料
+      setIsChatOpen(true); // 開啟聊天室元件
+
+    } catch (error) {
+      console.error("查詢對方資料失敗", err);
+    }
   };
 
-  // useAnimation
+  // Animation of add btn
   const controlAddSvg = useAnimation();
   const controlAddText = useAnimation();
   const controlAddBtn = useAnimation();
   const controlAddCart = useAnimation();
-
-  // Animation of add btn
   const handleAddClick = async (productId, amount) => {
     try {
       await addToCart(productId, amount);

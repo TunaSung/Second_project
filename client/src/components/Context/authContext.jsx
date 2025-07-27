@@ -1,113 +1,147 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { saveToken, clearToken } from "../../services/authService";
-import { userInfo } from '../../services/authService';
+import { userInfo } from "../../services/authService";
 import { getCart } from "../../services/cartService";
-import { getCategory } from "../../services/productService"
+import { getCategory } from "../../services/productService";
+import { getRooms } from "../../services/socketService";
 
-const AuthContext = createContext()
+const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
+  // useState
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [avatarUrl, setAvatarUrl] = useState("");
+  const [currentUser, setCurrentUser] = useState("");
+  const [cartList, setCartList] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [subcategories, setSubcategories] = useState([]);
+  const [rooms, setRooms] = useState([]);
+  const [messages, setMessages] = useState([]);
 
-    // useState
-    const [isAuthenticated, setIsAuthenticated] = useState(false)
-    const [avatarUrl, setAvatarUrl] = useState("");
-    const [currentUser, setCurrentUser] = useState("")
-    const [cartList, setCartList] = useState([])
-    const [categories, setCategories] = useState([])
-    const [subcategories, setSubcategories] = useState([])
+  // 檢查token，載入使用者資訊，還有購物車及聊天室資料
+  useEffect(() => {
+    const fetchUser = async () => {
+      const token = localStorage.getItem("token");
+      setIsAuthenticated(!!token);
 
-    // check token, load user info and cart
-    useEffect(() => {
-        const fetchUser = async () => {
-            const token = localStorage.getItem("token")
-            setIsAuthenticated(!!token)
+      if (!token) return;
 
-            if (!token) return;
+      try {
+        const user = await userInfo();
+        setAvatarUrl(user.avatarUrl || "");
+        setCurrentUser(user || "");
 
-            try {
-                const user = await userInfo();
-                setAvatarUrl(user.avatarUrl || "");
-                setCurrentUser(user || "")
-
-                const cart = await getCart()
-                    if (cart?.pios?.length > 0) {
-                        const productList = cart.pios.reverse()
-                        setCartList(productList)
-                    } else {
-                        setCartList([])
-                }
-                console.log('載入使用者資料成功')
-            } catch (err) {
-                console.log("載入使用者資料失敗", err);
-            }
-        };
-        fetchUser();
-    }, []);
-
-    // load product categories
-    useEffect(() => {
-        try {
-            const fetchCategory = async () => {
-                const data = await getCategory()
-                setCategories(data.categories)
-                setSubcategories(data.subcategories)
-            }
-            fetchCategory()
-        } catch (error) { 
-            console.error("載入分類失敗", error);
+        const cart = await getCart();
+        if (cart?.pios?.length > 0) {
+          const productList = cart.pios.reverse();
+          setCartList(productList);
+        } else {
+          setCartList([]);
         }
-    },[])
 
-    // Refresh cart data
-    const toggleCart = async () => {
-        try {
-            if (!isAuthenticated) return;
-            const cart = await getCart()
-            const productList = cart.pios.reverse()
-            setCartList(productList)
-            console.log('更改購物車成功')
-        } catch (err) {
-            alert("更改購物車失敗", err);
-        }
+        const res = await getRooms();
+        const roomList = Array.isArray(res)
+          ? res
+          : Array.isArray(res.rooms)
+            ? res.rooms
+            : [];
+        setRooms(roomList);
+
+        console.log("載入使用者資料成功");
+      } catch (err) {
+        console.log("載入使用者資料失敗", err);
+      }
+    };
+    fetchUser();
+  }, []);
+
+  // load product categories
+  useEffect(() => {
+    try {
+      const fetchCategory = async () => {
+        const data = await getCategory();
+        setCategories(data.categories);
+        setSubcategories(data.subcategories);
+      };
+      fetchCategory();
+    } catch (error) {
+      console.error("載入分類失敗", error);
     }
+  }, []);
 
-    // login → save token and load user/cart
-    const login = async (token) => {
-        saveToken(token)
-        setIsAuthenticated(true)
-        try {
-            const user = await userInfo();
-            setAvatarUrl(user.avatarUrl || "");
-            setCurrentUser(user || "")
-
-            const cart = await getCart()
-            if (cart?.pios?.length > 0) {
-                const productList = cart.pios.reverse()
-                setCartList(productList)
-            } else {
-                setCartList([])
-            }
-            console.log('載入使用者資料成功')
-        } catch (err) {
-            console.warn("載入使用者資料失敗");
-        }
+  // Refresh cart data
+  const toggleCart = async () => {
+    try {
+      if (!isAuthenticated) return;
+      const cart = await getCart();
+      const productList = cart.pios.reverse();
+      setCartList(productList);
+      console.log("更改購物車成功");
+    } catch (err) {
+      alert("更改購物車失敗", err);
     }
+  };
 
-    // logout → clear token and reset state
-    const logout = () => {
-        clearToken()
-        setIsAuthenticated(false)
-        setUserId("")
-        setUsername("")
-        setAvatarUrl("")
-        setCartList([])
+  // login → save token and load user/cart/msgRoom
+  const login = async (token) => {
+    saveToken(token);
+    setIsAuthenticated(true);
+    try {
+      const user = await userInfo();
+      setAvatarUrl(user.avatarUrl || "");
+      setCurrentUser(user || "");
+
+      const cart = await getCart();
+      if (cart?.pios?.length > 0) {
+        const productList = cart.pios.reverse();
+        setCartList(productList);
+      } else {
+        setCartList([]);
+      }
+
+      const room = await getRooms();
+      setRooms(room || []);
+      console.log(room)
+
+      console.log("載入使用者資料成功");
+    } catch (err) {
+      console.warn("載入使用者資料失敗");
     }
-    
-    return (
-        <AuthContext.Provider value={{ isAuthenticated, currentUser, avatarUrl, setAvatarUrl, login, logout, cartList, setCartList, toggleCart, categories, subcategories }}>
-            {children}
-        </AuthContext.Provider>
-    )
+  };
+
+  // logout → clear token and reset state
+  const logout = () => {
+    clearToken();
+    setIsAuthenticated(false);
+    setCurrentUser("")
+    setAvatarUrl("");
+    setCartList([]);
+    setRooms([])
+    setMessages([])
+  };
+
+  return (
+    <AuthContext.Provider
+      value={{
+        isAuthenticated,
+        currentUser,
+        avatarUrl,
+        setAvatarUrl,
+        login,
+        logout,
+        cartList,
+        setCartList,
+        toggleCart,
+        categories,
+        subcategories,
+        rooms,
+        messages,
+        setMessages
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 }
 
 export function useAuth() {

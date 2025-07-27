@@ -43,6 +43,19 @@ exports.getUserInfo = async(req, res) => {
     }
 }
 
+exports.getUserById = async(req, res) => {
+    try {
+        const user = await User.findByPk(req.params.id);
+        if(user){
+            res.status(201).json({user});
+        } else {
+            res.status(404).json({ message: "用戶未找到" });
+        }
+    } catch (error) {
+        res.status(500).json({message: "獲取用戶資料失敗", error});
+    }
+}
+
 exports.updateProfileInfo = async (req, res) => {
     try {
         const {username, email, phone, address} = req.body

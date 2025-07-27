@@ -15,16 +15,19 @@ module.exports = (io) => {
         })
 
         socket.on("sendMessage", async ({ senderId, receiverId, content, roomId }) => {
-            const message = await Message.create({
+            try {
+                const message = await Message.create({
                 senderId,
                 receiverId,
                 content,
                 roomId,
                 messageType: 'text',
-                isRead: false
-            });
-
-            io.to(roomId).emit("receiveMessage", message);
+                isRead: false,
+                });
+                io.to(roomId).emit("receiveMessage", message);
+            } catch (err) {
+                console.error("無法儲存訊息：", err);
+            }
         });
 
         socket.on('disconnect', () => {

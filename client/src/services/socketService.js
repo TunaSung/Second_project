@@ -1,3 +1,4 @@
+import api from './api' 
 import { io } from "socket.io-client";
 
 const SOCKET_URL = import.meta.env.VITE_API_URL;
@@ -34,3 +35,36 @@ export const onReceiveMessage = (cb) => {
 export const offReceiveMessage = () => {
   socket.off("receiveMessage");
 };
+
+export const getRoomMessages = async (roomId) => {
+  try {
+    const response = await api.get(`/msg/${roomId}/messages`)
+    return response.data
+  } catch (error) {
+    const message = error.response?.data?.message || error.message || "get msg failed";
+    console.error("get msg error:", message);
+    throw error.response?.data?.message || "get msg failed";
+  }
+}
+
+export const getLastMessages = async (roomId) => {
+  try {
+    const response = await api.get(`/msg/${roomId}/last`)
+    return response.data
+  } catch (error) {
+    const message = error.response?.data?.message || error.message || "get msg failed";
+    console.error("get msg error:", message);
+    throw error.response?.data?.message || "get msg failed";
+  }
+}
+
+export const getRooms = async () => {
+  try {
+    const response = await api.get(`/msg/rooms`)
+    return response.data
+  } catch (error) {
+    const message = error.response?.data?.message || error.message || "get rooms failed";
+    console.error("get rooms error:", message);
+    throw error.response?.data?.message || "get rooms failed";
+  }
+}
