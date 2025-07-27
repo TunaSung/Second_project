@@ -7,8 +7,7 @@ Globel;
 \* ------------------- */
 @layer base{
     *{
-        @apply relative
-        /* border border-black */
+        @apply relative box-border
     }
     body{
         @apply font-['Arial']
