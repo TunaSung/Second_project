@@ -60,6 +60,18 @@ export const userInfo = async () => {
     }
 }
 
+// get user by id
+export const userInfoById = async (id) => {
+    try {
+        const response = await api.get(`/auth/${id}`)
+        return response.data.user
+    } catch (error) {
+        const message = error.response?.data?.message || error.message || "User info not found";
+        console.error("userInfo error:", message);
+        throw error.response?.data?.message || "User info not found";
+    }
+}
+
 // update info
 export const updateInfo = async (username, phone, email, address) => {
     try {
