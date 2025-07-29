@@ -32,6 +32,7 @@ add to cart 的按鈕是個很酷的嘗試，用 framer motion 的 useAnimation 
 讓使用者編輯自己的基本資訊、  
 已完成與正在進行中的訂單的追蹤 、  
 以及placeholder往上跳 (發現MUI有下次可能用用看)  
+(edit跟pending的btn那黑線截圖才有，平常是沒有der)  
 ![header](./readmeImage/shop.png)  
 ![header](./readmeImage/profile.png)  
 ![header](./readmeImage/history.png)  
