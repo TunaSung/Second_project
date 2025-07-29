@@ -1,12 +1,9 @@
 ﻿# Second-roject  
-基本的後端功能串的差不多了  
-接耶下來開搞web socket(ಥ _ ಥ)  
 這是一個類似二手衣網站的東西  
-除了優化First Project的後端功能完整性  
-也會新增Socket.io來實現即時通訊  
-這次將會嘗試善用Framer還有其餘JS套件來豐富UI  
-目前嘗試出了很多想完成的動畫  
-火力全開中💥  
+除了優化 First Project 的後端功能完整性  
+也會新增 Socket.io 來實現即時通訊  
+這次將會嘗試善用 Framer motion 還有其餘JS套件來豐富UI  
+嘗試出了很多想完成的動畫😪👍  
 
 # 用了套件Swiper.js做Carousal跟像翻牌的東西，然後Navbar用framer做了點互動
 ![header](./readmeImage/header.png)
