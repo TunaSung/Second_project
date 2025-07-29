@@ -20,10 +20,11 @@ add to cart 的按鈕是個很酷的嘗試，用 framer motion 的 useAnimation 
 ![header](./readmeImage/productList.png)  
 ![header](./readmeImage/cartAnimation.png)  
 
-# 大部分即時通訊有的功能都有做  
+# Web socket實作 (socket.io)  
+大部分即時通訊有的功能都有做  
 打開聊天室的時候再連線，然後點選聊天室的時候向後端發送訂閱，關閉聊天室就斷連  
 除了上述功能就，就是解決是一些渲染上的問題與歷史訊息的抓取  
-已讀未讀功能: 待解鎖😴
+已讀未讀功能: 待解鎖😴  
 ![header](./readmeImage/chat.png)  
   
 # 一些 first project 沒用過東西  
