@@ -167,7 +167,7 @@ function ProductItem({ product }) {
         {/* start title */}
         <div className="flex justify-between mb-2">
           {/* start product name */}
-          <p className="text-3xl text-[#537D5D]">{product.name}</p>
+          <p className="text-2xl text-[#537D5D] line-clamp-1">{product.name}</p>
           {/* end product name */}
 
           {/* start msg btn */}
