@@ -16,7 +16,6 @@ export function AuthProvider({ children }) {
   const [categories, setCategories] = useState([]);
   const [subcategories, setSubcategories] = useState([]);
   const [rooms, setRooms] = useState([]);
-  const [messages, setMessages] = useState([]);
 
   // 檢查token，載入使用者資訊，還有購物車及聊天室資料
   useEffect(() => {
@@ -99,11 +98,15 @@ export function AuthProvider({ children }) {
         setCartList([]);
       }
 
-      const room = await getRooms();
-      setRooms(room || []);
-      console.log(room)
+      const res = await getRooms();
+      const roomList = Array.isArray(res)
+        ? res
+        : Array.isArray(res.rooms)
+          ? res.rooms
+          : [];
+      setRooms(roomList);
 
-      console.log("載入使用者資料成功");
+      console.log(`使用者資料載入成功`);
     } catch (err) {
       console.warn("載入使用者資料失敗");
     }
@@ -117,7 +120,6 @@ export function AuthProvider({ children }) {
     setAvatarUrl("");
     setCartList([]);
     setRooms([])
-    setMessages([])
   };
 
   return (
@@ -135,8 +137,6 @@ export function AuthProvider({ children }) {
         categories,
         subcategories,
         rooms,
-        messages,
-        setMessages
       }}
     >
       {children}

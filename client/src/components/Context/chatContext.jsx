@@ -16,12 +16,13 @@ const ChatContext = createContext();
 export function ChatProvider({ children }) {
 
   // 要登入時就載入聊天室資料所以丟在authContext
-  const { rooms, messages, setMessages } = useAuth();
+  const { rooms } = useAuth();
 
   // useState
-  const [chatList, setChatList] = useState();
+  const [chatList, setChatList] = useState([]);
   const [activeRoom, setActiveRoom] = useState(null); // {roomId, receiverId}
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [messages, setMessages] = useState([]);
 
   // AuthContext的rooms更新就同步到chatList
   useEffect(() => {
@@ -66,11 +67,11 @@ export function ChatProvider({ children }) {
     subscribeRoom(roomId);
 
     // 撈歷史
-    getRoomMessages(roomId).then(data => setMessages(data));
+    getRoomMessages(roomId).then(data => setMessages(data.msgs));
 
     // 接新訊
     onReceiveMessage(msg => {
-      setMessages(prev => [...prev, msg]);
+      setMessages(prev => Array.isArray(prev) ? [...prev, msg] : [msg]);
     });
 
     return () => {

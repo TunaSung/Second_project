@@ -37,10 +37,10 @@ function FixedMessage() {
     : Array.isArray(chatList?.rooms)
     ? chatList.rooms
     : [];
-  const safeChatList = rawChatList;
-  const safeMessages = Array.isArray(messages) ? messages : [];
-    
-  // 找渲染在聊天室裡的receiver的名字
+    const safeChatList = rawChatList;
+    const safeMessages = Array.isArray(messages) ? messages : [];
+
+    // 找渲染在聊天室裡的receiver的名字
   const currentRoom = safeChatList.find(r => r.roomId === activeRoom?.roomId);
   const otherUsername = currentRoom?.receiver.username || "";
 
@@ -120,7 +120,7 @@ function FixedMessage() {
       {/* start msg */}
       <motion.div
         className="h-full grid grid-rows-[1fr_auto] min-h-0"
-        style={{ opacity: isChatOpen ? "100%" : 0 }}
+        style={{ opacity: isChatOpen ? 1 : 0 }}
       >
         {/* start msg wrapper */}
         { activeRoom?.roomId ? (
