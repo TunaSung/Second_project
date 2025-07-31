@@ -10,7 +10,7 @@ FROM node:18 AS server
 
 WORKDIR /app
 COPY server/ ./server
-COPY --from=client /app/client/dist ./server/public  # 靜態檔放這裡
+COPY --from=client /app/client/dist ./server/public 
 
 WORKDIR /app/server
 RUN npm install
