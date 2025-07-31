@@ -16,5 +16,6 @@ WORKDIR /app/server
 RUN npm install
 
 # === 設定啟動 ===
+ENV PORT=3000
 EXPOSE 3000
 CMD ["node", "server.js"]
