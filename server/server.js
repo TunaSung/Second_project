@@ -63,7 +63,7 @@ sqlize.sync().then(() => {
 });
 
 if (process.env.NODE_ENV === "production") {
-  const staticPath = path.join(__dirname, "../client/dist");
+  const staticPath = path.join(__dirname, "public");
   app.use(express.static(staticPath)); // 提供前端的靜態檔案資源（如 JS, CSS）
 
   app.use((req, res) => { //v5 不能用 v4 的 app.get("*", handler);
