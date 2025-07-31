@@ -4,6 +4,7 @@ const cors = require('cors')
 const { Server } = require('socket.io')
 require('dotenv').config();
 
+require('./models/Association')
 const authRoute = require('./routes/authRoute')
 const productRoute = require('./routes/productRoute')
 const cartRoute = require('./routes/cartRoute')
