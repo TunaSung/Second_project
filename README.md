@@ -1,5 +1,6 @@
 ﻿# Second-roject  
 這是一個類似二手衣網站的東西  
+以 Vite + React + Tailwind Css + Express.js + MySQL 為技術主軸  
 除了優化 First Project 的相似功能完整性  
 也會新增 Socket.io 來實現即時通訊，還能讓使用者自己上架商品  
 這次將會嘗試善用 Framer motion 還有其餘JS套件來豐富UI  
