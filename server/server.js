@@ -61,14 +61,14 @@ sqlize.sync().then(() => {
     console.log("資料庫已同步");
 });
 
-// if (process.env.NODE_ENV === "production") {
-//   const staticPath = path.join(__dirname, "../frontend/dist");
-//   console.log("serve 靜態檔案：", staticPath);
-//   app.use(express.static(staticPath));
-//   app.get("*", (req, res) =>
-//     res.sendFile(path.join(staticPath, "index.html"))
-//   );
-// }
+if (process.env.NODE_ENV === "production") {
+  const staticPath = path.join(__dirname, "../client/dist");
+  app.use(express.static(staticPath)); // 提供前端的靜態檔案資源（如 JS, CSS）
+
+  app.use((req, res) => { //v5 不能用 v4 的 app.get("*", handler);
+    res.sendFile(path.join(staticPath, "index.html"));
+  });
+}
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, "0.0.0.0", ()=>{
