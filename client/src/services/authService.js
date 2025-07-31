@@ -29,7 +29,7 @@ export const setAuthHeader = () =>{
 // sign up
 export const signUp = async (username, phone, email, password) => {
     try {
-        console.log("🚀 註冊送出資料：", { username, phone, email, password })
+        console.log("註冊送出資料：", { username, phone, email, password })
         const response = await api.post('/auth/sign-up', {username, phone, email, password})
         return response.data
     } catch (error) {
