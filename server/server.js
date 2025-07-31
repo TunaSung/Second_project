@@ -71,7 +71,7 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 server.listen(PORT, "0.0.0.0", ()=>{
     console.log(`伺服器運行在 http://localhost:${PORT}`);
 })
