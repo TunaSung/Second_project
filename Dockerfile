@@ -16,5 +16,6 @@ WORKDIR /app/server
 RUN npm install
 
 # === 設定啟動 ===
+ENV PORT=8080
 EXPOSE 8080
 CMD ["node", "server.js"]
