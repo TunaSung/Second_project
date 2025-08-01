@@ -108,7 +108,7 @@ export function AuthProvider({ children }) {
 
       console.log(`使用者資料載入成功`);
     } catch (err) {
-      console.warn("載入使用者資料失敗");
+      console.warn("載入使用者資料失敗", err);
     }
   };
 
