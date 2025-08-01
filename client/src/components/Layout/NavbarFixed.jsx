@@ -15,6 +15,13 @@ function Navbar() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [search, setSearch] = useState("");
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    if (categories.length > 0) {
+      setReady(true);
+    }
+  }, [categories]);
 
   // useNavigate
   const navigate = useNavigate()
@@ -63,7 +70,7 @@ function Navbar() {
         >
           {/* start parent category */}
           <div className="h-full grid grid-cols-5 gap-rwd overflow-hidden">
-            {categories?.length > 0 ? (
+            {ready ? (
               categories.map((parent, i) => (
                 <button
                   key={i}
