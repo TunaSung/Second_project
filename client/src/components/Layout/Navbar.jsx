@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "../Context/authContext";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
@@ -15,12 +15,20 @@ function Navbar() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [search, setSearch] = useState("");
+  const [ready, setReady] = useState(false);
 
+  
   // useNavigate
   const navigate = useNavigate()
 
   // login status and categories
   const { isAuthenticated, categories, subcategories } = useAuth();
+
+  useEffect(() => {
+    if (categories.length > 0) {
+      setReady(true);
+    }
+  }, [categories]);
 
   // Open cart panel
   const handleCartClick = () => {
@@ -63,7 +71,7 @@ function Navbar() {
         >
           {/* start parent category */}
           <div className="h-full grid grid-cols-5 gap-rwd overflow-hidden">
-            {categories?.length > 0 ? (
+            {ready ? (
               categories.map((parent, i) => (
                 <button
                   key={i}
@@ -93,7 +101,7 @@ function Navbar() {
                 </button>
               ))
             ) : (
-              <li className="text-gray-400">分類載入中...</li>
+              <p className="col-start-3 text-sm text-[#D2D0A0]">分類載入中...</p>
             )}
           </div>
           {/* end parent category */}

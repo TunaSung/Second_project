@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "../Context/authContext";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
@@ -29,6 +29,7 @@ function Navbar() {
       setReady(true);
     }
   }, [categories]);
+
   // Open cart panel
   const handleCartClick = () => {
     setIsCartOpen(true);
@@ -100,7 +101,7 @@ function Navbar() {
                 </button>
               ))
             ) : (
-              <li className="text-gray-400">分類載入中...</li>
+              <p className="col-start-3 text-sm text-[#D2D0A0]">分類載入中...</p>
             )}
           </div>
           {/* end parent category */}
