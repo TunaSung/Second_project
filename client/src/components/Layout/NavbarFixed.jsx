@@ -17,18 +17,18 @@ function Navbar() {
   const [search, setSearch] = useState("");
   const [ready, setReady] = useState(false);
 
-  useEffect(() => {
-    if (categories.length > 0) {
-      setReady(true);
-    }
-  }, [categories]);
-
+  
   // useNavigate
   const navigate = useNavigate()
 
   // login status and categories
   const { isAuthenticated, categories, subcategories } = useAuth();
 
+  useEffect(() => {
+    if (categories.length > 0) {
+      setReady(true);
+    }
+  }, [categories]);
   // Open cart panel
   const handleCartClick = () => {
     setIsCartOpen(true);
