@@ -31,7 +31,7 @@ function Sign() {
       >
         <div
           className="flex flex-col items-center p-10
-                bg-[url('/imgs/kpop/yeji-itzy-girls-will-be-girls.jpg')] bg-cover-set"
+                bg-[url('/imgs/kpop/yeji-itzy-girls-will-be-girls.webp')] bg-cover-set"
         >
           {/* start title */}
           <div className="w-full mb-60">
@@ -69,7 +69,7 @@ function Sign() {
       >
         <div
           className="col-start-2 flex flex-col items-center p-10
-                bg-[url('/imgs/kpop/karina-aespa-dirty-work.jpg')] bg-cover-set"
+                bg-[url('/imgs/kpop/karina-aespa-dirty-work.webp')] bg-cover-set"
         >
           {/* start title */}
           <div className="w-full mb-60">

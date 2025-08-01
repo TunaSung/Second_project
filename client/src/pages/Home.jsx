@@ -98,16 +98,16 @@ function Home() {
 
                 {/* kpop slide */}
                 <SwiperSlide className='w-full h-full'>
-                    <div className='h-full w-full bg-cover-set bg-[url("imgs/kpop/aespa-karina-hot-mess.jpg")]'/>
+                    <div className='h-full w-full bg-cover-set bg-[url("imgs/kpop/aespa-karina-hot-mess.webp")]'/>
                 </SwiperSlide>
                 <SwiperSlide className='w-full h-full'>
-                    <div className='h-full w-full bg-cover-set bg-[url("imgs/kpop/aespa-winter-hot-mess.jpg")]'/>
+                    <div className='h-full w-full bg-cover-set bg-[url("imgs/kpop/aespa-winter-hot-mess.webp")]'/>
                 </SwiperSlide>
                 <SwiperSlide className='w-full h-full'>
-                    <div className='h-full w-full bg-cover-set bg-[url("imgs/kpop/ningning-aespa-hot-mess.jpg")]'/>
+                    <div className='h-full w-full bg-cover-set bg-[url("imgs/kpop/ningning-aespa-hot-mess.webp")]'/>
                 </SwiperSlide>
                 <SwiperSlide className='w-full h-full'>
-                    <div className='h-full w-full bg-cover-set bg-[url("imgs/kpop/giselle-aespa-hot-mess.jpg")]'/>
+                    <div className='h-full w-full bg-cover-set bg-[url("imgs/kpop/giselle-aespa-hot-mess.webp")]'/>
                 </SwiperSlide>
 
             </Swiper>
@@ -130,7 +130,7 @@ function Home() {
                         <motion.div className="w-full h-70 rounded-2xl bg-cover-set "
                         loading="lazy"
                         style={{ 
-                            backgroundImage: 'url("/imgs/kpop/bts-kpop-v-butter.jpg")',
+                            backgroundImage: 'url("/imgs/kpop/bts-kpop-v-butter.webp")',
                             scale: useScrollTransform(0.25, 0.5, "100%", "60%"),
                             y: useScrollTransform(0.23, 0.8, "0%", "50%"),
                             x: useScrollTransform(0.23, 0.8, "0%", "-30%") }}
@@ -138,7 +138,7 @@ function Home() {
                         <motion.div className="w-full h-70 rounded-2xl bg-cover-set"
                         loading="lazy"
                         style={{ 
-                            backgroundImage: 'url("/imgs/kpop/tzuyu-twice-with-youth.jpg")',
+                            backgroundImage: 'url("/imgs/kpop/tzuyu-twice-with-youth.webp")',
                             scale: useScrollTransform(0.25, 0.48, "100%", "50%"),
                             y: useScrollTransform(0.23, 0.8, "0%", "-50%"),
                             x: useScrollTransform(0.23, 0.83, "0%", "-30%") }}
@@ -146,14 +146,14 @@ function Home() {
                         <motion.div className="w-full h-70 rounded-2xl bg-cover-set"
                         loading="lazy"
                         style={{ 
-                            backgroundImage: 'url("/imgs/kpop/bts-butter-jungkook.jpg")',
+                            backgroundImage: 'url("/imgs/kpop/bts-butter-jungkook.webp")',
                             scale: useScrollTransform(0.25, 0.5, "100%", "60%"),
                             y: useScrollTransform(0.23, 0.8, "0%", "70%") }}
                         />
                         <motion.div className="w-full h-70 rounded-2xl bg-cover-set"
                         loading="lazy"
                         style={{ 
-                            backgroundImage: 'url("/imgs/kpop/karina-aespa-dirty-work2.jpg")',
+                            backgroundImage: 'url("/imgs/kpop/karina-aespa-dirty-work2.webp")',
                             height: useScrollTransform(0.25, 0.7, 280, 168), 
                             width: useScrollTransform(0.25, 0.5, 160.6, 128),
                             y: useScrollTransform(0.23, 0.8, "0%", "-32%"),
@@ -161,7 +161,7 @@ function Home() {
                         />
                         <motion.div className="w-full h-70 rounded-2xl bg-cover-set"
                         style={{ 
-                            backgroundImage: 'url("/imgs/kpop/bts-be-jimin.jpg")',
+                            backgroundImage: 'url("/imgs/kpop/bts-be-jimin.webp")',
                             height: useScrollTransform(0.25, 0.5, 280, 168), 
                             width: useScrollTransform(0.25, 0.5, 107.6, 128),
                             y: useScrollTransform(0.23, 0.8, "0%", "15%"),
