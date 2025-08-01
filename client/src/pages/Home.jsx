@@ -98,16 +98,16 @@ function Home() {
 
                 {/* kpop slide */}
                 <SwiperSlide className='w-full h-full'>
-                    <div className='h-full w-full bg-cover-set bg-[url("imgs/kpop/aespa-karina-hot-mess.webp")]'/>
+                    <div className='h-full w-full bg-cover-set bg-[url("/imgs/kpop/aespa-karina-hot-mess.webp")]'/>
                 </SwiperSlide>
                 <SwiperSlide className='w-full h-full'>
-                    <div className='h-full w-full bg-cover-set bg-[url("imgs/kpop/aespa-winter-hot-mess.webp")]'/>
+                    <div className='h-full w-full bg-cover-set bg-[url("/imgs/kpop/aespa-winter-hot-mess.webp")]'/>
                 </SwiperSlide>
                 <SwiperSlide className='w-full h-full'>
-                    <div className='h-full w-full bg-cover-set bg-[url("imgs/kpop/ningning-aespa-hot-mess.webp")]'/>
+                    <div className='h-full w-full bg-cover-set bg-[url("/imgs/kpop/ningning-aespa-hot-mess.webp")]'/>
                 </SwiperSlide>
                 <SwiperSlide className='w-full h-full'>
-                    <div className='h-full w-full bg-cover-set bg-[url("imgs/kpop/giselle-aespa-hot-mess.webp")]'/>
+                    <div className='h-full w-full bg-cover-set bg-[url("/imgs/kpop/giselle-aespa-hot-mess.webp")]'/>
                 </SwiperSlide>
 
             </Swiper>
