@@ -56,16 +56,16 @@ export function AuthProvider({ children }) {
 
   // load product categories
   useEffect(() => {
-    try {
-      const fetchCategory = async () => {
-        const data = await getCategory();
-        setCategories(data.categories);
-        setSubcategories(data.subcategories);
-      };
-      fetchCategory();
-    } catch (error) {
-      console.error("載入分類失敗", error);
+    const fetchCategory = async () => {
+      try {
+          const data = await getCategory();
+          setCategories(data.categories);
+          setSubcategories(data.subcategories);
+      } catch (error) {
+        console.error("載入分類失敗", error);
+      }
     }
+    fetchCategory();
   }, []);
 
   // Refresh cart data
