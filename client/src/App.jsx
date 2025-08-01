@@ -11,7 +11,6 @@ import {
   useLocation,
 } from "react-router-dom";
 import { clearToken, setAuthHeader } from "./services/authService";
-import { useAuth } from "./components/Context/authContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "ldrs/dotStream";
@@ -43,7 +42,6 @@ function ScrollToTop() {
 }
 
 function App() {
-  const { categories } = useAuth();
 
   useEffect(() => {
     setAuthHeader();
@@ -65,10 +63,6 @@ function App() {
       return () => clearTimeout(timeout); // 刷新時就取消計時器，避免記憶體浪費
     }
   }, []);
-
-  if (categories.length === 0) {
-    return <p className="text-center my-10 text-gray-400">載入中...</p>;
-  }
 
   return (
     <Router>

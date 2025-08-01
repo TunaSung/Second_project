@@ -63,34 +63,38 @@ function Navbar() {
         >
           {/* start parent category */}
           <div className="h-full grid grid-cols-5 gap-rwd overflow-hidden">
-            {categories.map((parent, i) => (
-              <button
-                key={i}
-                className="h-full text-center"
-                onMouseEnter={() => setHoverIndex(parent.id)}
-              >
-                <Link to={`/product`} state={{ initialLabel: parent.id }}>
-                  <motion.p
-                    initial={{ y: 0, color: "D2D0A0" }}
-                    animate={{
-                      y: hoverIndex === parent.id ? -12 : 0,
-                      color: hoverIndex === parent.id ? "#ffffff" : "#D2D0A0",
-                    }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    {parent.name}
-                  </motion.p>
-                </Link>
-                <AnimatePresence>
-                  <motion.div
-                    className="navbar-menu-mid bg-[#D2D0A0]/95 h-[70%] aspect-square rotate-45"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: hoverIndex === parent.id ? 1 : 0 }}
-                    transition={{ duration: 0.1 }}
-                  ></motion.div>
-                </AnimatePresence>
-              </button>
-            ))}
+            {categories?.length > 0 ? (
+              categories.map((parent, i) => (
+                <button
+                  key={i}
+                  className="h-full text-center"
+                  onMouseEnter={() => setHoverIndex(parent.id)}
+                >
+                  <Link to={`/product`} state={{ initialLabel: parent.id }}>
+                    <motion.p
+                      initial={{ y: 0, color: "D2D0A0" }}
+                      animate={{
+                        y: hoverIndex === parent.id ? -12 : 0,
+                        color: hoverIndex === parent.id ? "#ffffff" : "#D2D0A0",
+                      }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      {parent.name}
+                    </motion.p>
+                  </Link>
+                  <AnimatePresence>
+                    <motion.div
+                      className="navbar-menu-mid bg-[#D2D0A0]/95 h-[70%] aspect-square rotate-45"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: hoverIndex === parent.id ? 1 : 0 }}
+                      transition={{ duration: 0.1 }}
+                    ></motion.div>
+                  </AnimatePresence>
+                </button>
+              ))
+            ) : (
+              <li className="text-gray-400">分類載入中...</li>
+            )}
           </div>
           {/* end parent category */}
 
