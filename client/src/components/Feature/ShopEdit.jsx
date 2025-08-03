@@ -4,6 +4,8 @@ import { MdClose } from "react-icons/md";
 import { LuImagePlus } from "react-icons/lu";
 import SelectTree from "./SelectTree";
 import { toast } from "react-toastify";
+
+// compress image
 import { compressImage } from "../../utils/compressImage";
 
 function ProductForm({

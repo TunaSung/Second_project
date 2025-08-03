@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../components/Context/authContext";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
-import { compressImage } from "../utils/compressImage";
 import "aos/dist/aos.css";
+
+// compress image
+import { compressImage } from "../utils/compressImage";
 
 // API Services
 import { userInfo, updateInfo, updateAvatar } from "../services/authService";
