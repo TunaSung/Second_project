@@ -1,7 +1,6 @@
 const { Product } = require('../models/Association')
 const { ProductInOrder } = require('../models/Association')
 const { Order } = require('../models/Association')
-const authenticate = require('../middleware/JWT')
 
 exports.addToCart = async (req, res) => {
     try {

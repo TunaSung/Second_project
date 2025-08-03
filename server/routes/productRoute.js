@@ -1,7 +1,7 @@
 const express = require('express')
 const { getAllProducts, getCategory, getMyShop, getHistory, getProductSearch, uploadProduct, updateAvailable, updateMyShop} = require('../controllers/productController')
 const authenticate = require('../middleware/JWT');
-const multiUpload = require('../middleware/upload');
+const multiUpload = require('../middleware/productUpload');
 
 
 const router = express.Router()

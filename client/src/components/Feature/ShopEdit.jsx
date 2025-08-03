@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { MdClose } from "react-icons/md";
 import { LuImagePlus } from "react-icons/lu";
 import SelectTree from "./SelectTree";
 import { toast } from "react-toastify";
+import { compressImage } from "../../utils/compressImage";
 
 function ProductForm({
   isEdit,
@@ -24,6 +25,13 @@ function ProductForm({
     initialValues.categoryId || null
   );
 
+  // image change handler
+  const handleImageChange = async (e) => {
+    const files = Array.from(e.target.files);
+    const compressedFiles = await Promise.all(files.map(file => compressImage(file, 0.6, 800)));
+    setImageUrls(compressedFiles);
+  };
+
   // function of submit
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,7 +47,7 @@ function ProductForm({
       formData.append("category", categoryId);
 
       imageUrls.forEach((file) => {
-        formData.append("imageUrls", file);
+        formData.append("images", file);
       });
 
       await onSubmit(formData);
@@ -50,12 +58,6 @@ function ProductForm({
       console.error("提交失敗", err);
       toast.error("提交失敗，請稍後再試");
     }
-  };
-
-  // image change handler
-  const handleImageChange = (e) => {
-    const files = Array.from(e.target.files);
-    setImageUrls(files);
   };
 
   return (

@@ -4,6 +4,7 @@ const { Order } = require('../models/Association')
 const { User } = require('../models/Association')
 const { Category } = require('../models/Association')
 const { Op } = require("sequelize");
+const deleteCloudinaryImage = require("../utils/deleteCloudinaryImage");
 
 exports.getAllProducts = async (req, res) => {
     try {
@@ -178,7 +179,10 @@ exports.uploadProduct = async (req, res) => {
         const {name, price, stock, hashTags, category} = req.body
         const userId = req.user.id
         
-        const imageUrls = req.files.map(file => `/uploads/products/${file.filename}`);
+        // const imageUrls = req.files.map(file => `/uploads/products/${file.filename}`);
+
+        // Cloudinary 上傳圖片
+        const imageUrls = req.files.map(file => file.path);
         
         await Product.create({
             name: name,
@@ -224,7 +228,7 @@ exports.updateMyShop = async (req, res) => {
 
         const product = await Product.findByPk(productId)
 
-        console.log("🔥 收到更新請求：", {
+        console.log("收到更新請求：", {
             productId,
             name,
             price,
@@ -232,14 +236,22 @@ exports.updateMyShop = async (req, res) => {
             hashTags,
         });
 
-        console.log("📦 收到圖片：", req.files);
+        console.log("收到圖片：", req.files);
 
         if(!product){
             return res.status(404).json({message: "Product not found"})
         }
 
+        // 若有新圖 → 先刪除舊圖
+        if (req.files?.length) {
+            const oldImages = product.imageUrls || [];
+            for (let url of oldImages) {
+                await deleteCloudinaryImage(url);
+            }
+        }
+
         const imageUrls = req.files?.length 
-            ? req.files.map(file => `/uploads/products/${file.filename}`)
+            ? req.files.map(file => file.path)
             : product.imageUrls
 
 
@@ -252,7 +264,7 @@ exports.updateMyShop = async (req, res) => {
         
         res.status(200).json({message: "Update successfully"})
     } catch (error) {
-        console.error("❌ 更新失敗：", error);
+        console.error("更新失敗：", error);
         res.status(500).json({error: "Update failed", details:error.message})
     }
 }

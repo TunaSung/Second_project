@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../components/Context/authContext";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
+import { compressImage } from "../utils/compressImage";
 import "aos/dist/aos.css";
 
 // API Services
@@ -15,63 +16,6 @@ import { RiImageEditFill } from "react-icons/ri";
 import { MdAddCard } from "react-icons/md";
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Space } from "antd";
-
-const items = [
-  {
-    id: 1,
-    name: "Vintage 牛仔外套",
-    hashtag: "#vintage #denim",
-    price: 1200,
-    stock: 2,
-    sale: 0,
-    seller: "賣家A",
-  },
-  {
-    id: 2,
-    name: "復古格紋襯衫",
-    hashtag: "#retro #plaid #shirt",
-    price: 550,
-    stock: 4,
-    sale: 0,
-    seller: "賣家B",
-  },
-  {
-    id: 3,
-    name: "二手皮革夾克",
-    hashtag: "#leather #jacket",
-    price: 1800,
-    stock: 1,
-    sale: 0,
-    seller: "賣家C",
-  },
-  {
-    id: 4,
-    name: "韓系寬鬆針織衫",
-    hashtag: "#kstyle #knitwear",
-    price: 600,
-    stock: 3,
-    sale: 0,
-    seller: "賣家D",
-  },
-  {
-    id: 5,
-    name: "街頭風連帽衛衣",
-    hashtag: "#streetwear #hoodie",
-    price: 700,
-    stock: 6,
-    sale: 0,
-    seller: "賣家E",
-  },
-  {
-    id: 6,
-    name: "優雅波點洋裝",
-    hashtag: "#elegant #polkadot #dress",
-    price: 950,
-    stock: 2,
-    sale: 0,
-    seller: "賣家F",
-  },
-];
 
 function Personal() {
   // user profile state
@@ -146,8 +90,9 @@ function Personal() {
     if (!file) return;
 
     try {
+      const compressedFile = await compressImage(file, 0.3, 500);
       const formData = new FormData();
-      formData.append("avatar", file);
+      formData.append("avatar", compressedFile);
 
       const { avatarUrl } = await updateAvatar(formData);
       setFileURL(avatarUrl);
@@ -344,9 +289,7 @@ function Personal() {
                     <div
                       className="bg-cover-set w-30 border aspect-square rounded-full "
                       style={{
-                        backgroundImage: `url(${
-                          import.meta.env.VITE_API_URL
-                        }${fileURL})`,
+                        backgroundImage: `url(${fileURL})`,
                       }}
                     />
                   )}

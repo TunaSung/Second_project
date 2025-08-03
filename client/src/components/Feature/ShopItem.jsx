@@ -166,9 +166,7 @@ function ShopItem({
                 <div
                   className="w-20 aspect-square bg-cover-set mr-3"
                   style={{
-                    backgroundImage: `url(${
-                      import.meta.env.VITE_API_URL
-                    }${fileUrl})`,
+                    backgroundImage: `url(${fileUrl})`,
                   }}
                 />
               </SwiperSlide>

@@ -17,7 +17,6 @@ function MyShop() {
   const [stock, setStock] = useState(0);
   const [imageUrls, setImageUrls] = useState([]);
   const [hashTags, setHashTags] = useState("");
-  const [categoryId, setCategoryId] = useState(null);
   const [items, setItems] = useState([]);
   const [isAddProductOpen, setIsAddProductOpen] = useState(false);
 

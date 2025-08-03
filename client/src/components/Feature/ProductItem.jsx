@@ -151,9 +151,7 @@ function ProductItem({ product }) {
               <div
                 className="w-full h-full bg-cover-set rounded-2xl group-hover:rounded-r-none"
                 style={{
-                  backgroundImage: `url(${
-                    import.meta.env.VITE_API_URL
-                  }${fileUrl})`,
+                  backgroundImage: `url(${fileUrl})`,
                 }}
               />
             </SwiperSlide>

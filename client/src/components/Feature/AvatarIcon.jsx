@@ -34,7 +34,7 @@ function AvatarIcon({ isMenuOpen, toggleMenuOpen }) {
 
   // If there is an avatarUrl, convert it to a full URL
   const avatarSrc = avatarUrl
-    ? `${import.meta.env.VITE_API_URL}${avatarUrl}`
+    ? `${avatarUrl}`
     : null;
 
   // If the user clicks outside the component, close the menu

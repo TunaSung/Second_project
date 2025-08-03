@@ -38,7 +38,8 @@ socketHandler(io)
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/uploads", express.static(path.join(__dirname, "public", "uploads")));
+// 改用cloudinary存圖片，所以下面這個不用
+// app.use("/uploads", express.static(path.join(__dirname, "public", "uploads"))); 
 
 app.use('/api/auth', authRoute)
 
@@ -63,7 +64,7 @@ sqlize.sync().then(() => {
 });
 
 if (process.env.NODE_ENV === "production") {
-  const staticPath = path.join(__dirname, "public");
+  const staticPath = path.join(__dirname, "..", "client", "dist");
   app.use(express.static(staticPath)); // 提供前端的靜態檔案資源（如 JS, CSS）
 
   app.use((req, res) => { //v5 不能用 v4 的 app.get("*", handler);

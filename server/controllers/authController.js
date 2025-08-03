@@ -1,9 +1,11 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const { User } = require('../models/Association')
+const { avatarStorage } = require('../config/cloudinary')
+const deleteCloudinaryImage = require("../utils/deleteCloudinaryImage");
 const multer = require("multer");
-const path = require("path");
-const fs = require("fs");
+// const path = require("path");
+// const fs = require("fs");
 
 exports.signUp = async (req, res) => {
     try {
@@ -95,39 +97,64 @@ exports.updateCreditCard = async (req, res) => {
     }
 }
 
-// 建立儲存目錄（第一次啟動時會自動建立）
-const uploadDir = path.join(__dirname, "..", "public", "uploads", "avatars");
-if (!fs.existsSync(uploadDir)){
-    fs.mkdirSync(uploadDir, { recursive: true });
-} 
+// // 建立儲存目錄（第一次啟動時會自動建立）
+// const uploadDir = path.join(__dirname, "..", "public", "uploads", "avatars");
+// if (!fs.existsSync(uploadDir)){
+//     fs.mkdirSync(uploadDir, { recursive: true });
+// } 
 
-// 設定 multer 儲存設定
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, uploadDir);
-  },
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    cb(null, `avatar_${Date.now()}${ext}`);
-  },
-});
+// // 設定 multer 儲存設定
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, uploadDir);
+//   },
+//   filename: (req, file, cb) => {
+//     const ext = path.extname(file.originalname);
+//     cb(null, `avatar_${Date.now()}${ext}`);
+//   },
+// });
 
-const upload = multer({ storage });
+// const upload = multer({ storage });
 
-exports.updateAvatarUrl = [ 
-    upload.single("avatar"), 
-    async (req, res) => {
-        try {
-            const user = req.user
-            if(!req.file) return res.status(400).json({message: "No file uploaded"})
+// exports.updateAvatarUrl = [ 
+//     upload.single("avatar"), 
+//     async (req, res) => {
+//         try {
+//             const user = req.user
+//             if(!req.file) return res.status(400).json({message: "No file uploaded"})
 
-            const avatarUrl = `/uploads/avatars/${req.file.filename}?t=${Date.now()}`
-            user.avatarUrl = avatarUrl
-            await user.save();
+//             const avatarUrl = `/uploads/avatars/${req.file.filename}?t=${Date.now()}`
+//             user.avatarUrl = avatarUrl
+//             await user.save();
 
-            res.status(200).json({message: `Avatar updated`, avatarUrl})
-        } catch (error) {
-            res.status(500).json({error: "Update failed", details: error.message})
+//             res.status(200).json({message: `Avatar updated`, avatarUrl})
+//         } catch (error) {
+//             res.status(500).json({error: "Update failed", details: error.message})
+//         }
+//     }
+// ]
+
+const upload = multer({ avatarStorage });
+
+exports.updateAvatarUrl = async (req, res) => {
+    try {
+        const user = req.user;
+        if (!req.file || !req.file.path) {
+            return res.status(400).json({ message: "No file uploaded" });
         }
+
+        const oldAvatarUrl = user.avatarUrl;
+
+        if (oldAvatarUrl != null) {
+            await deleteCloudinaryImage(oldAvatarUrl);
+        }
+
+        // Cloudinary 回傳的完整圖片網址在 req.file.path
+        user.avatarUrl = req.file.path;
+        await user.save();
+
+        res.status(200).json({ message: "Avatar updated", avatarUrl: req.file.path });
+        } catch (error) {
+        res.status(500).json({ error: "Update failed", details: error.message });
     }
-]
+}
