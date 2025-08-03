@@ -121,7 +121,7 @@ exports.updateAvatarUrl = [
             const user = req.user
             if(!req.file) return res.status(400).json({message: "No file uploaded"})
 
-            const avatarUrl = `/uploads/avatars/${req.file.filename}`
+            const avatarUrl = `/uploads/avatars/${req.file.filename}?t=${Date.now()}`
             user.avatarUrl = avatarUrl
             await user.save();
 
