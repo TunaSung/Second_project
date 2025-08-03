@@ -5,7 +5,7 @@ import { LuImagePlus } from "react-icons/lu";
 import SelectTree from "./SelectTree";
 import { toast } from "react-toastify";
 
-// compress image
+// compress images
 import { compressImage } from "../../utils/compressImage";
 
 function ProductForm({
