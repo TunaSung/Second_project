@@ -15,7 +15,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "ldrs/dotStream";
 
-const Home = lazy(() => import("./pages/Home"));
+const Home = lazy(() => import("./pages/1_Home/Home.jsx"));
 const Product = lazy(() => import("./pages/Product"));
 const Sign = lazy(() => import("./pages/Sign"));
 const Personal = lazy(() => import("./pages/Personal"));
