@@ -98,7 +98,8 @@ export function ChatProvider({ children }) {
         isChatOpen,
         setIsChatOpen,
         messages,
-        setMessages
+        setMessages,
+        disconnectSocket
       }}
     >
       {children}

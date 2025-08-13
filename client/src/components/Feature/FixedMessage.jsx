@@ -28,7 +28,8 @@ function FixedMessage() {
     chatList,
     activeRoom,
     setActiveRoom,
-    messages
+    messages,
+    disconnectSocket
   } = useChat();
 
   // 防呆
@@ -54,6 +55,9 @@ function FixedMessage() {
   
   // toggle chat room open
   const handleToggleChat = () => {
+    if(isChatOpen){
+      disconnectSocket()
+    }
     setIsChatOpen(prev => !prev);
   };
 
