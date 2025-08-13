@@ -3,7 +3,7 @@ import { FaLine, FaPhoneVolume, FaLandmark, FaRegCopyright} from "react-icons/fa
 import { MdEmail } from "react-icons/md";
 function Footer(){
     return (
-        <div id="footer" className="py-10 w-full font-bold bg-[#333] text-[#ccc]">
+        <footer id="footer" className="py-10 w-full font-bold bg-[#333] text-[#ccc]">
             <div id="container" className="container-mid flex justify-center items-center flex-col">
                 <div id="row" className="row w-full grid grid-cols-3 gap-rwd mb-5">
                     <a href="#!" className=" text-xl hover:text-blue-700 transition-all duration-200">Inspection report</a>
@@ -40,7 +40,7 @@ function Footer(){
                     </div>
                 </div>
             </div>
-        </div>
+        </footer>
     )
 }
 export default Footer

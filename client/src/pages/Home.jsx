@@ -114,7 +114,7 @@ function Home() {
             {/* end kpop swiper */}
             
             {/* start wrapper of main */}
-            <div className="bg-[#73946B]">
+            <main className="bg-[#73946B]">
 
                 {/* start welcome */}
                 <Hero>
@@ -278,7 +278,7 @@ function Home() {
                     {/* end new arrival swiper */}
                 </Hero>
 
-            </div>
+            </main>
             {/* end wrapper of main */}
             
         </div>
