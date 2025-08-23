@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 // UI and icons
 import Jumbotron from "./component/layout/Jumbotron";

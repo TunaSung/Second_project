@@ -28,7 +28,7 @@ function WelcomeHome() {
           loading="lazy"
           style={{ opacity: useScrollTransform(0.6, 0.7, 0, 1) }}
         >
-          <h1 className="text-lg md:text-2xl xl:text-4xl font-bold text-center text-[#D2D0A0] indie-flower-regular">
+          <h1 className="text-sm md:text-2xl xl:text-4xl font-bold text-center text-[#D2D0A0] indie-flower-regular">
             Sustainable Chic Starts Here
           </h1>
         </motion.div>

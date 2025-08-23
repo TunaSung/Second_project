@@ -109,7 +109,7 @@ function Cart({ isCartOpen, setIsCartOpen }) {
   return (
     <motion.div
       id="cart-page"
-      className="fixed right-0 h-full shadow-2xl grid grid-rows-[auto_1fr_auto] rounded-l-xl z-200 bg-[#D2D0A0] overflow-hidden transition-all duration-150"
+      className="fixed right-0 h-screen shadow-2xl grid grid-rows-[auto_1fr_auto] rounded-l-xl z-1000 bg-[#D2D0A0] overflow-hidden transition-all duration-150"
       style={{ width: isCartOpen ? "30%" : "0%" }}
     >
       {/* start header */}

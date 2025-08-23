@@ -10,10 +10,10 @@
 
 /* swiper of home page events and arrivals  */
 #new-item .swiper {
-  @apply w-2/3 py-5;
+  @apply w-3/4 py-5;
 }
 #new-item .swiper-wrapper {
-  @apply w-1/4
+  @apply w-3/4 lg:w-1/3
 }
 
 #new-even .swiper-slide {

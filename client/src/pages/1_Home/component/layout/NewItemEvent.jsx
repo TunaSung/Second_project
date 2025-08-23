@@ -41,7 +41,7 @@ function NewItemEvent() {
               fill="none"
             />
           </svg>
-          <div className="absolute text-[#D2D0A0] text-3xl left-[10%] top-[10px] exile-regular">
+          <div className="absolute text-[#D2D0A0] bg-[#73946B] text-xl lg:text-3xl left-[10%] top-[16px] lg:top-[10px] rotate-3 exile-regular">
             NEW EVENTS
           </div>
         </div>
@@ -52,32 +52,16 @@ function NewItemEvent() {
           grabCursor={true}
           centeredSlides={true}
           slidesPerView={"auto"}
-          coverflowEffect={{ depth: 150 }} //預設值rotate: 50, stretch: 0, depth: 100, slideShadows: true }}
-          lazy="true"
+          coverflowEffect={{ depth: 180 }} //預設值rotate: 50, stretch: 0, depth: 100, slideShadows: true }}
+          lazy={{ loadOnTransitionStart: true, loadPrevNext: true }}
           modules={[EffectCoverflow]}
-          className=" w-1/4 h-83 max-sm:h-64"
+          className=" w-1/4 h-64 sm:h-83"
         >
-          <SwiperSlide className="w-auto">
-            <EventCard />
-          </SwiperSlide>
-          <SwiperSlide className="w-auto">
-            <EventCard />
-          </SwiperSlide>
-          <SwiperSlide className="w-auto">
-            <EventCard />
-          </SwiperSlide>
-          <SwiperSlide className="w-auto">
-            <EventCard />
-          </SwiperSlide>
-          <SwiperSlide className="w-auto">
-            <EventCard />
-          </SwiperSlide>
-          <SwiperSlide className="w-auto">
-            <EventCard />
-          </SwiperSlide>
-          <SwiperSlide className="w-auto">
-            <EventCard />
-          </SwiperSlide>
+          {Array.from({ length: 7 }).map((_, i) => (
+            <SwiperSlide key={`event-${i}`} className="w-auto">
+              <EventCard />
+            </SwiperSlide>
+          ))}
         </Swiper>
         <div className="absolute border-3 border-[#D2D0A0] bottom-[-10%] w-screen h-20 rounded-[50%]" />
       </div>
@@ -97,44 +81,16 @@ function NewItemEvent() {
           grabCursor={true}
           centeredSlides={true}
           slidesPerView={"auto"}
-          coverflowEffect={{
-            rotate: 50,
-            stretch: 0,
-            depth: 150,
-            modifier: 1,
-            slideShadows: true,
-          }}
+          coverflowEffect={{ depth: 180 }}
           lazy={{ loadOnTransitionStart: true, loadPrevNext: true }}
           modules={[EffectCoverflow]}
           className=" w-1/4 h-83 max-sm:h-64"
         >
-          <SwiperSlide className="w-auto">
-            <ProductCard />
-          </SwiperSlide>
-          <SwiperSlide className="w-auto">
-            <ProductCard />
-          </SwiperSlide>
-          <SwiperSlide className="w-auto">
-            <ProductCard />
-          </SwiperSlide>
-          <SwiperSlide className="w-auto">
-            <ProductCard />
-          </SwiperSlide>
-          <SwiperSlide className="w-auto">
-            <ProductCard />
-          </SwiperSlide>
-          <SwiperSlide className="w-auto">
-            <ProductCard />
-          </SwiperSlide>
-          <SwiperSlide className="w-auto">
-            <ProductCard />
-          </SwiperSlide>
-          <SwiperSlide className="w-auto">
-            <ProductCard />
-          </SwiperSlide>
-          <SwiperSlide className="w-auto">
-            <ProductCard />
-          </SwiperSlide>
+          {Array.from({ length: 9 }).map((_, i) => (
+            <SwiperSlide key={`product-${i}`} className="w-auto">
+              <ProductCard />
+            </SwiperSlide>
+          ))}
         </Swiper>
         <div className="absolute w-screen h-10 left-0 bottom-0 z-500">
           <svg
@@ -157,7 +113,7 @@ function NewItemEvent() {
               fill="none"
             />
           </svg>
-          <div className="absolute text-[#D2D0A0] text-3xl right-[10%] top-[10px] exile-regular">
+          <div className="absolute text-[#D2D0A0] bg-[#73946B] text-xl lg:text-3xl right-[10%] top-[18px] lg:top-[10px] -rotate-3 exile-regular">
             NEW ARRIVALS
           </div>
         </div>
