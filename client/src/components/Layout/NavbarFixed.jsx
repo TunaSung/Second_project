@@ -22,7 +22,7 @@ function Navbar() {
   // useNavigate
   const navigate = useNavigate();
 
-  const isWidth640 = useMediaQuery({ maxWidth: 640 });
+  const isWidth768 = useMediaQuery({ maxWidth: 768 });
 
   // login status and categories
   const { isAuthenticated, categories, subcategories } = useAuth();
@@ -56,16 +56,16 @@ function Navbar() {
   };
 
   return (
-    <nav className="w-full h-20 max-sm:h-30 fixed top-0 right-0 bg-[#537D5D] drop-shadow-[1px_1px_2px_rgba(0,0,0,0.3)] z-110">
+    <nav className="w-full h-30 md:h-20 fixed top-0 right-0 bg-[#537D5D] drop-shadow-[1px_1px_2px_rgba(0,0,0,0.3)] z-110">
       {/* start cart */}
       <Cart isCartOpen={isCartOpen} setIsCartOpen={setIsCartOpen} />
       {/* end cart */}
 
       <div className="container-mid h-full grid grid-cols-[1fr_4fr_1fr] justify-center gap-rwd px-2">
         {/* start nav left (logo)*/}
-        <div className="grid grid-rows-2 sm:grid-rows-1 order-2 sm:order-0 gap-2 py-2">
+        <div className="grid grid-rows-2 md:grid-rows-1 order-2 md:order-0 gap-2 py-2">
           <Link to={"/"} className="bg-[#D2D0A0]" />
-          {isWidth640 && 
+          {isWidth768 && 
             <form
               onSubmit={handleSubmit}
               className="h-full px-3 border-1 border-[#D2D0A0] rounded-2xl flex items-center justify-center"
@@ -89,7 +89,7 @@ function Navbar() {
 
         {/* start nav middle (category) */}
         {/* start parent + child */}
-        {isWidth640 ? (
+        {isWidth768 ? (
           <HamburgerMenu categories={categories} parent={parent} />
         ) : (
           <div
@@ -178,11 +178,11 @@ function Navbar() {
         {/* end nav middle */}
 
         {/* start nav right (cart, avatar, search) */}
-        <div className="grid lg:grid-rows-2 gap-1 w-full order-2 py-0 sm:py-2">
+        <div className="grid lg:grid-rows-2 gap-1 w-full order-2 py-0 md:py-2">
           <div className="grid grid-cols-2 lg:flex lg:justify-end items-center gap-3 lg:gap-2 w-full">
             <motion.div
               className="h-full flex justify-center items-center"
-              animate={{ translateX: isWidth640 ? 0 : isMenuOpen ? -12 : 0 }}
+              animate={{ translateX: isWidth768 ? 0 : isMenuOpen ? -12 : 0 }}
               transition={{ duration: 0.1 }}
             >
               <IoMdCart
@@ -207,7 +207,7 @@ function Navbar() {
             </div>
           </div>
 
-          {!isWidth640 &&
+          {!isWidth768 &&
             <form
               onSubmit={handleSubmit}
               className="h-full px-3 border-1 border-[#D2D0A0] rounded-2xl flex items-center justify-center"

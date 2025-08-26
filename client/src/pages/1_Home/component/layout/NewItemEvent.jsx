@@ -15,7 +15,7 @@ function NewItemEvent() {
     <Hero>
       {/* start new event swiper */}
       <div
-        id="new-item"
+        id="new-event"
         data-aos="fade-up"
         data-aos-offset="50"
         className="w-screen h-100 flex items-center justify-center overflow-hidden"

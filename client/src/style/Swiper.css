@@ -9,23 +9,13 @@
 }
 
 /* swiper of home page events and arrivals  */
-#new-item .swiper {
+#new-item .swiper, 
+#new-event .swiper {
   @apply w-3/4 py-5;
 }
-#new-item .swiper-wrapper {
-  @apply w-3/4 lg:w-1/3
-}
-
-#new-even .swiper-slide {
-  background-position: center;
-  background-size: cover;
-  height: 100%;
-  aspect-ratio: 1 / 1;
-}
-
-#new-even .swiper-slide img {
-  display: block;
-  width: 100%;
+#new-item .swiper-wrapper, 
+#new-event .swiper-wrapper {
+  @apply w-3/4 sm:w-1/3
 }
 
 /* swiper of product category  */
