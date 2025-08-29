@@ -6,7 +6,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/effect-cube";
 import "swiper/css/pagination";
-import "../../style/Swiper.css";
+import "../../../../style/Swiper.css";
 import { EffectFade, Pagination } from "swiper/modules";
 
 function ShopItem({

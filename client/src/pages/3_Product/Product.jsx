@@ -1,13 +1,16 @@
 import { useState, useEffect, useRef } from "react";
-import { useLocation, useSearchParams, useNavigate  } from "react-router-dom";
-import { useAuth } from "../components/Context/authContext";
+import { useLocation, useSearchParams, useNavigate } from "react-router-dom";
+import { useAuth } from "../../components/Context/authContext";
 import "aos/dist/aos.css";
 
 // API Service
-import { getProduct, searchProductsByName } from "../services/productService";
+import {
+  getProduct,
+  searchProductsByName,
+} from "../../services/productService";
 
 // UI & icons
-import ProductItem from "../components/Feature/ProductItem";
+import ProductItem from "./component/ProductItem";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 // Swiper
@@ -15,13 +18,27 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/free-mode";
-import "../style/Swiper.css";
+import "../../style/Swiper.css";
 import { Mousewheel, FreeMode } from "swiper/modules";
 
-function Product() {
+//  swiper settings
+const SWIPER_SETTINGS = {
+  id: "subcategory-swiper",
+  loop: true,
+  direction: "vertical",
+  slidesPerView: 4,
+  spaceBetween: 3,
+  freeMode: true,
+  mousewheel: { forceToAxis: true, sensitivity: 2, releaseOnEdges: true },
+  centeredSlides: true,
+  grabCursor: true,
+  modules: [Mousewheel, FreeMode],
+  className: "h-full w-full",
+};
 
+function Product() {
   const [searchParams] = useSearchParams();
-  const keyword = searchParams.get('keyword');
+  const keyword = searchParams.get("keyword");
   const navigate = useNavigate();
 
   // Get current product category from route state
@@ -54,20 +71,20 @@ function Product() {
   // Fetch product data when component mounts or category changes
   useEffect(() => {
     const fetchProduct = async () => {
-    try {
-      if (keyword) {
-        const result = await searchProductsByName(keyword);
-        setProducts(result);
-      } else {
-        const result = await getProduct(categorize);
-        setProducts(result);
+      try {
+        if (keyword) {
+          const result = await searchProductsByName(keyword);
+          setProducts(result);
+        } else {
+          const result = await getProduct(categorize);
+          setProducts(result);
+        }
+      } catch (err) {
+        console.log("商品資料載入失敗", err);
       }
-    } catch (err) {
-      console.log("商品資料載入失敗", err);
-    }
-  };
+    };
 
-  fetchProduct();
+    fetchProduct();
   }, [categorize]);
 
   // If products is null, show loading animation
@@ -84,12 +101,12 @@ function Product() {
     setParentId(id);
     setCategorize(id);
     setPage(1);
-    navigate('/product');
+    navigate("/product");
   };
   const handleChildCategory = (id) => {
     setCategorize(id);
     setPage(1);
-    navigate('/product');
+    navigate("/product");
   };
 
   // Grid dim
@@ -106,9 +123,7 @@ function Product() {
   const itemsPerPage = 20;
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const currentProducts = products
-  ? products.slice(startIndex, endIndex)
-  : [];
+  const currentProducts = products ? products.slice(startIndex, endIndex) : [];
   const totalPage =
     products.length < itemsPerPage
       ? 1
@@ -157,14 +172,13 @@ function Product() {
             <img
               src={label.img}
               loading="lazy"
-              className={`
-                            absolute w-full h-full rounded-t-xl object-cover transition-opacity duration-300
-                            ${
-                              label.id === parentId
-                                ? "opacity-100"
-                                : "opacity-0"
-                            }
-                        `}
+              className={`absolute w-full h-full rounded-t-xl object-cover transition-opacity duration-300
+                  ${
+                    label.id === parentId
+                      ? "opacity-100"
+                      : "opacity-0"
+                  }
+              `}
             />
             <span className="relative z-10 text-shadow-sm">{label.name}</span>
           </button>
@@ -185,21 +199,7 @@ function Product() {
           id="swiper-product-category"
           className="absolute top-5 h-40 -left-35 w-35 pl-0 border border-[#eceab8] border-r-black rounded-l-2xl bg-[#9EBC8A]"
         >
-          <Swiper
-            loop={true}
-            direction={"vertical"}
-            slidesPerView={4}
-            spaceBetween={3}
-            mousewheel={{
-              forceToAxis: true,
-              sensitivity: 2,
-              releaseOnEdges: true,
-            }}
-            centeredSlides={true}
-            grabCursor={true}
-            modules={[Mousewheel, FreeMode]}
-            className="h-full w-full"
-          >
+          <Swiper {...SWIPER_SETTINGS}>
             {subcategories
               .filter((child) => child.parentId === parentId)
               .map((sub, i) => (

@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 
 // UI & icons
-import Cart from "../../pages/Cart";
+import Cart from "../../pages/6_Cart/Cart";
 import { IoMdCart } from "react-icons/io";
 import { IoLogIn, IoSearch } from "react-icons/io5";
 import AvatarIcon from "../Feature/AvatarIcon";

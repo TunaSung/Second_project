@@ -6,9 +6,9 @@ import SelectTree from "./SelectTree";
 import { toast } from "react-toastify";
 
 // compress images
-import { compressImage } from "../../utils/compressImage";
+import { compressImage } from "../../../utils/compressImage";
 
-function ProductForm({
+function ShopEdit({
   isEdit,
   initialValues = {},
   onClose,
@@ -27,14 +27,15 @@ function ProductForm({
     initialValues.categoryId || null
   );
 
-  // image change handler
+  //  handlers
   const handleImageChange = async (e) => {
     const files = Array.from(e.target.files);
-    const compressedFiles = await Promise.all(files.map(file => compressImage(file, 0.6, 800)));
+    const compressedFiles = await Promise.all(
+      files.map((file) => compressImage(file, 0.6, 800))
+    );
     setImageUrls(compressedFiles);
   };
 
-  // function of submit
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -207,4 +208,4 @@ function ProductForm({
   );
 }
 
-export default ProductForm;
+export default ShopEdit;

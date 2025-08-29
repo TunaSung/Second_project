@@ -1,4 +1,4 @@
-import HistoryItem from '../Feature/HistoryItem'
+import HistoryItem from '../feature/HistoryItem'
 
 function CompletedOrder({ merchantTradeNo, date, pios, seller }) {
 

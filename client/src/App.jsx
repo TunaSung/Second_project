@@ -15,11 +15,11 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "ldrs/dotStream";
 
-const Home = lazy(() => import("./pages/1_Home/Home.jsx"));
-const Product = lazy(() => import("./pages/Product"));
-const Sign = lazy(() => import("./pages/Sign"));
-const Personal = lazy(() => import("./pages/Personal"));
-const MyShop = lazy(() => import("./pages/MyShop"));
+const Home = lazy(() => import("./pages/1_Home/Home"));
+const Product = lazy(() => import("./pages/3_Product/Product"));
+const Sign = lazy(() => import("./pages/2_Sign/Sign"));
+const Personal = lazy(() => import("./pages/4_Personal/Personal"));
+const MyShop = lazy(() => import("./pages/5_MyShop/MyShop"));
 
 // Dynamically adjust navbar
 function DynamicNavbar() {

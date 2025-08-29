@@ -1,4 +1,4 @@
-import HistoryItem from '../Feature/HistoryItem'
+import HistoryItem from '../feature/HistoryItem'
 
 function PendingOrder({ merchantTradeNo, date, pios, seller }) {
     return (

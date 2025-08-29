@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 
 // UI & icons
-import Cart from "../../pages/Cart";
+import Cart from "../../pages/6_Cart/Cart";
 import { IoMdCart } from "react-icons/io";
 import { IoLogIn, IoSearch } from "react-icons/io5";
 import HamburgerMenu from "../Feature/HamburgerMenu";
@@ -119,8 +119,7 @@ function Navbar() {
                         {parent.name}
                       </motion.p>
                     </Link>
-
-                    {/* 指示菱形：只有 hover 當下掛載 -> 有進/退出動畫 */}
+                    
                     <AnimatePresence mode="popLayout">
                       {hoverIndex === parent.id && (
                         <motion.div

@@ -6,7 +6,7 @@ import {
   updateAvailable,
   updateMyShop,
   getMyShop,
-} from "../../services/productService";
+} from "../../../services/productService";
 
 // UI & icons
 import { MdModeEdit } from "react-icons/md";
@@ -19,7 +19,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/effect-cube";
 import "swiper/css/pagination";
-import "../../style/Swiper.css";
+import "../../../style/Swiper.css";
 import { EffectFade, Pagination } from "swiper/modules";
 
 function ShopItem({
