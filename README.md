@@ -1,4 +1,4 @@
-# 🛍️ Second_project — Real-time Marketplace
+# Second_project — Real-time Marketplace
 
 一個進階版的 **多賣家電商平台**，結合 **即時聊天功能** 與更完整的資料關聯設計。  
 除了購物功能，買家能與賣家即時互動，提升交易體驗。  
@@ -23,3 +23,4 @@
   - Models: User, Product, Order, Message, ProductInOrder
 - **Cloud**：Cloudinary（商品圖片）
 - **Deploy**：Railway
+
