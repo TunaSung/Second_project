@@ -12,6 +12,7 @@
 - **即時聊天室**（Socket.IO）
   - 點商品卡片 → 建立聊天室房間 → 即時訊息互動
 - 訂單與購物流程
+- 串接 ECPay 全方位金流(測試帳號)，支援線上付款
 - 前端採 **React + Tailwind**，搭配動畫效果
 
 ---
@@ -23,4 +24,5 @@
   - Models: User, Product, Order, Message, ProductInOrder
 - **Cloud**：Cloudinary（商品圖片）
 - **Deploy**：Railway
+
 
