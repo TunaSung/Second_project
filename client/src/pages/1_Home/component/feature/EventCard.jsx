@@ -1,5 +1,5 @@
 import { LuCalendar, LuChevronRight } from "react-icons/lu";
-import { formatDateRange } from "../../../../components/util/format";
+import { formatDateRange } from "../../../../components/Util/format";
 import { memo } from "react";
 import { Link } from "react-router-dom";
 
