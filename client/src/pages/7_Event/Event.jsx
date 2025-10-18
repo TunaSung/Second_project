@@ -7,7 +7,7 @@ import HeroBlock from "./component/layout/HeroBlock";
 import SummaryCard from "./component/layout/SummaryCard";
 import ActionRow from "./component/layout/ActionRow";
 
-import { formatDateRange } from "../../components/util/format";
+import { formatDateRange } from "../../components/Util/format";
 import { eventStatus } from "../../components/Util/status";
 import { buildGCalUrl } from "../../components/Util/calender";
 import { buildMapUrl } from "../../components/Util/map";
