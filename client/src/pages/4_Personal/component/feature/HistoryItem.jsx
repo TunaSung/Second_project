@@ -1,4 +1,4 @@
-import { formatDate } from "../../../../components/util/format";
+import { formatDate } from "../../../../components/Util/format";
 
 // Icon
 import { TiMessages } from "react-icons/ti";
@@ -24,7 +24,7 @@ function ShopItem({
     <div id="cart-items">
       <div
         id="container"
-        className="w-full py-4 pl-10 text-[var(--quaterary-color)] bg-[var(--secondary-color)] hover:bg-[var(--tertiary-color)] grid grid-cols-[4fr_1fr_1fr_2fr] items-center transition-all duration-150"
+  className="w-full py-4 pl-10 text-[#ededd6] bg-[var(--tertiary-color)] hover:text-[#f1f0c7] hover:bg-[var(--primary-color)] grid grid-cols-[4fr_1fr_1fr_2fr] items-center transition-all duration-150"
       >
         <div className="flex items-center flex-wrap">
           {/* Start Seller & Product img */}
