@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../../../components/Context/authContext";
 import { addToCart } from "../../../../services/cartService";
 import { toast } from "react-toastify";
-import { formatCurrency } from "../../../../components/util/format";
+import { formatCurrency } from "../../../../components/Util/format";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, A11y } from "swiper/modules";
