@@ -1,5 +1,3 @@
-# syntax=docker/dockerfile:1.6
-
 # ==== Build client ====
 FROM node:20-alpine AS client
 WORKDIR /app/client
