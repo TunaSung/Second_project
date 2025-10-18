@@ -1,16 +1,24 @@
 # ==== 建立 client (Vite) ====
-FROM node:20-alpine AS client-build
+FROM node:20-alpine AS client
 
-WORKDIR /app/client
+# 先安裝依賴
+COPY client/package*.json ./
+RUN npm ci
+
+# 打包前端
 COPY client/ ./
-RUN npm install && npm run build
+RUN npm run build
 
 # ==== 建立 server (Express) ====
-FROM node:18 AS server
+FROM node:20-alpine AS server
+WORKDIR /app
 
+# 複製 server 原始碼
+COPY server/package*.json ./server/
+WORKDIR /app/server
+RUN npm ci --omit=dev
 WORKDIR /app
 COPY server/ ./server
-COPY --from=client /app/client/dist ./server/public 
 
 WORKDIR /app/server
 RUN npm install
