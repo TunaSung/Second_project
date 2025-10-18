@@ -19,6 +19,7 @@ WORKDIR /app/server
 RUN npm ci --omit=dev
 WORKDIR /app
 COPY server/ ./server
+COPY --from=client /app/client/dist ./server/public 
 
 WORKDIR /app/server
 RUN npm install
