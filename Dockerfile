@@ -1,5 +1,5 @@
 # ==== 建立 client (Vite) ====
-FROM node:18 AS client
+FROM node:20-alpine AS client-build
 
 WORKDIR /app/client
 COPY client/ ./
