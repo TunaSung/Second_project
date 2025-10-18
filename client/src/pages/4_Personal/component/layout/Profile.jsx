@@ -66,20 +66,21 @@ function Profile({ profile, onUpdateInfo, onUpdateAvatar }) {
   };
 
   return (
-    <div className="border border-t-0 bg-[#73946B] sticky top-1/4 w-full py-15 flex justify-center items-center">
-      {/* Title */}
+  <div className="bg-[var(--secondary-color)] sticky top-1/4 w-full py-15 flex justify-center items-center">
+      {/* start title */}
       <div className="absolute w-full h-10 left-0 top-0 z-500">
         <svg width="100%" height="40" viewBox="0 0 100 10" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
           <line x1="0" y1="0" x2="2.8%" y2="0" stroke="#f1f0c7" strokeWidth="0.5" />
           <line x1="13.4%" y1="0" x2="100%" y2="0" stroke="#f1f0c7" strokeWidth="0.5" />
         </svg>
-        <div className="absolute px-3 left-5 -top-5 text-4xl font-bold drop-shadow-[1px_1px_2px_rgba(0,0,0,0.3)]">
+        <div className="absolute px-3 left-5 -top-5 text-4xl text-[#f5f49f] font-bold drop-shadow-[1px_1px_2px_rgba(0,0,0,0.3)]">
           Profile
         </div>
       </div>
+      {/* end title */}
 
       <div className="w-4/5 flex justify-center items-center">
-        {/* Left: profile form */}
+        {/* start Left: profile form */}
         <form onSubmit={submitProfile} className="w-full">
           <table className="table-auto w-full">
             <tbody>
@@ -173,8 +174,9 @@ function Profile({ profile, onUpdateInfo, onUpdateAvatar }) {
             </tbody>
           </table>
         </form>
+        {/* end Left: profile form */}
 
-        {/* Right: avatar & payout */}
+        {/* start Right: avatar & payout */}
         <div className="w-1/3 flex flex-col justify-center items-center border-l-2 border-gray-300 py-10">
           {/* Avatar */}
           <form className="w-full flex justify-center items-center mb-10">
@@ -217,11 +219,11 @@ function Profile({ profile, onUpdateInfo, onUpdateAvatar }) {
           {/* Open payout modal */}
           <button
             onClick={() => setIsFormShow(true)}
-            className="border p-3 rounded-full group hover:bg-[#f1f0c7] transition-all duration-250"
+            className="border p-3 rounded-full hover:bg-[var(--tertiary-color)] hover:border-white hover:text-[var(--primary-color)] transition-all duration-250"
             aria-haspopup="dialog"
             aria-expanded={isFormShow}
           >
-            <MdAddCard className="scale-125 group-hover:text-[#537D5D]" />
+            <MdAddCard className="scale-125" />
           </button>
 
           {/* Backdrop */}
@@ -236,7 +238,7 @@ function Profile({ profile, onUpdateInfo, onUpdateAvatar }) {
           {/* Payout modal */}
           <motion.form
             onSubmit={submitBank}
-            className="fixed-mid w-120 aspect-[2/1] border bg-[#f1f0c7] text-[#537D5D] p-8 z-50 rounded-lg"
+            className="fixed-mid w-120 aspect-[2/1] border bg-[#f1f0c7] text-[var(--primary-color)] p-8 z-50 rounded-lg"
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: isFormShow ? 1 : 0, opacity: isFormShow ? 1 : 0 }}
             transition={{ duration: 0.4 }}
@@ -278,20 +280,21 @@ function Profile({ profile, onUpdateInfo, onUpdateAvatar }) {
             <div className="w-full flex justify-center gap-rwd">
               <button
                 type="submit"
-                className="border w-20 text-[#73946B] hover:bg-[#537D5D] hover:text-[#f1f0c7] px-4 py-2 rounded-md transition-all duration-200"
+                className="border w-20 text-[var(--secondary-color)] hover:bg-[var(--primary-color)] hover:text-[#f1f0c7] px-4 py-2 rounded-md transition-all duration-200"
               >
                 Save
               </button>
               <button
                 type="button"
                 onClick={() => setIsFormShow(false)}
-                className="border w-20 text-[#73946B] hover:bg-[#BE5B50] hover:text-[#f1f0c7] px-4 py-2 rounded-md transition-all duration-200"
+                className="border w-20 text-[var(--secondary-color)] hover:bg-[#BE5B50] hover:text-[#f1f0c7] px-4 py-2 rounded-md transition-all duration-200"
               >
                 Cancel
               </button>
             </div>
           </motion.form>
         </div>
+        {/* end Right: avatar & payout */}
       </div>
     </div>
   );

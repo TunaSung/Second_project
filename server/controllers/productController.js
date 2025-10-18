@@ -46,6 +46,19 @@ exports.getAllProducts = async (req, res) => {
     }
 }
 
+exports.getNewItem = async (req, res) => {
+    try {
+        const product = await Product.findAll({
+            order: [['updatedAt', 'DESC']],
+            attributes: ['id', 'name', 'price', 'stock', 'imageUrls'],
+            limit: 7
+        })
+        res.status(200).json({ product })
+    } catch (error) {
+        res.status(500).json({ error: 'Get new item failed', details: error.message });
+    }
+}
+
 exports.getProductSearch = async (req, res) => {
     try {
         const { keyword } = req.query;

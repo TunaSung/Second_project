@@ -1,4 +1,5 @@
 import "./App.css";
+import "./Variable.css"
 import NavbarFixed from "./components/Layout/NavbarFixed";
 import Navbar from "./components/Layout/Navbar";
 import Footer from "./components/Layout/Footer";
@@ -20,6 +21,7 @@ const Product = lazy(() => import("./pages/3_Product/Product"));
 const Sign = lazy(() => import("./pages/2_Sign/Sign"));
 const Personal = lazy(() => import("./pages/4_Personal/Personal"));
 const MyShop = lazy(() => import("./pages/5_MyShop/MyShop"));
+const Event = lazy(() => import("./pages/7_Event/Event"))
 
 // Dynamically adjust navbar
 function DynamicNavbar() {
@@ -83,6 +85,7 @@ function App() {
           <Route path="/sign" element={<Sign />} />
           <Route path="/personal" element={<Personal />} />
           <Route path="/my-shop" element={<MyShop />} />
+          <Route path="/event/:id" element={<Event />} />
         </Routes>
       </Suspense>
       <Footer />

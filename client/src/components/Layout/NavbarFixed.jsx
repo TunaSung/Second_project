@@ -56,7 +56,7 @@ function Navbar() {
   };
 
   return (
-    <nav className="w-full h-30 md:h-20 fixed top-0 right-0 bg-[#537D5D] drop-shadow-[1px_1px_2px_rgba(0,0,0,0.3)] z-110">
+  <nav className="w-full h-30 md:h-20 fixed top-0 right-0 bg-[var(--primary-color)] drop-shadow-[1px_1px_2px_rgba(0,0,0,0.3)] z-110">
       {/* start cart */}
       <Cart isCartOpen={isCartOpen} setIsCartOpen={setIsCartOpen} />
       {/* end cart */}
@@ -64,23 +64,25 @@ function Navbar() {
       <div className="container-mid h-full grid grid-cols-[1fr_4fr_1fr] justify-center gap-rwd px-2">
         {/* start nav left (logo)*/}
         <div className="grid grid-rows-2 md:grid-rows-1 order-2 md:order-0 gap-2 py-2">
-          <Link to={"/"} className="bg-[#D2D0A0]" />
+          <Link to={"/"} className="bg-[var(--quaternary-color)] text-white text-3xl flex justify-center items-center">
+           Logo
+          </Link>
           {isWidth768 && 
             <form
               onSubmit={handleSubmit}
-              className="h-full px-3 border-1 border-[#D2D0A0] rounded-2xl flex items-center justify-center"
+              className="h-full px-3 border-1 border-[var(--quaternary-color)] rounded-2xl flex items-center justify-center"
             >
               <input
                 type="text"
                 value={search}
                 onChange={toggleSearch}
-                className="w-full outline-none text-[#D2D0A0] placeholder-white"
+                className="w-full outline-none text-[var(--quaternary-color)] placeholder-white"
               />
               <button
                 type="submit"
                 className="flex justify-center items-center rounded-full"
               >
-                <IoSearch className="text-2xl text-[#D2D0A0]" />
+                <IoSearch className="text-2xl text-[var(--quaternary-color)]" />
               </button>
             </form>
           }
@@ -107,11 +109,11 @@ function Navbar() {
                   >
                     <Link to="/product" state={{ initialLabel: parent.id }}>
                       <motion.p
-                        initial={{ y: 0, color: "#D2D0A0" }}
+                        initial={{ y: 0, color: "var(--quaternary-color)" }}
                         animate={{
                           y: hoverIndex === parent.id ? -12 : 0,
                           color:
-                            hoverIndex === parent.id ? "#ffffff" : "#D2D0A0",
+                            hoverIndex === parent.id ? "var(--tertiary-color)" : "var(--quaternary-color)",
                         }}
                         transition={{ duration: 0.2 }}
                         className="select-none"
@@ -124,7 +126,7 @@ function Navbar() {
                       {hoverIndex === parent.id && (
                         <motion.div
                           key="diamond"
-                          className="navbar-menu-mid bg-[#D2D0A0]/95 h-[70%] aspect-square rotate-45 mx-auto"
+                          className="navbar-menu-mid bg-[var(--quaternary-color)]/95 h-[70%] aspect-square rotate-45 mx-auto"
                           initial={{ opacity: 0, scale: 0.9 }}
                           animate={{ opacity: 1, scale: 1 }}
                           exit={{ opacity: 0, scale: 0.9 }}
@@ -135,7 +137,7 @@ function Navbar() {
                   </div>
                 ))
               ) : (
-                <p className="col-start-3 text-sm text-[#D2D0A0]">
+                <p className="col-start-3 text-sm text-[var(--quaternary-color)]">
                   分類載入中...
                 </p>
               )}
@@ -146,7 +148,7 @@ function Navbar() {
               {hoverIndex !== null && (
                 <motion.div
                   key="submenu"
-                  className="absolute w-full navbar-items-mid bg-[#D2D0A0]/95 overflow-hidden rounded-2xl"
+                  className="absolute w-full navbar-items-mid bg-[var(--quaternary-color)]/95 overflow-hidden rounded-2xl"
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: "auto" }}
                   exit={{ opacity: 0, height: 0 }}
@@ -160,7 +162,7 @@ function Navbar() {
                           <Link
                             to="/product"
                             state={{ initialLabel: sub.id }}
-                            className="text-[#537D5D] hover:text-white max-lg:text-sm"
+                            className="text-[var(--primary-color)] hover:text-white max-lg:text-sm"
                           >
                             {sub.name}
                           </Link>
@@ -186,7 +188,7 @@ function Navbar() {
             >
               <IoMdCart
                 onClick={handleCartClick}
-                className="scale-200 lg:scale-150 text-[#D2D0A0] hover:text-[#e8e679] transition-colors duration-200 cursor-pointer"
+                className="scale-200 lg:scale-150 text-[var(--quaternary-color)] hover:text-[#e8e679] transition-colors duration-200 cursor-pointer"
               />
             </motion.div>
             <div className="h-full flex justify-center items-center">
@@ -198,7 +200,7 @@ function Navbar() {
               ) : (
                 <Link
                   to={"/sign"}
-                  className="cursor-pointer text-[#D2D0A0] hover:text-[#91c883] transition-colors duration-200"
+                  className="cursor-pointer text-[var(--quaternary-color)] hover:text-[#91c883] transition-colors duration-200"
                 >
                   <IoLogIn className="scale-200 lg:scale-150" />
                 </Link>
@@ -209,19 +211,19 @@ function Navbar() {
           {!isWidth768 &&
             <form
               onSubmit={handleSubmit}
-              className="h-full px-3 border-1 border-[#D2D0A0] rounded-2xl flex items-center justify-center"
+              className="h-full px-3 border-1 border-[var(--quaternary-color)] rounded-2xl flex items-center justify-center"
             >
               <input
                 type="text"
                 value={search}
                 onChange={toggleSearch}
-                className="w-full outline-none text-[#D2D0A0] placeholder-white"
+                className="w-full outline-none text-[var(--quaternary-color)] placeholder-white"
               />
               <button
                 type="submit"
                 className="flex justify-center items-center rounded-full"
               >
-                <IoSearch className="text-2xl text-[#D2D0A0]" />
+                <IoSearch className="text-2xl text-[var(--quaternary-color)]" />
               </button>
             </form>
           }

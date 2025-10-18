@@ -90,18 +90,18 @@ function AvatarIcon({ isMenuOpen, toggleMenuOpen }) {
             {isWidth640 ? 
             <></>
             :
-            <div className="absolute -right-[2px] translate-x-1/2 top-1 rotate-45 w-3/5 aspect-square bg-[#D2D0A0]" />
+            <div className="absolute -right-[2px] translate-x-1/2 top-1 rotate-45 w-3/5 aspect-square bg-[var(--tertiary-color)]" />
             }
           </div>
 
-          <div className="h-full bg-[#D2D0A0] rounded-b-2xl sm:rounded-sm text-sm">
-            <div className="w-full text-lg sm:text-base text-center text-[#537D5D] cursor-default my-2">
+          <div className="h-full bg-[var(--tertiary-color)] rounded-b-2xl sm:rounded-sm text-sm">
+            <div className="w-full text-lg sm:text-base text-center text-[var(--primary-color)] cursor-default my-2">
               Hi~ {currentUser.username}
             </div>
 
             <Link
               to="/personal"
-              className="block w-full py-2 text-lg sm:text-base text-center text-[#537D5D] hover:bg-[#73946B] hover:text-white"
+              className="block w-full py-2 text-lg sm:text-base text-center text-[var(--primary-color)] hover:bg-[var(--secondary-color)] hover:text-white"
               onClick={toggleMenuOpen}
             >
               My Account
@@ -109,7 +109,7 @@ function AvatarIcon({ isMenuOpen, toggleMenuOpen }) {
 
             <Link
               to={"/my-shop"}
-              className="block w-full py-2 text-lg sm:text-base text-center text-[#537D5D] hover:bg-[#73946B] hover:text-white"
+              className="block w-full py-2 text-lg sm:text-base text-center text-[var(--primary-color)] hover:bg-[var(--secondary-color)] hover:text-white"
               onClick={toggleMenuOpen}
             >
               My Shop
@@ -117,7 +117,7 @@ function AvatarIcon({ isMenuOpen, toggleMenuOpen }) {
 
             <Link
               to={"/"}
-              className="block w-full py-2 text-lg sm:text-base text-center text-[#537D5D] hover:bg-[#E14434] hover:text-white"
+              className="block w-full py-2 text-lg sm:text-base text-center text-[var(--primary-color)] hover:bg-[#E14434] hover:text-white"
               onClick={handleLogout}
             >
               Logout

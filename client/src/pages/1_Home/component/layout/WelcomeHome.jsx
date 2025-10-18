@@ -4,17 +4,7 @@ import Hero from "../../../../components/Layout/Hero";
 import ParallaxCard from "../motion/ParallaxCard";
 import MotionTitle from "../motion/MotionTitle";
 import usePrefersReducedMotion from "../hook/usePrefersReducedMotion";
-
-/** --------------------------------
- * Helpers & Constants
- * --------------------------------*/
-const IMG = {
-  v: "/imgs/kpop/bts-kpop-v-butter.webp",
-  tzuyu: "/imgs/kpop/tzuyu-twice-with-youth.webp",
-  jungkook: "/imgs/kpop/bts-butter-jungkook.webp",
-  karina: "/imgs/kpop/karina-aespa-dirty-work2.webp",
-  jimin: "/imgs/kpop/bts-be-jimin.webp",
-};
+import { CARDS } from "../data/home";
 
 // system prefers-reduced-motion
 const prefersReducedMotion =
@@ -35,53 +25,6 @@ function WelcomeHome() {
   const containerY = prefersReducedMotion
     ? undefined
     : useTransform(scrollYProgress, [0.1, 0.6], ["0%", "50%"]);
-
-  // cards
-  const CARDS = [
-    {
-      key: "v",
-      img: IMG.v,
-      ranges: {
-        scale: [0.25, 0.5, 1, 0.6],
-        y: [0.23, 0.8, "0%", "50%"],
-        x: [0.23, 0.8, "0%", "-30%"],
-      },
-    },
-    {
-      key: "tzuyu",
-      img: IMG.tzuyu,
-      ranges: {
-        scale: [0.25, 0.48, 1, 0.5],
-        y: [0.23, 0.8, "0%", "-50%"],
-        x: [0.23, 0.83, "0%", "-30%"],
-      },
-    },
-    {
-      key: "jungkook",
-      img: IMG.jungkook,
-      ranges: { scale: [0.25, 0.5, 1, 0.6], y: [0.23, 0.8, "0%", "70%"] },
-    },
-    {
-      key: "karina",
-      img: IMG.karina,
-      ranges: {
-        h: [0.25, 0.7, "100%", "60%"],
-        w: [0.25, 0.5, "100%", "80%"],
-        y: [0.23, 0.8, "0%", "-32%"],
-        x: [0.23, 0.8, "0%", "20%"],
-      },
-    },
-    {
-      key: "jimin",
-      img: IMG.jimin,
-      ranges: {
-        h: [0.25, 0.7, "100%", "60%"],
-        w: [0.25, 0.5, "100%", "80%"],
-        y: [0.23, 0.8, "0%", "15%"],
-        x: [0.23, 0.8, "0%", "40%"],
-      },
-    },
-  ];
 
   return (
     <Hero>

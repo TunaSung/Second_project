@@ -77,7 +77,7 @@ function SignIn({ isShowed = true }) {
           aria-busy={disabled ? "true" : "false"}
         >
           {/* Branding / illustration (placeholder) */}
-          <div className="w-3/5 h-20 border mb-10" aria-hidden="true" />
+          <div className="w-3/5 h-20 border mb-10 flex items-center justify-center text-3xl font-bold" aria-hidden="true">Logo</div>
 
           {/* Email */}
           <FloatingField

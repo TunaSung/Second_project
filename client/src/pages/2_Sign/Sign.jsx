@@ -19,24 +19,21 @@ function Sign() {
       className="h-[90vh] w-full grid grid-cols-2 items-center justify-center overflow-hidden"
       style={{
         backgroundImage:
-          "linear-gradient(0deg,#D2D0A0 0%, #9EBC8A 33%, #73946B 66%, #537D5D 100%)",
+          "linear-gradient(0deg,var(--quaternary-color) 0%, var(--tertiary-color) 33%, var(--secondary-color) 66%, var(--primary-color) 100%)",
       }}
     >
       {/* start go sign in*/}
       <motion.section
         className="absolute grid grid-cols-2 h-full w-full z-90 -right-1/2"
         animate={{ x: isSignUp ? "50%" : "0%" }}
-        transition={{ duration: 0.5, ease: 'easeInOut' }}
+        transition={{ duration: 0.5, ease: "easeInOut" }}
         aria-hidden={isSignUp ? "true" : "false"}
       >
-        <div
-          className="flex flex-col items-center p-10
-                bg-[url('/imgs/kpop/yeji-itzy-girls-will-be-girls.webp')] bg-cover-set"
-        >
+        <div className="flex flex-col items-center justify-center p-10">
           {/* start title */}
-          <header className="w-full mb-60">
+          <header className="w-full mb-30">
             <h2
-              className="pl-2 flex justify-start text-7xl mb-3 sail-regular text-[#D2D0A0]
+              className="pl-2 flex justify-start text-7xl mb-3 sail-regular text-[var(--quaternary-color)]
                         drop-shadow-[3px_3px_3px_rgba(0,0,0,0.8)] bg-cover-set"
             >
               Sign In &
@@ -52,7 +49,7 @@ function Sign() {
 
           {/* start btn */}
           <button
-            className="w-40 h-20 border-2 border-gray-500 bg-[#73946B] text-[#D2D0A0] rounded-xl opacity-85 text-2xl font-bold hover:scale-110 hover:opacity-100 hover:bg-[#537D5D] transition-all duration-250"
+            className="w-40 h-20 border-2 border-gray-500 bg-[var(--secondary-color)] text-[var(--quaternary-color)] rounded-xl opacity-85 text-2xl font-bold hover:scale-110 hover:opacity-100 hover:bg-[var(--primary-color)] transition-all duration-250"
             onClick={toggleSignChange}
             aria-controls="signin-panel"
             aria-expanded={!isSignUp ? "true" : "false"}
@@ -67,19 +64,16 @@ function Sign() {
       {/* start go sign up*/}
       <motion.section
         className="absolute grid grid-cols-2 h-full w-full z-90 -left-1/2"
-        initial={{x: "-50%"}}
+        initial={{ x: "-50%" }}
         animate={{ x: !isSignUp ? "-50%" : "0%" }}
-        transition={{ duration: 0.5, ease: 'easeInOut' }}
+        transition={{ duration: 0.5, ease: "easeInOut" }}
         aria-hidden={isSignUp ? "false" : "true"}
       >
-        <div
-          className="col-start-2 flex flex-col items-center p-10
-                bg-[url('/imgs/kpop/karina-aespa-dirty-work.webp')] bg-cover-set"
-        >
+        <div className="col-start-2 flex flex-col items-center justify-center p-10">
           {/* start title */}
-          <header className="w-full mb-60">
+          <header className="w-full mb-30">
             <h2
-              className="pl-2 flex justify-start text-7xl mb-3 sail-regular text-[#D2D0A0]
+              className="pl-2 flex justify-start text-7xl mb-3 sail-regular text-[var(--quaternary-color)]
                         drop-shadow-[3px_3px_3px_rgba(0,0,0,0.8)] bg-cover-set"
             >
               Sign Up &
@@ -95,7 +89,7 @@ function Sign() {
 
           {/* start btn */}
           <button
-            className="w-40 h-20 border-2 border-gray-500 bg-[#73946B] text-[#D2D0A0] rounded-xl opacity-85 text-2xl font-bold hover:scale-110 hover:opacity-100 hover:bg-[#537D5D] transition-all duration-250"
+            className="w-40 h-20 border-2 border-gray-500 bg-[var(--secondary-color)] text-[var(--quaternary-color)] rounded-xl opacity-85 text-2xl font-bold hover:scale-110 hover:opacity-100 hover:bg-[var(--primary-color)] transition-all duration-250"
             onClick={toggleSignChange}
             aria-controls="signin-panel"
             aria-expanded={!isSignUp ? "true" : "false"}

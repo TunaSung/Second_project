@@ -14,7 +14,7 @@ const MotionTitle = memo(function MotionTitle({
 
   return (
     <motion.div className={className} style={{ opacity }}>
-      <h2 className="text-sm md:text-2xl xl:text-4xl font-bold text-center text-[#D2D0A0] indie-flower-regular">
+  <h2 className="text-sm md:text-2xl xl:text-4xl font-bold text-center text-[var(--quaternary-color)] indie-flower-regular">
         {text}
       </h2>
     </motion.div>

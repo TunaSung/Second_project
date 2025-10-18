@@ -99,3 +99,14 @@ export const updateAvailable = async (productId) => {
         throw error.response?.data?.message || "update failed";
     }
 }
+
+export const getNewItem = async () => {
+    try {
+        const response = await api.get('/product/new')
+        return response.data
+    } catch (error) {
+        const message = error.response?.data?.message || error.message || "get product failed";
+        console.error("get product error:", message);
+        throw error.response?.data?.message || "get product failed";
+    }
+}

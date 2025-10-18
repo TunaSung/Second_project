@@ -146,10 +146,13 @@ function Product() {
   };
 
   return (
-    <div id="product-list-page" className="h-full w-full bg-[#73946B]">
+    <div
+      id="product-list-page"
+      className="h-full w-full bg-[var(--secondary-color)]"
+    >
       {/* start title */}
-      <div className="border-b border-[#D2D0A0] p-4 pt-35 flex justify-self-center">
-        <h1 className="text-5xl text-[#eceab8] font-bold indie-flower-regular">
+      <div className="border-b border-[var(--tertiary-color)] p-4 pt-35 flex justify-self-center">
+        <h1 className="text-5xl text-[var(--tertiary-color)] font-bold indie-flower-regular">
           Product List
         </h1>
       </div>
@@ -161,7 +164,7 @@ function Product() {
           <button
             key={i}
             onClick={() => handleParentCategory(label.id)}
-            className={`border w-[85%] transition-all duration-300 rounded-t-xl font-bold border-b-0 bg-[#9EBC8A]
+            className={`border w-[85%] transition-all duration-300 rounded-t-xl font-bold border-b-0 bg-[var(--tertiary-color)]
                     ${
                       label.id === parentId
                         ? `h-3/4 text-white text-2xl`
@@ -173,11 +176,7 @@ function Product() {
               src={label.img}
               loading="lazy"
               className={`absolute w-full h-full rounded-t-xl object-cover transition-opacity duration-300
-                  ${
-                    label.id === parentId
-                      ? "opacity-100"
-                      : "opacity-0"
-                  }
+                  ${label.id === parentId ? "opacity-100" : "opacity-0"}
               `}
             />
             <span className="relative z-10 text-shadow-sm">{label.name}</span>
@@ -188,7 +187,7 @@ function Product() {
 
       {/* start product list */}
       <div
-        className={`grid w-[72%] max-lg:w-[90%] max-md:w-[98%] mx-auto rounded-2xl transition-all duration-350 gap-1 border`}
+        className={`grid w-[72%] max-lg:w-[90%] max-md:w-[98%] mx-auto rounded-2xl transition-all duration-350 gap-1 border border-slate-300 shadow-sm`}
         style={{
           height: `${wrapperHeight}px`,
           gridTemplateRows: getRowSizes(),
@@ -197,7 +196,7 @@ function Product() {
         {/* start category swiper */}
         <div
           id="swiper-product-category"
-          className="absolute top-5 h-40 -left-35 w-35 pl-0 border border-[#eceab8] border-r-black rounded-l-2xl bg-[#9EBC8A]"
+          className="absolute top-5 h-40 -left-35 w-35 pl-0 border border-[#eceab8] border-r-black rounded-l-2xl bg-[var(--tertiary-color)]"
         >
           <Swiper {...SWIPER_SETTINGS}>
             {subcategories
@@ -224,7 +223,7 @@ function Product() {
             className="absolute inset-0 flex items-center justify-center z-10"
             style={{ height: `${wrapperHeight}px` }}
           >
-            <p className="text-2xl font-bold text-[#f8f7cf]">
+            <p className="text-2xl font-bold text-[var(--tertiary-color)]">
               Currently, there are no products in this category (ಥ _ ಥ)
             </p>
           </div>

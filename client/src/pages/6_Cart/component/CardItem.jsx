@@ -44,8 +44,8 @@ function CardItem({
     () =>
       new Intl.NumberFormat(undefined, {
         style: "currency",
-        currency: "USD",
-        maximumFractionDigits: 2,
+        currency: "TWD",
+        maximumFractionDigits: 0,
       }),
     []
   );
@@ -116,7 +116,7 @@ function CardItem({
         type="checkbox"
         checked={isChecked}
         onChange={(e) => onClickChange(e.target.checked, productId)}
-        className="accent-[#537D5D]"
+  className="accent-[var(--primary-color)]"
         aria-label={`Select ${title}`}
       />
 
@@ -137,7 +137,7 @@ function CardItem({
       </figure>
 
       {/* product info */}
-      <div className="flex flex-col justify-between h-full text-[#1f4428] gap-3">
+      <div className="flex flex-col justify-between h-full text-[var(--quateranry-color)] gap-3">
         {/* title, tags, subtotal */}
         <div className="flex justify-between">
           <div className="flex flex-col flex-wrap">
@@ -165,13 +165,13 @@ function CardItem({
         <div className="flex justify-between h-8">
           <div
             id="amount"
-            className="grid grid-cols-[1fr_1.5fr_1fr] items-center border divide-x text-[#3e6547] border-[#73946B] divide-[#73946B]"
+            className="grid grid-cols-[1fr_1.5fr_1fr] items-center border divide-x text-[var(--quaterary-color)] border-[var(--secondary-color)] divide-[var(--secondary-color)]"
             aria-label="Quantity selector"
           >
             <button
               type="button"
               onClick={toggleMinus}
-              className="h-full flex justify-center items-center cursor-pointer p-1 disabled:text-[#9EBC8A] disabled:cursor-default"
+              className="h-full flex justify-center items-center cursor-pointer p-1 disabled:text-[var(--secondary-color)] disabled:cursor-default"
               disabled={itemAmount <= 1 || pending}
               aria-label="Decrease quantity"
               title="Decrease quantity"
@@ -186,7 +186,7 @@ function CardItem({
             <button
               type="button"
               onClick={togglePlus}
-              className="h-full flex justify-center items-center cursor-pointer p-1 disabled:text-[#9EBC8A] disabled:cursor-default"
+              className="h-full flex justify-center items-center cursor-pointer p-1 disabled:text-[var(--secondary-color)]disabled:cursor-default"
               disabled={itemAmount >= stock || pending}
               aria-label="Increase quantity"
               title="Increase quantity"

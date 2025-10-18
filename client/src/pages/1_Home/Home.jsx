@@ -22,7 +22,7 @@ function Home() {
             {/* end kpop swiper */}
             
             {/* start wrapper of main */}
-            <main className="bg-[#73946B]">
+            <main className="bg-[var(--secondary-color)]">
 
                 {/* start welcome */}
                 <WelcomeHome />

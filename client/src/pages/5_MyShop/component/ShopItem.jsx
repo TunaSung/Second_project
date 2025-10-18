@@ -116,7 +116,7 @@ function ShopItem({
       {/* Start Product details */}
       <div
         id="container"
-        className="mt-4 w-full border py-4 pl-10 hover:bg-[#537D5D] grid grid-cols-[3fr_1fr_1fr_1fr_2fr_1fr] items-center"
+  className="mt-4 w-full border py-4 pl-10 hover:bg-[var(--primary-color)] grid grid-cols-[3fr_1fr_1fr_1fr_2fr_1fr] items-center"
       >
         <div className="flex items-center pl-2">
           {/* Start Edit Available Confirm Open */}
@@ -128,13 +128,13 @@ function ShopItem({
               <div className="flex justify-center items-center gap-rwd">
                 <button
                   onClick={() => toggleAvailabe(productId)}
-                  className="w-20 h-10 border bg-[#537D5D]"
+                  className="w-20 h-10 border bg-[var(--primary-color)]"
                 >
                   Confirm
                 </button>
                 <button
                   onClick={handleConfirmOpen}
-                  className="w-20 h-10 border bg-[#537D5D]"
+                  className="w-20 h-10 border bg-[var(--primary-color)]"
                 >
                   Cancal
                 </button>

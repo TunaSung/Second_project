@@ -65,7 +65,7 @@ function ShopEdit({
 
   return (
     <motion.div
-      className="fixed-mid p-4 w-120 aspect-square border z-200 bg-[#537D5D] rounded-2xl drop-shadow-[3px_3px_3px_rgba(0,0,0,0.8)]"
+  className="fixed-mid p-4 w-120 aspect-square border z-200 bg-[var(--primary-color)] rounded-2xl drop-shadow-[3px_3px_3px_rgba(0,0,0,0.8)]"
       animate={{
         scale: [0, 1.1, 0.9, 1],
         opacity: [0, 1],
@@ -87,7 +87,7 @@ function ShopEdit({
         {/* start img input */}
         <div className="flex flex-col justify-center items-center">
           <label
-            className="p-6 border rounded-full cursor-pointer hover:bg-[#9EBC8A] transition-all"
+            className="p-6 border rounded-full cursor-pointer hover:bg-[var(--tertiary-color)] transition-all"
             htmlFor="product-image"
           >
             <LuImagePlus className="scale-150" />
@@ -119,7 +119,7 @@ function ShopEdit({
               </th>
               <td className="w-full">
                 <input
-                  className="w-full border rounded-sm pl-2 py-1 focus:bg-[#f8f7cf] focus:text-[#537D5D] focus:outline-0"
+                  className="w-full border rounded-sm pl-2 py-1 focus:bg-[#f8f7cf] focus:text-[var(--primary-color)] focus:outline-0"
                   type="text"
                   id="name"
                   value={name}
@@ -135,7 +135,7 @@ function ShopEdit({
               </th>
               <td>
                 <input
-                  className="w-full border rounded-sm pl-2 py-1 focus:bg-[#f8f7cf] focus:text-[#537D5D] focus:outline-0"
+                  className="w-full border rounded-sm pl-2 py-1 focus:bg-[#f8f7cf] focus:text-[var(--primary-color)] focus:outline-0"
                   type="number"
                   id="price"
                   value={price}
@@ -151,7 +151,7 @@ function ShopEdit({
               </th>
               <td>
                 <input
-                  className="w-full border rounded-sm pl-2 py-1 focus:bg-[#f8f7cf] focus:text-[#537D5D] focus:outline-0"
+                  className="w-full border rounded-sm pl-2 py-1 focus:bg-[#f8f7cf] focus:text-[var(--primary-color)] focus:outline-0"
                   type="number"
                   id="stock"
                   value={stock}
@@ -167,7 +167,7 @@ function ShopEdit({
               </th>
               <td>
                 <input
-                  className="w-full border rounded-sm pl-2 py-1 focus:bg-[#f8f7cf] focus:text-[#537D5D] focus:outline-0"
+                  className="w-full border rounded-sm pl-2 py-1 focus:bg-[#f8f7cf] focus:text-[var(--primary-color)] focus:outline-0"
                   type="text"
                   id="hashTags"
                   value={hashTags}
@@ -197,7 +197,7 @@ function ShopEdit({
         <button
           type="submit"
           className="border py-2 px-6 rounded-2xl
-        hover:bg-[#f8f7cf] hover:text-[#537D5D] hover:border-[#9bda8b] transition-all duration-200"
+  hover:bg-[#f8f7cf] hover:text-[var(--primary-color)] hover:border-[#9bda8b] transition-all duration-200"
         >
           {isEdit ? "Update" : "Add to shop"}
         </button>

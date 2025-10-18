@@ -1,5 +1,5 @@
 const express = require('express')
-const { getAllProducts, getCategory, getMyShop, getHistory, getProductSearch, uploadProduct, updateAvailable, updateMyShop} = require('../controllers/productController')
+const { getAllProducts, getCategory, getMyShop, getHistory, getProductSearch, uploadProduct, updateAvailable, updateMyShop, getNewItem} = require('../controllers/productController')
 const authenticate = require('../middleware/JWT');
 const multiUpload = require('../middleware/productUpload');
 
@@ -13,5 +13,6 @@ router.post('/search', getProductSearch)
 router.post('/upload', authenticate, multiUpload, uploadProduct)
 router.post('/update/available', updateAvailable)
 router.post('/update/my-shop', multiUpload, updateMyShop)
+router.get('/new', getNewItem)
 
 module.exports = router

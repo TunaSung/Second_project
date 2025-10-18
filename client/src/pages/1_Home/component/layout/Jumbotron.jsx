@@ -1,6 +1,8 @@
 import { useCallback, useMemo, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { IoSearch } from "react-icons/io5";
+import { SLIDE_IMAGES } from "../data/home";
+import usePrefersReducedMotion from "../hook/usePrefersReducedMotion";
 
 // Swiper
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -8,31 +10,6 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "../../../../style/Swiper.css";
 import { Autoplay, Pagination } from "swiper/modules";
-
-/** --------------------------------
- * Helpers & Constants
- * --------------------------------*/
-const SLIDE_IMAGES = [
-  "/imgs/kpop/aespa-karina-hot-mess.webp",
-  "/imgs/kpop/aespa-winter-hot-mess.webp",
-  "/imgs/kpop/ningning-aespa-hot-mess.webp",
-  "/imgs/kpop/giselle-aespa-hot-mess.webp",
-];
-
-// detect prefers-reduced-motion
-const usePrefersReducedMotion = () => {
-  const [reduced, setReduced] = useState(false);
-  useEffect(() => {
-    const m = window.matchMedia?.("(prefers-reduced-motion: reduce)");
-    if (m) {
-      const update = () => setReduced(!!m.matches);
-      update();
-      m.addEventListener?.("change", update);
-      return () => m.removeEventListener?.("change", update);
-    }
-  }, []);
-  return reduced;
-};
 
 function Jumbotron() {
   const [search, setSearch] = useState("");
@@ -94,7 +71,7 @@ function Jumbotron() {
           role="search"
           aria-label="Search products"
           onSubmit={handleSubmit}
-          className="border w-full h-15 bg-white/90 backdrop-blur flex items-center justify-center rounded-md"
+          className="border w-full h-15 bg-white/90 backdrop-blur flex items-center justify-center rounded-md overflow-hidden"
         >
           <label htmlFor="hero-search" className="sr-only">
             Enter product name
@@ -114,7 +91,7 @@ function Jumbotron() {
           />
           <button
             type="submit"
-            className="h-full aspect-5/3 bg-[#D2D0A0] text-[#537D5D] flex items-center justify-center hover:text-white hover:text-lg transition-all duration-300"
+            className="h-full aspect-5/3 bg-[var(--tertiary-color)] text-[var(--primary-color)] flex items-center justify-center hover:text-white hover:text-lg transition-all duration-300"
           >
             <IoSearch aria-hidden="true" />
             <span>Search</span>

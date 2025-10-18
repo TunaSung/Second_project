@@ -84,9 +84,9 @@ function FixedMessage() {
       className={`fixed right-15 bottom-15 z-100 border p-3 overflow-hidden grid grid-cols-[auto_1fr]
       ${
         isChatOpen
-          ? "bg-[#D2D0A0]"
-          : "bg-gray-100 text-[#537D5D] hover:bg-[#9EBC8A] hover:text-white"
-      }  transition-all duration-200`}
+          ? "bg-[var(--primary-color)]"
+          : "bg-[var(--tertiary-color)] text-[var(--primary-color)] hover:bg-[var(--tertiary-color)] hover:text-white"
+      }  transition-all duration-200 shadow-sm border-slate-300`}
       style={{
         width: isChatOpen ? "500px" : "40px",
         height: isChatOpen ? "70vh" : "40px",
@@ -103,7 +103,7 @@ function FixedMessage() {
           <button
             key={item.roomId}
             onClick={() => handleSelectRoom(item.receiverId)}
-            className="w-full h-1/6 hover:bg-[#9EBC8A] flex items-center pl-2 group transition-all duration-200"
+            className="w-full h-1/6 hover:bg-[var(--tertiary-color)] flex items-center pl-2 group transition-all duration-200"
           >
             <img
               src={`${import.meta.env.VITE_API_URL}${item.receiver.avatarUrl}`}
@@ -111,7 +111,7 @@ function FixedMessage() {
               alt="avatar"
             />
             <div className="grid grid-rows-2 w-full text-start">
-              <p className="font-bold line-clamp-1 text-[#537D5D] group-hover:text-white ">{item.receiver.username}</p>
+              <p className="font-bold line-clamp-1 text-[var(--quaternary-color)] group-hover:text-white ">{item.receiver.username}</p>
               <p className="text-gray-600 text-xs line-clamp-1">
                 {item.lastMsg || "開始聊天吧～"}
               </p>
@@ -152,8 +152,8 @@ function FixedMessage() {
                     className={`
                       max-w-[70%] p-2 text-sm rounded-lg
                       ${isSender
-                        ? "bg-[#6F826A] text-white"
-                        : "bg-[#73946B] text-white"}
+                        ? "bg-[var(--tertiary-color)] text-white"
+                        : "bg-[var(--secondary-color)] text-[var(--quaternary-color)]"}
                     `}
                   >
                     <p className="break-words text-justify">{item.content}</p>
@@ -173,7 +173,8 @@ function FixedMessage() {
         <div className="rounded-br-xl flex justify-around">
           <textarea
             rows={3}
-            className="w-7/8 h-full p-2 text-[#537D5D] text-sm placeholder:text-sm placeholder:text-[#9EBC8A] focus:outline-none resize-none"
+            className="w-7/8 h-full rounded-b-xl p-2 text-[var(--quaternary-color)] text-sm placeholder:text-sm placeholder:text-[var(--tertiary-color)] 
+            focus:outline-none focus:bg-[#DDDDDD] transition-colors duration-150 resize-none"
             value={msg}
             onChange={(e) => setMsg(e.target.value)}
             placeholder="Input text"
@@ -181,7 +182,7 @@ function FixedMessage() {
           <div className="pt-2">
             <button
               onClick={handleSend}
-              className="flex justify-center items-center text-[#537D5D]"
+              className="flex justify-center items-center text-[var(--quaternary-color)]"
             >
               <LuSendHorizontal />
             </button>
@@ -201,7 +202,7 @@ function FixedMessage() {
         }  z-20`}
       >
         {isChatOpen ? (
-          <IoMdCloseCircleOutline className="text-3xl w-full h-full text-[#537D5D] hover:text-[#E14434] transition-all duration-200" />
+          <IoMdCloseCircleOutline className="text-3xl w-full h-full text-[var(--tertiary-color)] hover:text-[#E14434] transition-all duration-200" />
         ) : (
           <MdMessage className="scale-150 w-full h-full" />
         )}

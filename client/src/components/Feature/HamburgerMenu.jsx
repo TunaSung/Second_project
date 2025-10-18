@@ -57,7 +57,7 @@ function HamburgerMenu({ categories }) {
       {/* Start menu icon btn */}
       <button
         onClick={handleMenuOpen}
-        className="text-2xl text-[#D2D0A0]"
+  className="text-2xl text-[var(--quaternary-color)]"
         aria-label="Open menu"
       >
         <SlMenu />
@@ -67,7 +67,7 @@ function HamburgerMenu({ categories }) {
       {/* Start menu list */}
       <AnimatePresence initial={false}>
         {isOpen && 
-          <motion.div className="fixed top-30 left-0 bg-[#D2D0A0] rounded-b-xl drop-shadow-[1px_1px_2px_rgba(0,0,0,0.3)]"
+          <motion.div className="fixed top-30 left-0 bg-[var(--quaternary-color)] rounded-b-xl drop-shadow-[1px_1px_2px_rgba(0,0,0,0.3)]"
             initial={{ clipPath: "inset(0% 0% 100% 0%)" }}
             animate={{
               clipPath: "inset(0% 0% 0% 0%)",
@@ -78,7 +78,7 @@ function HamburgerMenu({ categories }) {
           >
             {categories.map((parent, i) => (
               <Link key={`menu-${parent.name}`} to={`/product`} state={{ initialLabel: parent.id }}>
-                <p className="text-[#537D5D] text-center text-lg px-3 py-4">
+                <p className="text-[var(--primary-color)] text-center text-lg px-3 py-4">
                   {parent.name} 
                 </p>
               </Link>

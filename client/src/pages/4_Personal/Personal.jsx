@@ -15,19 +15,18 @@ import ProfileSection from "./component/layout/Profile";
 import HistorySection from "./component/layout/History";
 
 function Personal() {
-  /** ---------- Auth context ---------- */
   const { setAvatarUrl } = useAuth();
 
-  /** ---------- Profile state ---------- */
+  // Profile state
   const [profile, setProfile] = useState(null);
   const [loadingProfile, setLoadingProfile] = useState(true);
 
-  /** ---------- Orders state ---------- */
+  // Orders state
   const [completedOrder, setCompletedOrder] = useState([]);
   const [pendingOrder, setPendingOrder] = useState([]);
   const [loadingOrders, setLoadingOrders] = useState(true);
 
-  /** ---------- Fetch user profile ---------- */
+// Fetch user profile
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -42,7 +41,7 @@ function Personal() {
     fetchProfile();
   }, []);
 
-  /** ---------- Fetch order history ---------- */
+  // Fetch order history
   useEffect(() => {
     const fetchOrder = async () => {
       try {
@@ -58,7 +57,7 @@ function Personal() {
     fetchOrder();
   }, []);
 
-  /** ---------- Handlers passed to children ---------- */
+  // Handlers
   const handleUpdateAvatar = async (file) => {
     if (!file) return;
     try {
@@ -88,7 +87,6 @@ function Personal() {
     }
   };
 
-  /** ---------- Early loading guard for profile ---------- */
   if (loadingProfile || !profile) {
     return (
       <div className="w-full h-[50vh] flex justify-center items-center my-25">
@@ -97,9 +95,8 @@ function Personal() {
     );
   }
 
-  /** ---------- Render ---------- */
   return (
-    <div className="bg-[#9EBC8A] text-[#f1f0c7] pb-30">
+  <div className="bg-[var(--tertiary-color)] text-[var(--quaterary-color)] pb-30">
       <div className="container-mid">
         <ProfileSection
           profile={profile}

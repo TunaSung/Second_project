@@ -42,23 +42,30 @@ function Cart({ isCartOpen, setIsCartOpen }) {
 
   // currency formatter（預設 TWD；要改幣別可換 currency）
   const currency = useMemo(
-    () => new Intl.NumberFormat("zh-TW", { style: "currency", currency: "TWD", maximumFractionDigits: 0 }),
+    () =>
+      new Intl.NumberFormat("zh-TW", {
+        style: "currency",
+        currency: "TWD",
+        maximumFractionDigits: 0,
+      }),
     []
   );
 
   // keep selections valid if cartList changes
   useEffect(() => {
-    setSelectedItems(prev => {
-      const ids = new Set(cartList.map(i => i.product.id));
+    setSelectedItems((prev) => {
+      const ids = new Set(cartList.map((i) => i.product.id));
       const next = new Set();
-      prev.forEach(id => { if (ids.has(id)) next.add(id); });
+      prev.forEach((id) => {
+        if (ids.has(id)) next.add(id);
+      });
       return next;
     });
   }, [cartList]);
 
   // handlers
   const handleCheckChange = useCallback((isChecked, productId) => {
-    setSelectedItems(prev => {
+    setSelectedItems((prev) => {
       const next = new Set(prev);
       if (isChecked) next.add(productId);
       else next.delete(productId);
@@ -66,11 +73,14 @@ function Cart({ isCartOpen, setIsCartOpen }) {
     });
   }, []);
 
-  const handleSelectAllChange = useCallback((isChecked) => {
-    setSelectedItems(() =>
-      isChecked ? new Set(cartList.map(i => i.product.id)) : new Set()
-    );
-  }, [cartList]);
+  const handleSelectAllChange = useCallback(
+    (isChecked) => {
+      setSelectedItems(() =>
+        isChecked ? new Set(cartList.map((i) => i.product.id)) : new Set()
+      );
+    },
+    [cartList]
+  );
 
   const handlePayment = useCallback(async () => {
     if (processing) return;
@@ -86,12 +96,15 @@ function Cart({ isCartOpen, setIsCartOpen }) {
 
       // 組品項字串（例：Name $Price*Amount#...）
       const selectedProductNames = cartList
-        .filter(i => selectedItems.has(i.product.id))
-        .map(i => `${i.product.name} $${i.product.price}*${i.amount}`)
+        .filter((i) => selectedItems.has(i.product.id))
+        .map((i) => `${i.product.name} $${i.product.price}*${i.amount}`)
         .join("#");
 
       // 建立付款表單（由後端回傳 HTML form）
-      const paymentFormHtml = await createPayment(totalPrice, selectedProductNames);
+      const paymentFormHtml = await createPayment(
+        totalPrice,
+        selectedProductNames
+      );
 
       // 解析表單與訂單編號
       const tmp = document.createElement("div");
@@ -121,7 +134,15 @@ function Cart({ isCartOpen, setIsCartOpen }) {
     } finally {
       setProcessing(false);
     }
-  }, [processing, selectedItems, cartList, totalPrice, setIsCartOpen, navigate, toggleCart]);
+  }, [
+    processing,
+    selectedItems,
+    cartList,
+    totalPrice,
+    setIsCartOpen,
+    navigate,
+    toggleCart,
+  ]);
 
   return (
     <motion.aside
@@ -130,7 +151,7 @@ function Cart({ isCartOpen, setIsCartOpen }) {
       aria-label="Shopping cart"
       aria-hidden={isCartOpen ? "false" : "true"}
       id="cart-page"
-      className="fixed right-0 h-screen shadow-2xl grid grid-rows-[auto_1fr_auto] rounded-l-xl z-1000 bg-[#D2D0A0] overflow-hidden"
+      className="fixed right-0 h-screen shadow-2xl grid grid-rows-[auto_1fr_auto] rounded-l-xl z-1000 bg-[var(--tertiary-color)] overflow-hidden"
       initial={false}
       animate={{ width: isCartOpen ? "30%" : "0%" }}
       transition={{ type: "tween", duration: 0.15 }}
@@ -139,11 +160,11 @@ function Cart({ isCartOpen, setIsCartOpen }) {
       <header className="mb-2 h-26 px-8 cart-container">
         <div className="border-b py-8 w-full h-full flex items-center justify-between">
           <div className="flex">
-            <h1 className="text-5xl text-[#537D5D] indie-flower-regular mr-3 font-bold">
+            <h1 className="text-5xl text-[var(--primary-color)] indie-flower-regular mr-3 font-bold">
               Your Cart
             </h1>
             <p
-              className="rounded-3xl text-xs text-[#f9f7d3] h-lh py-3 px-4 font-bold bg-[#73946B] flex items-center justify-center"
+              className="rounded-3xl text-xs text-[#8b8849] h-lh py-3 px-4 font-bold bg-[var(--secondary-color)] flex items-center justify-center"
               aria-live="polite"
             >
               {cartList.length} items
@@ -163,9 +184,12 @@ function Cart({ isCartOpen, setIsCartOpen }) {
       </header>
 
       {/* Items */}
-      <section className="cart-container overflow-y-auto cart-scroll mb-2" aria-label="Cart items">
+      <section
+        className="cart-container overflow-y-auto cart-scroll mb-2"
+        aria-label="Cart items"
+      >
         {cartList.length === 0 ? (
-          <div className="h-full w-full flex items-center justify-center text-[#537D5D]">
+          <div className="h-full w-full flex items-center justify-center text-[var(--primary-color)]">
             購物車是空的𓆟 𓆞 𓆝
           </div>
         ) : (
@@ -190,7 +214,7 @@ function Cart({ isCartOpen, setIsCartOpen }) {
       </section>
 
       {/* Checkout */}
-      <footer className="cart-container flex-col bg-[#67AE6E] rounded-t-3xl rounded-bl-xl py-8">
+      <footer className="cart-container flex-col bg-[var(--secondary-color)] rounded-t-3xl rounded-bl-xl py-8">
         <div className="w-full mb-3 flex items-center gap-3">
           <input
             id="select-all"
@@ -198,7 +222,7 @@ function Cart({ isCartOpen, setIsCartOpen }) {
             checked={selectAllChecked}
             disabled={cartList.length === 0}
             onChange={(e) => handleSelectAllChange(e.target.checked)}
-            className="scale-150 accent-[#537D5D]"
+            className="scale-150 accent-[var(--primary-color)]"
             aria-label="Select all items"
           />
           <label htmlFor="select-all">Select all</label>
@@ -212,7 +236,7 @@ function Cart({ isCartOpen, setIsCartOpen }) {
         <button
           onClick={handlePayment}
           disabled={processing || selectedItems.size === 0 || totalPrice <= 0}
-          className="w-full text-lg text-white rounded-lg py-2 bg-[#537D5D] border-white border-2
+          className="w-full text-lg text-[var(--quateranry-color)] rounded-lg py-2 bg-[var(--primary-color)] border-white border-2
                      hover:bg-[#d6d5a4] hover:text-[#497152] transition-all duration-200
                      disabled:opacity-60 disabled:cursor-not-allowed"
           aria-busy={processing ? "true" : "false"}

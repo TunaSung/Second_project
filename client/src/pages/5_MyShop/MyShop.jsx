@@ -59,7 +59,7 @@ function MyShop() {
   const hasItems = useMemo(() => items.length > 0, [items]);
 
   return (
-    <main className="pt-30 bg-[#9EBC8A] text-[#f8f7cf]" aria-labelledby="page-title">
+  <main className="pt-30 bg-[var(--tertiary-color)] text-[#f8f7cf]" aria-labelledby="page-title">
       {/* modal: add product */}
       {isAddProductOpen && (
         <ShopEdit
@@ -84,7 +84,7 @@ function MyShop() {
         className="container-mid mt-20"
         aria-labelledby="todo-heading"
       >
-        <div className="w-full border p-5 bg-[#73946B]">
+  <div className="w-full border p-5 bg-[var(--secondary-color)]">
           <h2 id="todo-heading" className="text-xl font-bold mb-1">
             To Do List
           </h2>
@@ -98,7 +98,7 @@ function MyShop() {
               <li key={label} role="listitem">
                 <button
                   type="button"
-                  className="w-full h-full rounded-2xl hover:bg-[#9EBC8A] transition-colors duration-250 text-left p-3"
+                  className="w-full h-full rounded-2xl hover:bg-[var(--tertiary-color)] transition-colors duration-250 text-left p-3"
                   aria-label={`${label}, 0 items`}
                 >
                   <p className="font-bold text-xl text-white mb-1" aria-live="polite">0</p>
@@ -140,7 +140,7 @@ function MyShop() {
             <button
               type="button"
               onClick={openCreate}
-              className="flex justify-center items-center hover:text-[#537D5D]"
+              className="flex justify-center items-center hover:text-[var(--primary-color)]"
               aria-label="Add product"
               title="Add product"
             >
@@ -168,7 +168,7 @@ function MyShop() {
               <button
                 type="button"
                 onClick={refreshItems}
-                className="border px-4 py-2 rounded hover:bg-[#73946B] hover:text-white transition-colors"
+                className="border px-4 py-2 rounded hover:bg-[var(--secondary-color)] hover:text-white transition-colors"
               >
                 Retry
               </button>
