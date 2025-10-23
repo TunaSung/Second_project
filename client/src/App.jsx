@@ -1,5 +1,5 @@
 import "./App.css";
-import "./Variable.css"
+import "./Variable.css";
 import NavbarFixed from "./components/Layout/NavbarFixed";
 import Navbar from "./components/Layout/Navbar";
 import Footer from "./components/Layout/Footer";
@@ -21,7 +21,7 @@ const Product = lazy(() => import("./pages/3_Product/Product"));
 const Sign = lazy(() => import("./pages/2_Sign/Sign"));
 const Personal = lazy(() => import("./pages/4_Personal/Personal"));
 const MyShop = lazy(() => import("./pages/5_MyShop/MyShop"));
-const Event = lazy(() => import("./pages/7_Event/Event"))
+const Event = lazy(() => import("./pages/7_Event/Event"));
 
 // Dynamically adjust navbar
 function DynamicNavbar() {
@@ -44,7 +44,6 @@ function ScrollToTop() {
 }
 
 function App() {
-
   useEffect(() => {
     setAuthHeader();
   }, []);
@@ -70,8 +69,6 @@ function App() {
     <Router>
       <ScrollToTop />
       <ToastContainer position="top-right" autoClose={3000} />
-      <FixedMessage />
-      <DynamicNavbar />
       <Suspense
         fallback={
           <div className="w-full h-[50vh] flex items-center justify-center text-center my-60">
@@ -79,6 +76,8 @@ function App() {
           </div>
         }
       >
+        <FixedMessage />
+        <DynamicNavbar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/product" element={<Product />} />
@@ -87,8 +86,8 @@ function App() {
           <Route path="/my-shop" element={<MyShop />} />
           <Route path="/event/:id" element={<Event />} />
         </Routes>
+        <Footer />
       </Suspense>
-      <Footer />
     </Router>
   );
 }
