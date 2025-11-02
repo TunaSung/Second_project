@@ -20,4 +20,11 @@ const sqlize = new Sequelize(process.env.MYSQL_URL, {
   dialectOptions: { charset: 'utf8mb4' }
 });
 
-module.exports = sqlize
+async function connectDB(opts = {}) {
+  await sqlize.authenticate();
+  if (opts.sync) await sqlize.sync();
+  return sqlize;
+}
+
+module.exports = sqlize;
+module.exports.connectDB = connectDB;
