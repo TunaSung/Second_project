@@ -8,7 +8,7 @@ Message.init({
         senderId: {type: DataTypes.INTEGER, allowNull: false, references: {model: "users", key: "id"}},
         receiverId: {type: DataTypes.INTEGER, allowNull: false, references: {model: "users", key: "id"}},
         content: {type: DataTypes.TEXT},
-        roomId: {type: DataTypes.STRING, defaultValue: false },
+        roomId: {type: DataTypes.STRING, allowNull: false },
         messageType: {type: DataTypes.ENUM('text', 'image'), defaultValue: 'text'},
         isRead: {type: DataTypes.BOOLEAN, defaultValue: false}
     },
