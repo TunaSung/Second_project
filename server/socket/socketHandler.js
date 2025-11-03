@@ -1,6 +1,6 @@
 const Message = require("../models/Message");
 
-// 可選：若要追蹤 socket 清單
+// 追蹤 socket 清單
 const userSockets = new Map(); // userId -> Set<socketId>
 
 function canonicalRoomId(a, b, clientRoomId) {

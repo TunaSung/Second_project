@@ -39,7 +39,7 @@ export const sendMessage = ({ senderId, receiverId, content, roomId }) => {
 export const onReceiveMessage = (cb) => socket.on('receiveMessage', cb);
 export const offReceiveMessage = () => socket.off('receiveMessage');
 
-// 👇 新增：讓列表即時出現/更新
+// 讓列表即時出現/更新
 export const onRoomsUpsert = (cb) => socket.on('rooms:upsert', cb);
 export const offRoomsUpsert = () => socket.off('rooms:upsert');
 
