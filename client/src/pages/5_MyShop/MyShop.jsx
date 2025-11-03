@@ -59,7 +59,10 @@ function MyShop() {
   const hasItems = useMemo(() => items.length > 0, [items]);
 
   return (
-  <main className="pt-30 bg-[var(--tertiary-color)] text-[#f8f7cf]" aria-labelledby="page-title">
+    <main
+      className="pt-30 bg-[var(--tertiary-color)] text-[#f8f7cf]"
+      aria-labelledby="page-title"
+    >
       {/* modal: add product */}
       {isAddProductOpen && (
         <ShopEdit
@@ -80,12 +83,9 @@ function MyShop() {
       </header>
 
       {/* to-do list */}
-      <section
-        className="container-mid mt-20"
-        aria-labelledby="todo-heading"
-      >
-  <div className="w-full border p-5 bg-[var(--secondary-color)]">
-          <h2 id="todo-heading" className="text-xl font-bold mb-1">
+      <section className="container-mid mt-20" aria-labelledby="todo-heading">
+        <div className="w-full border p-5 bg-[var(--secondary-color)]">
+          <h2 id="todo-heading" className="text-xl text-[var(--quaternary-color)] font-bold mb-1">
             To Do List
           </h2>
 
@@ -98,11 +98,16 @@ function MyShop() {
               <li key={label} role="listitem">
                 <button
                   type="button"
-                  className="w-full h-full rounded-2xl hover:bg-[var(--tertiary-color)] transition-colors duration-250 text-left p-3"
+                  className="w-full h-full rounded-2xl group hover:bg-[var(--tertiary-color)] transition-colors duration-250 text-left p-3"
                   aria-label={`${label}, 0 items`}
                 >
-                  <p className="font-bold text-xl text-white mb-1" aria-live="polite">0</p>
-                  <p className="text-xs">{label}</p>
+                  <p
+                    className="font-bold text-xl text-[var(--tertiary-color)] group-hover:text-[var(--primary-color)] mb-1"
+                    aria-live="polite"
+                  >
+                    0
+                  </p>
+                  <p className="text-xs text-[var(--quaternary-color)] group-hover:text-[var(--secondary-color)]">{label}</p>
                 </button>
               </li>
             ))}
@@ -117,7 +122,8 @@ function MyShop() {
         className="container-mid flex justify-center items-center pb-15 flex-col max-md:text-sm"
       >
         <div className="sr-only" id="products-desc">
-          Manage your product list, including price, sale status, stock and hashtags.
+          Manage your product list, including price, sale status, stock and
+          hashtags.
         </div>
 
         {/* column header row (acts like a table header) */}
@@ -163,7 +169,10 @@ function MyShop() {
               <span className="sr-only">Loading products…</span>
             </div>
           ) : errMsg ? (
-            <div className="w-full h-60 flex flex-col items-center justify-center" role="alert">
+            <div
+              className="w-full h-60 flex flex-col items-center justify-center"
+              role="alert"
+            >
               <p className="text-red-100 mb-3">Failed to load: {errMsg}</p>
               <button
                 type="button"

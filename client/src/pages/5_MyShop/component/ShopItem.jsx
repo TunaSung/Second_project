@@ -116,25 +116,25 @@ function ShopItem({
       {/* Start Product details */}
       <div
         id="container"
-  className="mt-4 w-full border py-4 pl-10 hover:bg-[var(--primary-color)] grid grid-cols-[3fr_1fr_1fr_1fr_2fr_1fr] items-center"
+        className="mt-4 w-full border py-4 pl-10 hover:bg-[var(--primary-color)] hover:text-[var(--quaternary-color)] grid grid-cols-[3fr_1fr_1fr_1fr_2fr_1fr] items-center"
       >
         <div className="flex items-center pl-2">
           {/* Start Edit Available Confirm Open */}
           {isConfirmOpen ? (
-            <div className="fixed-mid w-80 h-30 p-5 z-100 flex flex-col justify-center items-center border bg-[#f8f7cf]">
+            <div className="fixed-mid w-80 h-30 p-5 z-100 flex flex-col justify-center items-center border bg-[var(--secondary-color)]">
               <p className="text-black w-full mb-4">
                 Confirm changing the product status?
               </p>
               <div className="flex justify-center items-center gap-rwd">
                 <button
                   onClick={() => toggleAvailabe(productId)}
-                  className="w-20 h-10 border bg-[var(--primary-color)]"
+                  className="w-20 h-10 border text-[var(--quaternary-color)]  bg-[var(--primary-color)]"
                 >
                   Confirm
                 </button>
                 <button
                   onClick={handleConfirmOpen}
-                  className="w-20 h-10 border bg-[var(--primary-color)]"
+                  className="w-20 h-10 border text-[var(--quaternary-color)]  bg-[var(--primary-color)]"
                 >
                   Cancal
                 </button>
@@ -217,7 +217,7 @@ function ShopItem({
             ))}
         </div>
         {/* End Item's HashTags */}
- 
+
         {/* Start Edit Button */}
         <div className="flex justify-center items-center gap-3">
           <button onClick={() => setIsUpdateOpen(true)}>

@@ -62,24 +62,17 @@ function SelectTree({
             height: "32px", // 控制輸入框總高度
           },
           "& .MuiOutlinedInput-notchedOutline": {
-            borderColor: "#f8f7cf", // 邊框色
+            borderColor: "var(--quaternary-color)", // 邊框色
           },
           "& .MuiInputBase-input": {
-            paddingLeft: "8px",
-            color: "#f8f7cf", // 實際輸入文字顏色
+            paddingLeft: "8px"
           },
           "&:hover .MuiOutlinedInput-notchedOutline": {
-            borderColor: "#f8f7cf", // hover 邊框色
+            borderColor: "var(--quaternary-color)", // hover 邊框色
           },
           "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-            borderColor: "#f8f7cf", // ✅ 聚焦時邊框色
-          },
-          "& .MuiOutlinedInput-root": {
-            outlineStyle: "none", // ✅ 去除瀏覽器預設藍框
-          },
-          "& .MuiOutlinedInput-root.Mui-focused": {
-            outlineStyle: "none", // 聚焦時也移除
-          },
+            borderColor: "var(--quaternary-color)", // ✅ 聚焦時邊框色
+          }
         }}
       />
 
