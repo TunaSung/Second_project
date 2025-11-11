@@ -1,4 +1,3 @@
-// server.js
 const http = require('http');
 const { Server } = require('socket.io');
 require('dotenv').config();
