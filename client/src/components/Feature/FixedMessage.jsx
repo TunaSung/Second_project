@@ -19,7 +19,7 @@ function FixedMessage() {
   const messagesEndRef = useRef(null);
   
   // load user info from authContext
-  const { currentUser } = useAuth()
+  const { isAuthenticated, currentUser } = useAuth()
 
   // useState from chatContext
   const {
@@ -78,6 +78,10 @@ function FixedMessage() {
     });
     setMsg("");
   };
+
+  if(!isAuthenticated){
+    return <></>
+  }
 
   return (
     <motion.div
